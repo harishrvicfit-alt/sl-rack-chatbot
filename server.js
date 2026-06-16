@@ -1,4 +1,6 @@
 import 'dotenv/config';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import express from 'express';
 import cors from 'cors';
 import OpenAI from 'openai';
@@ -6,14 +8,17 @@ import { productCatalog, companyFacts, scoreProducts } from './src/slRackKnowled
 import { buildSystemPrompt } from './src/systemPrompt.js';
 import { getKnowledgeStatus, searchKnowledge } from './src/knowledgeSearch.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
 const port = Number(process.env.PORT || 3000);
 const model = process.env.OPENAI_MODEL || 'gpt-4.1-mini';
 const client = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
+const publicDir = path.join(__dirname, 'public');
 
 app.use(cors());
 app.use(express.json({ limit: '1mb' }));
-app.use(express.static('public'));
+app.use(express.static(publicDir));
 
 app.get('/api/health', (_req, res) => {
   res.json({
@@ -26,6 +31,10 @@ app.get('/api/health', (_req, res) => {
 
 app.get('/api/catalog', (_req, res) => {
   res.json({ companyFacts, products: productCatalog });
+});
+
+app.get('/', (_req, res) => {
+  res.sendFile(path.join(publicDir, 'index.html'));
 });
 
 app.post('/api/recommend', (req, res) => {
