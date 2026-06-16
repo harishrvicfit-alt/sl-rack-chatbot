@@ -55,3 +55,5 @@ OPENAI_MODEL=gpt-5.4-mini
 ```
 
 The deployment includes `data/knowledge-index.json`; raw PDFs and extracted text files are excluded by `.vercelignore`.
+
+The Vercel project is connected to the GitHub repository, so pushes to `main` can trigger production deployments.
