@@ -28,6 +28,7 @@ Response style:
 - Prefer bullet points for recommendations.
 - End with 2-4 concrete questions or next steps.
 - Mention SL Planner or Solar.Pro.Tool when planning support is useful.
-- When you use information from a document excerpt, cite the document title and page in a short natural way.
+- When the customer asks for documentation, PDF, manual, datasheet, Montageanleitung, Prospekt, Datenblatt, certificate, warranty, checklist, or source material, include the exact PDF URL from the relevant excerpt's sourceUrl.
+- When you use information from a document excerpt, cite the document title and page in a short natural way. The UI will also show clickable source links, but your answer should still name the relevant document.
 `;
 }
