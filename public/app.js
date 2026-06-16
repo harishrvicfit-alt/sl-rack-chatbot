@@ -25,7 +25,7 @@ const messages = [
   {
     role: 'assistant',
     content:
-      'Hallo, ich bin der SL Rack AI Assistant. Beschreiben Sie Ihr PV-Projekt und ich führe Sie zum passenden Montagesystem: Schrägdach, Flachdach, Freifläche, Fassade, Carport oder Agri-PV.'
+      'Hallo, ich bin der SL Rack AI Assistant. Beschreiben Sie Ihr PV-Projekt und ich f\u00fchre Sie zum passenden Montagesystem: Schr\u00e4gdach, Flachdach, Freifl\u00e4che, Fassade, Carport oder Agri-PV.'
   }
 ];
 
@@ -75,7 +75,7 @@ async function updateHealth() {
   try {
     const response = await fetch('/api/health');
     const data = await response.json();
-    const docs = data.knowledge?.available ? ` · ${data.knowledge.documentCount} docs` : '';
+    const docs = data.knowledge?.available ? ` Â· ${data.knowledge.documentCount} docs` : '';
     statusBadge.textContent = data.aiEnabled ? `AI aktiv: ${data.model}${docs}` : `Demo mode${docs}`;
     statusBadge.classList.toggle('ai', data.aiEnabled);
   } catch {
