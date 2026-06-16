@@ -25,7 +25,7 @@ const messages = [
   {
     role: 'assistant',
     content:
-      'Hallo, ich bin der SL Rack AI Assistant. Beschreiben Sie Ihr PV-Projekt und ich fÃ¼hre Sie zum passenden Montagesystem: SchrÃ¤gdach, Flachdach, FreiflÃ¤che, Fassade, Carport oder Agri-PV.'
+      'Hallo, ich bin der SL Rack AI Assistant. Beschreiben Sie Ihr PV-Projekt und ich f\u00fchre Sie zum passenden Montagesystem: Schr\u00e4gdach, Flachdach, Freifl\u00e4che, Fassade, Carport oder Agri-PV.'
   }
 ];
 
@@ -57,7 +57,7 @@ chatForm.addEventListener('submit', async (event) => {
   typing.remove();
 
   const reply = data.reply || 'I could not generate a response. Please try again with more project details.';
-  messages.push({ role: 'assistant', content: reply });
+  messages.push({ role: 'assistant', content: reply, sources: data.documentSources || [] });
   renderMessages();
   renderRecommendations(data.recommendations || []);
 });
@@ -106,18 +106,45 @@ function getProfile(message = '') {
 function renderMessages() {
   chatLog.innerHTML = '';
   for (const message of messages) {
-    addMessage(message.role, message.content);
+    addMessage(message.role, message.content, message.sources || []);
   }
   chatLog.scrollTop = chatLog.scrollHeight;
 }
 
-function addMessage(role, content) {
+function addMessage(role, content, sources = []) {
   const element = document.createElement('div');
   element.className = `message ${role}`;
-  element.textContent = content;
+  element.innerHTML = formatMessage(content);
+
+  if (role === 'assistant' && sources.length) {
+    element.append(renderSources(sources));
+  }
+
   chatLog.append(element);
   chatLog.scrollTop = chatLog.scrollHeight;
   return element;
+}
+
+function renderSources(sources) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'source-list';
+
+  const title = document.createElement('strong');
+  title.className = 'source-title';
+  title.textContent = 'Official PDF sources';
+  wrapper.append(title);
+
+  for (const source of sources.slice(0, 4)) {
+    const link = document.createElement('a');
+    link.className = 'source-link';
+    link.href = source.url;
+    link.target = '_blank';
+    link.rel = 'noreferrer';
+    link.textContent = `${source.title}${source.page ? ` Â· page ${source.page}` : ''}`;
+    wrapper.append(link);
+  }
+
+  return wrapper;
 }
 
 function renderRecommendations(recommendations) {
@@ -138,6 +165,13 @@ function renderRecommendations(recommendations) {
     `;
     recommendationList.append(card);
   }
+}
+
+function formatMessage(value) {
+  return escapeHtml(value)
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/(https?:\/\/[^\s<]+?)(?=[).,;!?]*($|\s))/g, '<a href="$1" target="_blank" rel="noreferrer">$1</a>')
+    .replace(/\n/g, '<br />');
 }
 
 function escapeHtml(value) {
