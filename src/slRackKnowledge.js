@@ -20,14 +20,30 @@ export const productCatalog = [
     bestFor: ['pitched roof', 'tile roof', 'trapezoidal sheet', 'standing seam', 'residential', 'commercial roof'],
     triggerWords: ['schraeg', 'pitched', 'tile', 'ziegel', 'trapez', 'metal roof', 'blech', 'falz', 'roof hook'],
     shortPitch: 'Complete modular mounting system for pitched and sheet-metal roofs with fast installation and high compatibility.',
-    keyProducts: ['Dachhaken', 'Dachersatzplatten', 'Trapez 1-6', 'RAIL', 'Modulklemmen', 'Falzklemmen', 'Schneefang'],
+    keyProducts: [
+      'Dachhaken',
+      'Alpha-Platte',
+      'Beta-Platte',
+      'Delta-Platte',
+      'Dachersatzplatten',
+      'Trapez 1-6',
+      'RAIL',
+      'Modulklemmen',
+      'Falzklemmen',
+      'Schneefang'
+    ],
     advantages: [
       'fast installation with only a few core components',
       'height-adjustable roof hooks and flexible rail configurations',
       'integrated equipotential bonding and lightning protection logic',
       'compatible with many roof types and module frames'
     ],
-    questions: ['Which roof covering is used?', 'What is the roof pitch?', 'Which module frame height is planned?', 'Is snow retention or lightning protection relevant?']
+    questions: [
+      'Which exact roof covering/tile model is used?',
+      'For tile roofs: is it Tonziegel or Betondachstein?',
+      'What is the roof pitch and rafter spacing?',
+      'Which module layout, wind zone and snow load zone apply?'
+    ]
   },
   {
     id: 'flat-roof',
