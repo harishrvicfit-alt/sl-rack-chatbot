@@ -25,7 +25,7 @@ const messages = [
   {
     role: 'assistant',
     content:
-      'Hallo, ich bin der SL Rack AI Assistant. Beschreiben Sie Ihr PV-Projekt und ich f\u00fchre Sie zum passenden Montagesystem: Schr\u00e4gdach, Flachdach, Freifl\u00e4che, Fassade, Carport oder Agri-PV.'
+      'Hallo, ich bin der SL Rack AI Assistant. Beschreiben Sie Ihr PV-Projekt und ich fÃ¼hre Sie zum passenden Montagesystem: SchrÃ¤gdach, Flachdach, FreiflÃ¤che, Fassade, Carport oder Agri-PV.'
   }
 ];
 
