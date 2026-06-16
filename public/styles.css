@@ -1,0 +1,489 @@
+:root {
+  color-scheme: light;
+  --ink: #10231b;
+  --muted: #5e6c66;
+  --line: #dfe7e2;
+  --surface: #f4f7f2;
+  --panel: #ffffff;
+  --brand: #004528;
+  --brand-dark: #00331e;
+  --accent: #f7a600;
+  --accent-dark: #d08c01;
+  --steel: #26362f;
+  --green: #075d3a;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    linear-gradient(140deg, rgba(0, 69, 40, 0.12), transparent 34%),
+    linear-gradient(22deg, rgba(247, 166, 0, 0.16), transparent 38%),
+    var(--surface);
+  color: var(--ink);
+}
+
+.brand-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 76px;
+  padding: 16px 28px;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid var(--line);
+}
+
+.brand-logo img {
+  display: block;
+  width: 150px;
+  height: auto;
+}
+
+.brand-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.brand-header a {
+  color: var(--brand);
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.brand-header nav a {
+  border: 1px solid rgba(0, 69, 40, 0.16);
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: #ffffff;
+}
+
+.brand-header nav a:hover {
+  border-color: rgba(247, 166, 0, 0.8);
+  color: var(--brand-dark);
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 410px;
+  gap: 22px;
+  height: calc(100vh - 76px);
+  min-height: 0;
+  padding: 22px;
+}
+
+.assistant-panel,
+.decision-panel {
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 18px 56px rgba(0, 69, 40, 0.1);
+}
+
+.assistant-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.topbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 275px;
+  align-items: stretch;
+  gap: 20px;
+  padding: 28px;
+  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(90deg, rgba(0, 69, 40, 0.95), rgba(0, 69, 40, 0.72)),
+    url("/assets/hero-sl-tracker.jpg") center / cover;
+  color: #ffffff;
+}
+
+.hero-copy {
+  display: grid;
+  align-content: center;
+  max-width: 740px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  max-width: 760px;
+  font-size: clamp(1.75rem, 3vw, 3.55rem);
+  line-height: 1.02;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+.intro {
+  max-width: 640px;
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.86);
+  line-height: 1.48;
+}
+
+.hero-card {
+  display: grid;
+  align-content: end;
+  gap: 8px;
+  min-height: 150px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(8px);
+}
+
+.hero-card strong {
+  color: #ffffff;
+  font-size: 1.05rem;
+}
+
+.hero-card span:last-child {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.status-badge {
+  align-self: start;
+  justify-self: start;
+  border: 1px solid rgba(247, 166, 0, 0.45);
+  border-radius: 999px;
+  padding: 7px 11px;
+  color: #ffffff;
+  background: rgba(0, 69, 40, 0.55);
+  font-size: 0.82rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.status-badge.ai {
+  color: #ffffff;
+  border-color: rgba(247, 166, 0, 0.82);
+  background: rgba(7, 93, 58, 0.86);
+}
+
+.chat-log {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 26px;
+  min-height: 0;
+  overflow-y: auto;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)),
+    radial-gradient(circle at top left, rgba(247, 166, 0, 0.1), transparent 32%);
+}
+
+.message {
+  width: min(780px, 92%);
+  padding: 15px 17px;
+  border-radius: 8px;
+  line-height: 1.48;
+  white-space: pre-wrap;
+  box-shadow: 0 10px 24px rgba(0, 69, 40, 0.06);
+}
+
+.message.assistant {
+  background: #f4f8f5;
+  border: 1px solid #dae8df;
+}
+
+.message.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--brand), #075d3a);
+  color: #ffffff;
+}
+
+.composer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  padding: 18px;
+  border-top: 1px solid var(--line);
+  background: #ffffff;
+}
+
+textarea,
+input,
+select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 13px;
+  color: var(--ink);
+  font: inherit;
+  background: #ffffff;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(247, 166, 0, 0.16);
+  outline: 0;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 52px;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 0 22px;
+  background: var(--accent);
+  color: var(--brand-dark);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+}
+
+button:hover {
+  background: #ffc247;
+  box-shadow: 0 10px 22px rgba(247, 166, 0, 0.24);
+  transform: translateY(-1px);
+}
+
+.decision-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 2px 0 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand-block img {
+  width: 118px;
+  height: auto;
+}
+
+.brand-block span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.image-strip {
+  position: relative;
+  overflow: hidden;
+  height: 142px;
+  border-radius: 8px;
+  background: var(--brand);
+}
+
+.image-strip::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(90deg, rgba(0, 69, 40, 0.55), rgba(247, 166, 0, 0.06));
+}
+
+.image-strip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+label {
+  display: grid;
+  gap: 7px;
+  color: var(--steel);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.secondary-button {
+  min-height: 44px;
+  border: 1px solid rgba(0, 69, 40, 0.28);
+  background: var(--brand);
+  color: #ffffff;
+}
+
+.secondary-button:hover {
+  background: var(--brand-dark);
+  box-shadow: 0 12px 26px rgba(0, 69, 40, 0.2);
+}
+
+.recommendations {
+  display: grid;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.section-heading h2 {
+  margin-bottom: 0;
+}
+
+.section-heading span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+#recommendationList {
+  display: grid;
+  gap: 12px;
+}
+
+.recommendation-card {
+  display: grid;
+  grid-template-columns: 86px 1fr;
+  gap: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfd;
+  box-shadow: 0 10px 22px rgba(0, 69, 40, 0.06);
+}
+
+.recommendation-card img {
+  width: 86px;
+  height: 100%;
+  min-height: 112px;
+  object-fit: cover;
+}
+
+.recommendation-body {
+  padding: 12px 12px 12px 0;
+}
+
+.recommendation-card strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.recommendation-card p {
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.confidence {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e8edf2;
+}
+
+.confidence span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+}
+
+@media (max-width: 920px) {
+  body {
+    overflow: auto;
+  }
+
+  .brand-header {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 14px;
+  }
+
+  .brand-header nav {
+    justify-content: flex-start;
+  }
+
+  .app-shell {
+    grid-template-columns: 1fr;
+    height: auto;
+    padding: 12px;
+    min-height: auto;
+  }
+
+  .assistant-panel {
+    min-height: 78vh;
+  }
+
+  .topbar,
+  .composer {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    padding: 22px;
+  }
+
+  .hero-card {
+    min-height: 120px;
+  }
+
+  button {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 560px) {
+  .brand-logo img {
+    width: 132px;
+  }
+
+  .brand-header nav a {
+    padding: 7px 10px;
+  }
+
+  .chat-log {
+    padding: 16px;
+  }
+
+  .message {
+    width: 100%;
+  }
+
+  .recommendation-card {
+    grid-template-columns: 76px 1fr;
+  }
+
+  .recommendation-card img {
+    width: 76px;
+  }
+}

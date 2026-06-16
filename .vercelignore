@@ -1,0 +1,7 @@
+.env
+Api_Key_Chatbot_SL_Rack.txt
+server.log
+server.err.log
+node_modules/
+data/sl-rack-documents/
+data/sl-rack-text/

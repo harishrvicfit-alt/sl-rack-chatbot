@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SL Rack AI Assistant</title>
+    <link rel="icon" href="/assets/logo_sl-rack.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="brand-header">
+      <a class="brand-logo" href="https://www.sl-rack.com/" target="_blank" rel="noreferrer" aria-label="SL Rack website">
+        <img src="/assets/logo_sl-rack.svg" alt="SL Rack" />
+      </a>
+      <nav aria-label="SL Rack quick links">
+        <a href="https://www.sl-rack.com/montagesysteme" target="_blank" rel="noreferrer">Montagesysteme</a>
+        <a href="https://sl-planner.de" target="_blank" rel="noreferrer">SL Planner</a>
+        <a href="https://shop.sl-rack.com" target="_blank" rel="noreferrer">Shop</a>
+      </nav>
+    </header>
+
+    <main class="app-shell">
+      <section class="assistant-panel">
+        <header class="topbar">
+          <div class="hero-copy">
+            <p class="eyebrow">Neu gedacht. Besser gelöst.</p>
+            <h1>AI Beratung für montagefreundliche PV-Unterkonstruktionen</h1>
+            <p class="intro">
+              Qualifizieren Sie Dach, Freifläche, Fassade, Carport oder Agri-PV und erhalten Sie eine passende SL Rack Empfehlung.
+            </p>
+          </div>
+          <div class="hero-card" aria-label="SL Rack product focus">
+            <span id="statusBadge" class="status-badge">Checking AI</span>
+            <strong>Sicherheit. Leidenschaft. Respekt.</strong>
+            <span>Installer-focused guidance for faster decisions.</span>
+          </div>
+        </header>
+
+        <div id="chatLog" class="chat-log" aria-live="polite"></div>
+
+        <form id="chatForm" class="composer">
+          <textarea
+            id="messageInput"
+            rows="2"
+            placeholder="Describe the project: roof type, surface, module layout, priority..."
+            required
+          ></textarea>
+          <button type="submit" aria-label="Send message">
+            <span>Send</span>
+          </button>
+        </form>
+      </section>
+
+      <aside class="decision-panel">
+        <div class="brand-block">
+          <img src="/assets/logo_sl-rack.svg" alt="SL Rack" />
+          <div>
+            <strong>System selector</strong>
+            <span>Fast pre-qualification for PV projects</span>
+          </div>
+        </div>
+
+        <div class="image-strip" aria-hidden="true">
+          <img src="/assets/hero-sl-tracker.jpg" alt="" />
+        </div>
+
+        <label>
+          Project type
+          <select id="projectType">
+            <option value="">Not sure yet</option>
+            <option value="pitched-roof">Pitched or sheet-metal roof</option>
+            <option value="flat-roof">Flat roof</option>
+            <option value="ground-mount">Ground-mounted solar park</option>
+            <option value="facade">Facade / SL Energy Wall</option>
+            <option value="carport">PV carport</option>
+            <option value="agri-pv">Agri-PV</option>
+          </select>
+        </label>
+
+        <label>
+          Surface or structure
+          <input id="surface" placeholder="Tile roof, flat membrane, soil, facade..." />
+        </label>
+
+        <label>
+          Main priority
+          <select id="priority">
+            <option value="">Choose priority</option>
+            <option>Fast installation</option>
+            <option>Minimal roof load</option>
+            <option>Maximum energy yield</option>
+            <option>Aesthetic integration</option>
+            <option>Dual land use</option>
+            <option>Rain protection for parking</option>
+          </select>
+        </label>
+
+        <label>
+          Orientation
+          <input id="orientation" placeholder="South, east-west, vertical, tracking..." />
+        </label>
+
+        <button id="recommendButton" class="secondary-button" type="button">Recommend product</button>
+
+        <section class="recommendations">
+          <div class="section-heading">
+            <h2>Best fit</h2>
+            <span>Live ranking</span>
+          </div>
+          <div id="recommendationList"></div>
+        </section>
+      </aside>
+    </main>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
