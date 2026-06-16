@@ -75,7 +75,7 @@ async function updateHealth() {
   try {
     const response = await fetch('/api/health');
     const data = await response.json();
-    const docs = data.knowledge?.available ? ` Â· ${data.knowledge.documentCount} docs` : '';
+    const docs = data.knowledge?.available ? ` \u00b7 ${data.knowledge.documentCount} docs` : '';
     statusBadge.textContent = data.aiEnabled ? `AI aktiv: ${data.model}${docs}` : `Demo mode${docs}`;
     statusBadge.classList.toggle('ai', data.aiEnabled);
   } catch {
@@ -140,7 +140,7 @@ function renderSources(sources) {
     link.href = source.url;
     link.target = '_blank';
     link.rel = 'noreferrer';
-    link.textContent = `${source.title}${source.page ? ` Â· page ${source.page}` : ''}`;
+    link.textContent = `${source.title}${source.page ? ` \u00b7 page ${source.page}` : ''}`;
     wrapper.append(link);
   }
 
