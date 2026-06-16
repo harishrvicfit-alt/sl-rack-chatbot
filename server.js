@@ -85,9 +85,11 @@ app.post('/api/chat', async (req, res) => {
       ]
     });
 
+    const reply = postProcessSalesReply(response.output_text, latestUserMessage);
+
     res.json({
       mode: 'ai',
-      reply: response.output_text,
+      reply,
       recommendations,
       knowledgeResults,
       documentSources
@@ -145,4 +147,37 @@ function buildDocumentSources(knowledgeResults = []) {
   }
 
   return [...seen.values()].slice(0, 4);
+}
+
+function postProcessSalesReply(reply, userMessage = '') {
+  let output = String(reply || '');
+  const query = String(userMessage || '').toLowerCase();
+  const isTileRoofQuestion = /(ziegel|zieldach|dachhaken|erus|e58|tonziegel|betondachstein)/i.test(query);
+  const asksHookQuantity = /(wie viele|wieviele|anzahl|dachhaken.*ben[oÃ¶]tig|ben[oÃ¶]tige.*dachhaken)/i.test(query);
+
+  if (isTileRoofQuestion && (!/Alpha-Platte/i.test(output) || !/Delta-Platte/i.test(output))) {
+    output += [
+      '',
+      'Zusatzhinweis aus der SL Rack Vertriebslogik:',
+      'Bei ZiegeldÃ¤chern bitte nicht nur Dachhaken betrachten. Je nach Ziegeltyp und Projekt kÃ¶nnen auch Alpha-Platte und Delta-Platte relevante SL Rack Optionen sein. FÃ¼r eine belastbare Auswahl bitte den exakten Ziegeltyp, Tonziegel/Betondachstein, Dachneigung und Lattungsabstand prÃ¼fen.'
+    ].join('\n');
+  }
+
+  if (/dachhaken|edelstahl|sl a2/i.test(output) && /preiswert|gÃ¼nstig|guenstig|cheap|low-cost/i.test(output)) {
+    output += [
+      '',
+      'Hinweis zur Preisbewertung:',
+      'Eine pauschale Aussage wie preiswert oder gÃ¼nstig ist bei Edelstahl-Dachhaken nicht belastbar. Die wirtschaftlich passende LÃ¶sung hÃ¤ngt vom Dach, Material, Ziegeltyp, statischer Auslegung und den verfÃ¼gbaren SL Rack Alternativen ab.'
+    ].join('\n');
+  }
+
+  if (asksHookQuantity && /rail 40/i.test(query) && !/1[,\\.]50|1,5|1\.5/i.test(output)) {
+    output += [
+      '',
+      'Planungshinweis:',
+      'FÃ¼r RAIL 40 ist aus dem Vertriebs-/Planungskontext eine maximale Ãœberspannung von ca. 1,50 m als relevanter Planungswert bekannt. Die tatsÃ¤chliche Anzahl der Dachhaken muss dennoch projektspezifisch mit Wind-/Schneelast, Randzonen, Modulbelegung und Statik geprÃ¼ft werden.'
+    ].join('\n');
+  }
+
+  return output;
 }
