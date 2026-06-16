@@ -48,6 +48,7 @@ app.post('/api/chat', async (req, res) => {
   const recommendations = scoreProducts(profile).slice(0, 3);
   const latestUserMessage = [...messages].reverse().find((message) => message.role !== 'assistant')?.content || '';
   const knowledgeResults = searchKnowledge(latestUserMessage, profile, 6);
+  const documentSources = buildDocumentSources(knowledgeResults);
 
   if (!messages.length) {
     return res.status(400).json({ error: 'messages array is required' });
@@ -57,7 +58,9 @@ app.post('/api/chat', async (req, res) => {
     return res.json({
       mode: 'fallback',
       reply: buildFallbackReply(profile, recommendations),
-      recommendations
+      recommendations,
+      knowledgeResults,
+      documentSources
     });
   }
 
@@ -86,7 +89,8 @@ app.post('/api/chat', async (req, res) => {
       mode: 'ai',
       reply: response.output_text,
       recommendations,
-      knowledgeResults
+      knowledgeResults,
+      documentSources
     });
   } catch (error) {
     console.error(error);
@@ -98,7 +102,8 @@ app.post('/api/chat', async (req, res) => {
         : 'AI response failed',
       reply: buildFallbackReply(profile, recommendations),
       recommendations,
-      knowledgeResults
+      knowledgeResults,
+      documentSources
     });
   }
 });
@@ -124,4 +129,20 @@ function buildFallbackReply(profile, recommendations) {
     `Zasto SL Rack: ${top.advantages.slice(0, 3).join('; ')}.`,
     'Za precizan prijedlog posaljite tip krova/povrsine, dimenzije, lokaciju, nagib, tip modula i zeljenu orijentaciju.'
   ].join(' ');
+}
+
+function buildDocumentSources(knowledgeResults = []) {
+  const seen = new Map();
+
+  for (const result of knowledgeResults) {
+    if (!result?.sourceUrl || seen.has(result.sourceUrl)) continue;
+    seen.set(result.sourceUrl, {
+      title: result.title,
+      category: result.category,
+      page: result.page,
+      url: result.sourceUrl
+    });
+  }
+
+  return [...seen.values()].slice(0, 4);
 }
