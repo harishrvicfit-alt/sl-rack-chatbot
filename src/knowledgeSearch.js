@@ -21,6 +21,7 @@ export function searchKnowledge(query, profile = {}, limit = 6) {
 
   const queryText = [
     query,
+    expandSalesTerms(query),
     profile.projectType,
     profile.surface,
     profile.priority,
@@ -96,7 +97,7 @@ function tokenize(value) {
     'ein',
     'eine',
     'mit',
-    'für',
+    'fÃ¼r',
     'von',
     'auf',
     'zur',
@@ -110,9 +111,28 @@ function tokenize(value) {
     'brauchen'
   ]);
 
-  return [...new Set(String(value || '').toLowerCase().match(/[a-zäöüß0-9-]{3,}/gi) || [])].filter(
+  return [...new Set(String(value || '').toLowerCase().match(/[a-zÃ¤Ã¶Ã¼ÃŸ0-9-]{3,}/gi) || [])].filter(
     (term) => !stopWords.has(term)
   );
+}
+
+function expandSalesTerms(query = '') {
+  const text = String(query).toLowerCase();
+  const expansions = [];
+
+  if (/(ziegel|dachhaken|erus|e58|tonziegel|betondachstein)/i.test(text)) {
+    expansions.push('Dachhaken Alpha-Platte Delta-Platte Beta-Platte Ziegeldach Tonziegel Betondachstein Dachersatzplatte');
+  }
+
+  if (/(anzahl|wie viele|wieviele|dachhaken|befestigungspunkte|haken)/i.test(text)) {
+    expansions.push('Projektierung Planung Windlast Schneelast Modulgroesse Rafter Sparrenabstand RAIL 40 Ueberspannung');
+  }
+
+  if (/(falz|kupfer|stehfalz|zambelli|dfalz|falzklemme)/i.test(text)) {
+    expansions.push('Falzklemme Blechfalzklemme Stehfalzklemme DFalzCU Zambelli Kupferfalzdach Produktdatenblatt');
+  }
+
+  return expansions.join(' ');
 }
 
 function escapeRegExp(value) {
