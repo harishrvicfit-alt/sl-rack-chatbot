@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import express from 'express';
 import cors from 'cors';
 import OpenAI from 'openai';
+import { get as getBlob, put as putBlob } from '@vercel/blob';
 import { productCatalog, companyFacts, scoreProducts } from './src/slRackKnowledge.js';
 import { buildSystemPrompt } from './src/systemPrompt.js';
 import { getKnowledgeStatus, searchKnowledge } from './src/knowledgeSearch.js';
@@ -32,6 +33,10 @@ const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || process.env.OPE
 const ADMIN_COOKIE = 'slrack_admin_session';
 const CHAT_SESSION_COOKIE = 'slrack_chat_session';
 const ACTIVE_SESSION_MS = Number(process.env.ACTIVE_SESSION_MS || 30 * 60 * 1000);
+const ANALYTICS_BLOB_PATH = process.env.ANALYTICS_BLOB_PATH || 'analytics/live.json';
+const HAS_BLOB_STORAGE = Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
+let analyticsLoaded = false;
+let analyticsSaveQueue = Promise.resolve();
 const analytics = {
   startedAt: new Date().toISOString(),
   events: 0,
@@ -80,17 +85,20 @@ app.get('/api/admin/session', (req, res) => {
   res.json({ authenticated, adminPath: authenticated ? ADMIN_PATH : undefined });
 });
 
-app.post('/api/admin/login', (req, res) => {
+app.post('/api/admin/login', async (req, res) => {
+  await ensureAnalyticsLoaded();
   const username = String(req.body?.username || '');
   const password = String(req.body?.password || '');
 
   if (!isValidAdminLogin(username, password)) {
     recordAnalyticsEvent('admin_login_failed');
+    await persistAnalytics();
     return res.status(401).json({ error: 'invalid_login' });
   }
 
   setAdminSessionCookie(res);
   recordAnalyticsEvent('admin_login_success');
+  await persistAnalytics();
   res.json({ ok: true });
 });
 
@@ -99,25 +107,29 @@ app.post('/api/admin/logout', (_req, res) => {
   res.json({ ok: true });
 });
 
-app.get('/api/admin/summary', (req, res) => {
+app.get('/api/admin/summary', async (req, res) => {
   if (!isAdminRequest(req)) {
     return res.status(404).json({ error: 'not_found' });
   }
 
+  await ensureAnalyticsLoaded();
   res.json(buildAdminSummary());
 });
 
-app.get('/api/analytics/summary', (req, res) => {
+app.get('/api/analytics/summary', async (req, res) => {
   if (!canReadAnalytics(req)) {
     return res.status(404).json({ error: 'not_found' });
   }
 
+  await ensureAnalyticsLoaded();
   res.json(getAnalyticsSummary());
 });
 
-app.post('/api/analytics', (req, res) => {
+app.post('/api/analytics', async (req, res) => {
+  await ensureAnalyticsLoaded();
   const sessionId = getOrCreateChatSession(req, res);
   recordAnalyticsEvent(req.body?.type, req.body?.payload, sessionId);
+  await persistAnalytics();
   res.status(204).end();
 });
 
@@ -131,6 +143,7 @@ app.post('/api/recommend', (req, res) => {
 });
 
 app.post('/api/chat', async (req, res) => {
+  await ensureAnalyticsLoaded();
   const sessionId = getOrCreateChatSession(req, res);
   const rawMessages = Array.isArray(req.body?.messages) ? req.body.messages : [];
   const validation = validateChatRequest(req, rawMessages);
@@ -155,6 +168,7 @@ app.post('/api/chat', async (req, res) => {
   const latestUserMessage = [...messages].reverse().find((message) => message.role !== 'assistant')?.content || '';
   if (req.body?.analyticsTracked !== true) {
     recordQuestion(latestUserMessage, sessionId);
+    await persistAnalytics();
   }
   const knowledgeResults = searchKnowledge(latestUserMessage, profile, 6);
   const documentSources = buildDocumentSources(knowledgeResults);
@@ -323,6 +337,76 @@ function buildAdminPage() {
     <script src="/admin.js" type="module"></script>
   </body>
 </html>`;
+}
+
+async function ensureAnalyticsLoaded() {
+  if (analyticsLoaded || !HAS_BLOB_STORAGE) {
+    analyticsLoaded = true;
+    return;
+  }
+
+  analyticsLoaded = true;
+  try {
+    const result = await getBlob(ANALYTICS_BLOB_PATH, { access: 'private', useCache: false });
+    if (!result?.stream) return;
+    const text = await new Response(result.stream).text();
+    const stored = JSON.parse(text);
+    hydrateAnalytics(stored);
+  } catch (error) {
+    if (error?.name !== 'BlobNotFoundError') {
+      console.warn('Analytics blob load failed:', error?.message || error);
+    }
+  }
+}
+
+async function persistAnalytics() {
+  if (!HAS_BLOB_STORAGE) return;
+  const snapshot = JSON.stringify(serializeAnalytics());
+
+  analyticsSaveQueue = analyticsSaveQueue
+    .then(() =>
+      putBlob(ANALYTICS_BLOB_PATH, snapshot, {
+        access: 'private',
+        allowOverwrite: true,
+        contentType: 'application/json',
+        cacheControlMaxAge: 60
+      })
+    )
+    .catch((error) => {
+      console.warn('Analytics blob save failed:', error?.message || error);
+    });
+
+  await analyticsSaveQueue;
+}
+
+function serializeAnalytics() {
+  return {
+    ...analytics,
+    topEvents: [...analytics.topEvents.entries()],
+    topQuestions: [...analytics.topQuestions.entries()],
+    sessions: [...analytics.sessions.entries()],
+    savedAt: new Date().toISOString()
+  };
+}
+
+function hydrateAnalytics(stored) {
+  if (!stored || typeof stored !== 'object') return;
+  analytics.startedAt = stored.startedAt || analytics.startedAt;
+  analytics.events = Number(stored.events || 0);
+  analytics.chats = Number(stored.chats || 0);
+  analytics.totalQuestions = Number(stored.totalQuestions || 0);
+  analytics.totalSessions = Number(stored.totalSessions || 0);
+  analytics.blocked = Number(stored.blocked || 0);
+  analytics.errors = Number(stored.errors || 0);
+  analytics.attachments = Number(stored.attachments || 0);
+  analytics.contacts = Number(stored.contacts || 0);
+  analytics.contactOffers = Number(stored.contactOffers || 0);
+  analytics.sourceClicks = Number(stored.sourceClicks || 0);
+  analytics.quickActions = Number(stored.quickActions || 0);
+  analytics.topEvents = new Map(Array.isArray(stored.topEvents) ? stored.topEvents : []);
+  analytics.topQuestions = new Map(Array.isArray(stored.topQuestions) ? stored.topQuestions : []);
+  analytics.sessions = new Map(Array.isArray(stored.sessions) ? stored.sessions : []);
+  analytics.lastEvents = Array.isArray(stored.lastEvents) ? stored.lastEvents.slice(0, 50) : [];
 }
 
 function securityHeaders(_req, res, next) {
