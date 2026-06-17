@@ -116,7 +116,8 @@ app.get('/api/analytics/summary', (req, res) => {
 });
 
 app.post('/api/analytics', (req, res) => {
-  recordAnalyticsEvent(req.body?.type, req.body?.payload);
+  const sessionId = getOrCreateChatSession(req, res);
+  recordAnalyticsEvent(req.body?.type, req.body?.payload, sessionId);
   res.status(204).end();
 });
 
@@ -152,7 +153,9 @@ app.post('/api/chat', async (req, res) => {
   if (attachment) recordAnalyticsEvent('attachment_received', { kind: attachment.kind });
   const recommendations = scoreProducts(profile).slice(0, 3);
   const latestUserMessage = [...messages].reverse().find((message) => message.role !== 'assistant')?.content || '';
-  recordQuestion(latestUserMessage, sessionId);
+  if (req.body?.analyticsTracked !== true) {
+    recordQuestion(latestUserMessage, sessionId);
+  }
   const knowledgeResults = searchKnowledge(latestUserMessage, profile, 6);
   const documentSources = buildDocumentSources(knowledgeResults);
 
@@ -473,11 +476,14 @@ function timingSafeEqualString(a, b) {
   return crypto.timingSafeEqual(left, right);
 }
 
-function recordAnalyticsEvent(type = 'unknown', payload = {}) {
+function recordAnalyticsEvent(type = 'unknown', payload = {}, sessionId = '') {
   const eventType = String(type || 'unknown').slice(0, 80);
   analytics.events += 1;
   analytics.topEvents.set(eventType, (analytics.topEvents.get(eventType) || 0) + 1);
 
+  if (eventType === 'question_asked') {
+    recordQuestion(payload?.question, sessionId);
+  }
   if (eventType === 'chat_submitted' || eventType === 'chat_answered') analytics.chats += 1;
   if (eventType === 'chat_blocked') analytics.blocked += 1;
   if (eventType === 'chat_error' || eventType === 'chat_failed') analytics.errors += 1;
