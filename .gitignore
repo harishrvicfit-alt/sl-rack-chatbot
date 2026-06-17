@@ -8,3 +8,4 @@ data/sl-rack-documents/
 data/sl-rack-text/
 
 .vercel
+.env*
