@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import crypto from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
@@ -24,6 +25,11 @@ const RATE_WINDOW_MS = Number(process.env.CHAT_RATE_WINDOW_MS || 60_000);
 const RATE_MAX_REQUESTS = Number(process.env.CHAT_RATE_MAX_REQUESTS || 12);
 const DAILY_MAX_REQUESTS = Number(process.env.CHAT_DAILY_MAX_REQUESTS || 120);
 const DAILY_MAX_INPUT_CHARS = Number(process.env.CHAT_DAILY_MAX_INPUT_CHARS || 120_000);
+const ADMIN_PATH = process.env.ADMIN_PATH || '';
+const ADMIN_USER = process.env.ADMIN_USER || '';
+const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || '';
+const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || process.env.OPENAI_API_KEY || crypto.randomBytes(32).toString('hex');
+const ADMIN_COOKIE = 'slrack_admin_session';
 const analytics = {
   startedAt: new Date().toISOString(),
   events: 0,
@@ -56,8 +62,46 @@ app.get('/api/catalog', (_req, res) => {
   res.json({ companyFacts, products: productCatalog });
 });
 
-app.get('/api/analytics/summary', (_req, res) => {
-  if (!canReadAnalytics(_req)) {
+if (ADMIN_PATH) {
+  app.get(ADMIN_PATH, (_req, res) => {
+    res.type('html').send(buildAdminPage());
+  });
+}
+
+app.get('/api/admin/session', (req, res) => {
+  const authenticated = isAdminRequest(req);
+  res.json({ authenticated, adminPath: authenticated ? ADMIN_PATH : undefined });
+});
+
+app.post('/api/admin/login', (req, res) => {
+  const username = String(req.body?.username || '');
+  const password = String(req.body?.password || '');
+
+  if (!isValidAdminLogin(username, password)) {
+    recordAnalyticsEvent('admin_login_failed');
+    return res.status(401).json({ error: 'invalid_login' });
+  }
+
+  setAdminSessionCookie(res);
+  recordAnalyticsEvent('admin_login_success');
+  res.json({ ok: true });
+});
+
+app.post('/api/admin/logout', (_req, res) => {
+  clearAdminSessionCookie(res);
+  res.json({ ok: true });
+});
+
+app.get('/api/admin/summary', (req, res) => {
+  if (!isAdminRequest(req)) {
+    return res.status(404).json({ error: 'not_found' });
+  }
+
+  res.json(buildAdminSummary());
+});
+
+app.get('/api/analytics/summary', (req, res) => {
+  if (!canReadAnalytics(req)) {
     return res.status(404).json({ error: 'not_found' });
   }
 
@@ -171,6 +215,83 @@ if (process.env.VERCEL !== '1') {
 
 export default app;
 
+function buildAdminPage() {
+  return `<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SL Rack Admin</title>
+    <link rel="icon" href="/assets/logo_sl-rack.svg" />
+    <style>
+      :root { color-scheme: light; --brand:#004528; --accent:#f7a600; --ink:#10231b; --muted:#65736c; --line:#dfe7e2; --surface:#f4f7f2; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-height: 100vh; background: var(--surface); color: var(--ink); }
+      .admin-shell { min-height: 100vh; display: grid; grid-template-rows: auto 1fr; }
+      header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 22px; background: #fff; border-bottom: 1px solid var(--line); }
+      header img { width: 132px; height: auto; display: block; }
+      main { width: min(1120px, 100%); margin: 0 auto; padding: 24px; }
+      .login, .panel { background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 18px 48px rgba(0, 69, 40, .08); }
+      .login { width: min(430px, 100%); margin: 10vh auto 0; padding: 24px; }
+      h1, h2, p { margin-top: 0; }
+      h1 { font-size: 1.25rem; }
+      label { display: grid; gap: 7px; margin-top: 14px; font-weight: 800; color: #26362f; }
+      input { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 12px 13px; font: inherit; }
+      input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(247,166,0,.16); outline: none; }
+      button { border: 0; border-radius: 8px; padding: 12px 16px; background: var(--accent); color: #00331e; font: inherit; font-weight: 900; cursor: pointer; }
+      button.secondary { background: var(--brand); color: #fff; }
+      .toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+      .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+      .card { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
+      .metric { color: var(--muted); font-size: .78rem; font-weight: 900; text-transform: uppercase; }
+      .value { display: block; margin-top: 8px; font-size: 1.7rem; font-weight: 900; color: var(--brand); }
+      .wide { grid-column: 1 / -1; }
+      table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+      th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; }
+      th { color: #26362f; font-size: .78rem; text-transform: uppercase; }
+      .muted { color: var(--muted); }
+      .hidden { display: none !important; }
+      .error { color: #a33; font-weight: 800; min-height: 1.4em; }
+      @media (max-width: 780px) { main { padding: 14px; } .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } header { padding: 12px 14px; } }
+    </style>
+  </head>
+  <body>
+    <div class="admin-shell">
+      <header>
+        <img src="/assets/logo_sl-rack.svg" alt="SL Rack" />
+        <strong>Admin</strong>
+      </header>
+      <main>
+        <section id="loginView" class="login hidden">
+          <h1>SL Rack Admin Login</h1>
+          <p class="muted">Geschuetzter Bereich fuer interne Auswertung.</p>
+          <form id="loginForm">
+            <label>Benutzername <input id="adminUser" autocomplete="username" required /></label>
+            <label>Passwort <input id="adminPass" type="password" autocomplete="current-password" required /></label>
+            <p id="loginError" class="error"></p>
+            <button type="submit">Anmelden</button>
+          </form>
+        </section>
+        <section id="panelView" class="panel hidden">
+          <div class="toolbar">
+            <div>
+              <h1>SL Rack Chatbot Admin</h1>
+              <p id="statusText" class="muted">Lade Daten...</p>
+            </div>
+            <div>
+              <button id="refreshButton" type="button">Aktualisieren</button>
+              <button id="logoutButton" class="secondary" type="button">Abmelden</button>
+            </div>
+          </div>
+          <div id="metrics" class="grid"></div>
+        </section>
+      </main>
+    </div>
+    <script src="/admin.js" type="module"></script>
+  </body>
+</html>`;
+}
+
 function securityHeaders(_req, res, next) {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
@@ -202,6 +323,66 @@ function sanitizeAttachment(value) {
 
   if (!name || !Number.isFinite(size) || size < 0 || size > 8 * 1024 * 1024) return null;
   return { name, type, size, kind };
+}
+
+function isValidAdminLogin(username, password) {
+  if (!ADMIN_USER || !ADMIN_PASSWORD_HASH) return false;
+  const userOk = timingSafeEqualString(username, ADMIN_USER);
+  const passwordHash = crypto.createHash('sha256').update(password).digest('hex');
+  const passwordOk = timingSafeEqualString(passwordHash, ADMIN_PASSWORD_HASH);
+  return userOk && passwordOk;
+}
+
+function setAdminSessionCookie(res) {
+  const issuedAt = Date.now();
+  const payload = `${ADMIN_USER}.${issuedAt}`;
+  const signature = signAdminPayload(payload);
+  const secure = process.env.VERCEL === '1' ? '; Secure' : '';
+  res.setHeader(
+    'Set-Cookie',
+    `${ADMIN_COOKIE}=${encodeURIComponent(`${payload}.${signature}`)}; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800${secure}`
+  );
+}
+
+function clearAdminSessionCookie(res) {
+  res.setHeader('Set-Cookie', `${ADMIN_COOKIE}=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0`);
+}
+
+function isAdminRequest(req) {
+  const cookies = parseCookies(req.headers.cookie || '');
+  const token = cookies[ADMIN_COOKIE];
+  if (!token) return false;
+
+  const parts = token.split('.');
+  if (parts.length !== 3) return false;
+
+  const [username, issuedAtText, signature] = parts;
+  const issuedAt = Number(issuedAtText);
+  if (!timingSafeEqualString(username, ADMIN_USER)) return false;
+  if (!Number.isFinite(issuedAt) || Date.now() - issuedAt > 8 * 60 * 60 * 1000) return false;
+
+  return timingSafeEqualString(signature, signAdminPayload(`${username}.${issuedAtText}`));
+}
+
+function signAdminPayload(payload) {
+  return crypto.createHmac('sha256', ADMIN_SESSION_SECRET).update(payload).digest('hex');
+}
+
+function parseCookies(header) {
+  const cookies = {};
+  for (const part of String(header || '').split(';')) {
+    const [rawName, ...rawValue] = part.trim().split('=');
+    if (!rawName) continue;
+    cookies[rawName] = decodeURIComponent(rawValue.join('=') || '');
+  }
+  return cookies;
+}
+
+function timingSafeEqualString(a, b) {
+  const left = Buffer.from(String(a || ''));
+  const right = Buffer.from(String(b || ''));
+  if (left.length !== right.length) return false;
+  return crypto.timingSafeEqual(left, right);
 }
 
 function recordAnalyticsEvent(type = 'unknown', payload = {}) {
@@ -251,6 +432,27 @@ function getAnalyticsSummary() {
   };
 }
 
+function buildAdminSummary() {
+  return {
+    ok: true,
+    generatedAt: new Date().toISOString(),
+    model: client ? model : 'fallback-recommender',
+    aiEnabled: Boolean(client),
+    knowledge: getKnowledgeStatus(),
+    analytics: getAnalyticsSummary(),
+    limits: {
+      maxMessages: MAX_MESSAGES,
+      maxMessageChars: MAX_MESSAGE_CHARS,
+      maxTotalChars: MAX_TOTAL_CHARS,
+      maxOutputTokens: MAX_OUTPUT_TOKENS,
+      rateWindowMs: RATE_WINDOW_MS,
+      rateMaxRequests: RATE_MAX_REQUESTS,
+      dailyMaxRequests: DAILY_MAX_REQUESTS,
+      dailyMaxInputChars: DAILY_MAX_INPUT_CHARS
+    }
+  };
+}
+
 function canReadAnalytics(req) {
   const token = process.env.ANALYTICS_TOKEN;
   if (token) {
@@ -259,7 +461,7 @@ function canReadAnalytics(req) {
     return headerToken === token || queryToken === token;
   }
 
-  return process.env.VERCEL !== '1';
+  return process.env.VERCEL !== '1' || isAdminRequest(req);
 }
 
 function buildFallbackReply(profile, recommendations) {
