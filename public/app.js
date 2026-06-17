@@ -4,6 +4,10 @@ const messageInput = document.querySelector('#messageInput');
 const statusBadge = document.querySelector('#statusBadge');
 const recommendButton = document.querySelector('#recommendButton');
 const recommendationList = document.querySelector('#recommendationList');
+const fileInput = document.querySelector('#fileInput');
+const attachButton = document.querySelector('#attachButton');
+const contactButton = document.querySelector('#contactButton');
+const attachmentPreview = document.querySelector('#attachmentPreview');
 
 const fields = {
   projectType: document.querySelector('#projectType'),
@@ -21,11 +25,58 @@ const productImages = {
   'agri-pv': 'https://www.sl-rack.com/fileadmin/_processed_/8/7/csm_headerimage_sl-rack_sl-agri-wall_2025-06_web_9f4a86e121.jpg'
 };
 
+const quickPrompts = [
+  { label: 'Ziegeldach ausw\u00e4hlen', text: 'Ich habe ein Ziegeldach. Bitte hilf mir, das passende SL Rack System auszuw\u00e4hlen.' },
+  { label: 'PDF Anleitung finden', text: 'Bitte finde mir die passende PDF Montageanleitung oder das Datenblatt.' },
+  { label: 'Dachhaken planen', text: 'Wie gehe ich bei der Planung der Dachhaken und RAIL 40 vor?' },
+  { label: 'Flachdach planen', text: 'Ich plane ein Flachdachprojekt. Welche SL Rack L\u00f6sung passt?' }
+];
+
+const guidedTopics = [
+  {
+    match: /(ziegel|dachhaken|erus|e58|tonziegel|betondachstein)/i,
+    actions: [
+      { label: 'Tonziegel', text: 'Es handelt sich um Tonziegel. Welche Angaben brauchst du als N\u00e4chstes?' },
+      { label: 'Betondachstein', text: 'Es handelt sich um Betondachstein. Welche SL Rack Optionen kommen in Frage?' },
+      { label: 'Dachneigung angeben', text: 'Die Dachneigung betr\u00e4gt ' },
+      { label: 'Ziegeltyp nennen', text: 'Der genaue Ziegeltyp ist ' }
+    ]
+  },
+  {
+    match: /(wie viele|anzahl|dachhaken|rail 40|planung|auslegung)/i,
+    actions: [
+      { label: 'Modulbelegung', text: 'Die Modulbelegung ist ' },
+      { label: 'Sparrenabstand', text: 'Der Sparrenabstand betr\u00e4gt ' },
+      { label: 'Wind/Schnee', text: 'Die Windlastzone und Schneelastzone sind ' },
+      { label: 'SL Planner', text: 'Welche Angaben brauche ich f\u00fcr eine saubere Auslegung im SL Planner?' }
+    ]
+  },
+  {
+    match: /(pdf|datenblatt|montageanleitung|dokumentation|anleitung)/i,
+    actions: [
+      { label: 'Montageanleitung', text: 'Ich suche die Montageanleitung f\u00fcr ' },
+      { label: 'Datenblatt', text: 'Ich suche das Produktdatenblatt f\u00fcr ' },
+      { label: 'Produkt nennen', text: 'Das Produkt hei\u00dft ' }
+    ]
+  },
+  {
+    match: /(flachdach|fast flat|ballast|ost-west|s\u00fcd)/i,
+    actions: [
+      { label: 'Ost-West', text: 'Das Flachdach soll als Ost-West System geplant werden. Welche Angaben brauchst du?' },
+      { label: 'S\u00fcd-Ausrichtung', text: 'Das Flachdach soll nach S\u00fcd ausgerichtet werden. Welche SL Rack L\u00f6sung passt?' },
+      { label: 'Dachlast', text: 'Die verf\u00fcgbare Dachlast betr\u00e4gt ' }
+    ]
+  }
+];
+
+let pendingAttachment = null;
+
 const messages = [
   {
     role: 'assistant',
     content:
-      'Hallo, ich bin der SL Rack AI Assistant. Beschreiben Sie Ihr PV-Projekt und ich f\u00fchre Sie zum passenden Montagesystem: Schr\u00e4gdach, Flachdach, Freifl\u00e4che, Fassade, Carport oder Agri-PV.'
+      'Hallo, ich bin der SL Rack AI Assistant. Beschreiben Sie Ihr PV-Projekt und ich f\u00fchre Sie zum passenden Montagesystem: Schr\u00e4gdach, Flachdach, Freifl\u00e4che, Fassade, Carport oder Agri-PV.',
+    actions: quickPrompts
   }
 ];
 
@@ -33,36 +84,64 @@ renderMessages();
 updateHealth();
 updateRecommendations();
 syncViewportHeight();
+trackEvent('session_started');
 window.addEventListener('resize', syncViewportHeight);
 window.visualViewport?.addEventListener('resize', syncViewportHeight);
 
 chatForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const content = messageInput.value.trim();
-  if (!content) return;
+  if (!content && !pendingAttachment) return;
 
-  messages.push({ role: 'user', content });
+  const attachment = pendingAttachment;
+  const visibleContent = content || `Anhang gesendet: ${attachment.name}`;
+  const outgoingContent = withAttachmentContext(visibleContent, attachment);
+
+  messages.push({ role: 'user', content: visibleContent, attachment });
   messageInput.value = '';
+  pendingAttachment = null;
+  renderAttachmentPreview();
   renderMessages();
+  trackEvent('chat_submitted', { hasAttachment: Boolean(attachment), messageLength: visibleContent.length });
 
   const typing = addMessage('assistant', 'Thinking through the project details...');
 
-  const response = await fetch('/api/chat', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      messages: messages.slice(1),
-      profile: getProfile(content)
-    })
-  });
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: buildOutgoingMessages(outgoingContent),
+        profile: getProfile(outgoingContent),
+        attachment
+      })
+    });
 
-  const data = await response.json();
-  typing.remove();
+    const data = await response.json();
+    typing.remove();
 
-  const reply = data.reply || 'I could not generate a response. Please try again with more project details.';
-  messages.push({ role: 'assistant', content: reply, sources: data.documentSources || [] });
-  renderMessages();
-  renderRecommendations(data.recommendations || []);
+    const reply = data.reply || 'I could not generate a response. Please try again with more project details.';
+    const actions = getGuidedActions(outgoingContent, reply);
+    messages.push({
+      role: 'assistant',
+      content: reply,
+      sources: data.documentSources || [],
+      actions,
+      contact: shouldOfferContact(reply, data.documentSources || [])
+    });
+    renderMessages();
+    renderRecommendations(data.recommendations || []);
+    trackEvent('chat_answered', { mode: data.mode, sourceCount: (data.documentSources || []).length });
+  } catch {
+    typing.remove();
+    messages.push({
+      role: 'assistant',
+      content: 'Die Antwort konnte gerade nicht geladen werden. Bitte versuchen Sie es erneut oder kontaktieren Sie SL Rack direkt.',
+      contact: true
+    });
+    renderMessages();
+    trackEvent('chat_failed');
+  }
 });
 
 messageInput.addEventListener('keydown', (event) => {
@@ -75,6 +154,57 @@ messageInput.addEventListener('focus', () => {
   requestAnimationFrame(() => {
     chatLog.scrollTop = chatLog.scrollHeight;
   });
+});
+
+chatLog.addEventListener('click', (event) => {
+  const chip = event.target.closest('[data-prompt]');
+  if (!chip) return;
+  const text = chip.getAttribute('data-prompt') || '';
+  const mode = chip.getAttribute('data-mode') || 'send';
+  trackEvent('quick_action_clicked', { label: chip.textContent.trim() });
+
+  if (mode === 'fill') {
+    messageInput.value = text;
+    messageInput.focus();
+    return;
+  }
+
+  messageInput.value = text;
+  chatForm.requestSubmit();
+});
+
+attachButton.addEventListener('click', () => {
+  fileInput.click();
+});
+
+fileInput.addEventListener('change', () => {
+  const file = fileInput.files?.[0];
+  fileInput.value = '';
+  if (!file) return;
+
+  if (!/^image\//.test(file.type) && file.type !== 'application/pdf') {
+    setAttachmentError('Bitte nur Bilddateien oder PDF hochladen.');
+    return;
+  }
+
+  if (file.size > 8 * 1024 * 1024) {
+    setAttachmentError('Die Datei ist zu gro\u00df. Bitte maximal 8 MB hochladen.');
+    return;
+  }
+
+  pendingAttachment = {
+    name: file.name,
+    type: file.type || 'unknown',
+    size: file.size,
+    kind: /^image\//.test(file.type) ? 'image' : 'pdf'
+  };
+  renderAttachmentPreview();
+  messageInput.focus();
+  trackEvent('attachment_selected', { kind: pendingAttachment.kind });
+});
+
+contactButton.addEventListener('click', () => {
+  openContactMail();
 });
 
 recommendButton.addEventListener('click', updateRecommendations);
@@ -108,30 +238,74 @@ function getProfile(message = '') {
     surface: fields.surface.value,
     priority: fields.priority.value,
     orientation: fields.orientation.value,
-    message
+    message,
+    attachment: pendingAttachment
   };
 }
 
 function renderMessages() {
   chatLog.innerHTML = '';
   for (const message of messages) {
-    addMessage(message.role, message.content, message.sources || []);
+    addMessage(message.role, message.content, message.sources || [], message);
   }
   chatLog.scrollTop = chatLog.scrollHeight;
 }
 
-function addMessage(role, content, sources = []) {
+function addMessage(role, content, sources = [], options = {}) {
   const element = document.createElement('div');
   element.className = `message ${role}`;
   element.innerHTML = formatMessage(content);
+
+  if (options.attachment) {
+    element.append(renderAttachmentTag(options.attachment));
+  }
 
   if (role === 'assistant' && sources.length) {
     element.append(renderSources(sources));
   }
 
+  if (role === 'assistant' && options.actions?.length) {
+    element.append(renderActions(options.actions));
+  }
+
+  if (role === 'assistant' && options.contact) {
+    element.append(renderContactActions());
+  }
+
   chatLog.append(element);
   chatLog.scrollTop = chatLog.scrollHeight;
   return element;
+}
+
+function renderActions(actions) {
+  const wrapper = document.createElement('div');
+  wrapper.className = actions === quickPrompts ? 'quick-actions' : 'guided-actions';
+
+  for (const action of actions) {
+    const button = document.createElement('button');
+    button.className = actions === quickPrompts ? 'quick-chip' : 'guide-chip';
+    button.type = 'button';
+    button.textContent = action.label;
+    button.setAttribute('data-prompt', action.text);
+    button.setAttribute('data-mode', action.text.endsWith(' ') ? 'fill' : 'send');
+    wrapper.append(button);
+  }
+
+  return wrapper;
+}
+
+function renderContactActions() {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'contact-actions';
+
+  const link = document.createElement('a');
+  link.className = 'contact-link';
+  link.href = buildContactMailto();
+  link.textContent = 'Technisches Team kontaktieren';
+  link.addEventListener('click', () => trackEvent('contact_clicked'));
+  wrapper.append(link);
+
+  return wrapper;
 }
 
 function renderSources(sources) {
@@ -140,7 +314,7 @@ function renderSources(sources) {
 
   const title = document.createElement('strong');
   title.className = 'source-title';
-  title.textContent = 'Official PDF sources';
+  title.textContent = 'Offizielle PDF-Quellen';
   wrapper.append(title);
 
   for (const source of sources.slice(0, 4)) {
@@ -149,11 +323,50 @@ function renderSources(sources) {
     link.href = source.url;
     link.target = '_blank';
     link.rel = 'noreferrer';
-    link.textContent = `${source.title}${source.page ? ` \u00b7 page ${source.page}` : ''}`;
+    link.addEventListener('click', () => trackEvent('source_clicked', { title: source.title, category: source.category }));
+    link.innerHTML = `
+      <strong>${escapeHtml(source.title || 'SL Rack Dokument')}</strong>
+      <span class="source-meta">${escapeHtml(source.category || 'Dokument')}${source.page ? ` \u00b7 Seite ${escapeHtml(source.page)}` : ''}</span>
+      <span class="source-open">PDF \u00f6ffnen</span>
+    `;
     wrapper.append(link);
   }
 
   return wrapper;
+}
+
+function renderAttachmentTag(attachment) {
+  const tag = document.createElement('div');
+  tag.className = 'source-list';
+  tag.innerHTML = `<strong class="source-title">Anhang</strong><span class="source-meta">${escapeHtml(attachment.name)} \u00b7 ${formatBytes(attachment.size)}</span>`;
+  return tag;
+}
+
+function renderAttachmentPreview() {
+  if (!pendingAttachment) {
+    attachmentPreview.hidden = true;
+    attachmentPreview.innerHTML = '';
+    return;
+  }
+
+  attachmentPreview.hidden = false;
+  attachmentPreview.innerHTML = `
+    <span>${escapeHtml(pendingAttachment.name)} \u00b7 ${formatBytes(pendingAttachment.size)}</span>
+    <button type="button">Entfernen</button>
+  `;
+  attachmentPreview.querySelector('button').addEventListener('click', () => {
+    pendingAttachment = null;
+    renderAttachmentPreview();
+  });
+}
+
+function setAttachmentError(message) {
+  pendingAttachment = null;
+  attachmentPreview.hidden = false;
+  attachmentPreview.innerHTML = `<span>${escapeHtml(message)}</span><button type="button">OK</button>`;
+  attachmentPreview.querySelector('button').addEventListener('click', () => {
+    attachmentPreview.hidden = true;
+  });
 }
 
 function renderRecommendations(recommendations) {
@@ -176,11 +389,81 @@ function renderRecommendations(recommendations) {
   }
 }
 
+function getGuidedActions(userText, reply) {
+  const combined = `${userText}\n${reply}`;
+  const topic = guidedTopics.find((item) => item.match.test(combined));
+  return topic?.actions || [];
+}
+
+function shouldOfferContact(reply, sources) {
+  return /nicht belastbar|nicht verbindlich|technische pr\u00fcfung|projektspezifisch|keinen beleg|nicht sicher/i.test(reply) || sources.length === 0;
+}
+
+function buildOutgoingMessages(currentContent) {
+  return [
+    ...messages.slice(1, -1).map((message) => ({
+      role: message.role,
+      content: withAttachmentContext(message.content, message.attachment)
+    })),
+    { role: 'user', content: currentContent }
+  ].slice(-8);
+}
+
+function withAttachmentContext(content, attachment) {
+  if (!attachment) return content;
+  return [
+    content,
+    '',
+    `Anhang-Kontext: Der Nutzer hat eine ${attachment.kind === 'pdf' ? 'PDF-Datei' : 'Bilddatei'} mit dem Namen "${attachment.name}" hochgeladen (${formatBytes(attachment.size)}). Der Inhalt der Datei wurde noch nicht automatisch ausgelesen. Bitte den Nutzer gezielt fragen, welche Details daraus gepr\u00fcft werden sollen, oder bei technischer Unsicherheit an SL Rack verweisen.`
+  ].join('\n');
+}
+
+function openContactMail() {
+  window.location.href = buildContactMailto();
+  trackEvent('contact_clicked');
+}
+
+function buildContactMailto() {
+  const subject = encodeURIComponent('SL Rack AI Assistant - technische Projektanfrage');
+  const body = encodeURIComponent(buildConversationSummary());
+  return `mailto:sales@sl-rack.de?subject=${subject}&body=${body}`;
+}
+
+function buildConversationSummary() {
+  const recent = messages
+    .slice(-6)
+    .map((message) => `${message.role === 'user' ? 'Kunde' : 'AI'}: ${message.content}`)
+    .join('\n\n');
+
+  return [
+    'Hallo SL Rack Team,',
+    '',
+    'bitte pr\u00fcfen Sie folgende Anfrage aus dem AI Assistant:',
+    '',
+    recent || 'Noch keine Chat-Historie vorhanden.',
+    '',
+    'Projektangaben:',
+    `- Projekttyp: ${fields.projectType.value || '-'}`,
+    `- Untergrund/Dach: ${fields.surface.value || '-'}`,
+    `- Priorit\u00e4t: ${fields.priority.value || '-'}`,
+    `- Ausrichtung: ${fields.orientation.value || '-'}`,
+    '',
+    'Vielen Dank.'
+  ].join('\n');
+}
+
 function formatMessage(value) {
   return escapeHtml(value)
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/(https?:\/\/[^\s<]+?)(?=[).,;!?]*($|\s))/g, '<a href="$1" target="_blank" rel="noreferrer">$1</a>')
     .replace(/\n/g, '<br />');
+}
+
+function formatBytes(bytes) {
+  if (!Number.isFinite(bytes)) return '';
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
+  return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
 
 function escapeHtml(value) {
@@ -195,4 +478,19 @@ function escapeHtml(value) {
 function syncViewportHeight() {
   const height = window.visualViewport?.height || window.innerHeight;
   document.documentElement.style.setProperty('--viewport-height', `${height}px`);
+}
+
+function trackEvent(type, payload = {}) {
+  const body = JSON.stringify({ type, payload, at: new Date().toISOString() });
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon('/api/analytics', new Blob([body], { type: 'application/json' }));
+    return;
+  }
+
+  fetch('/api/analytics', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body,
+    keepalive: true
+  }).catch(() => {});
 }
