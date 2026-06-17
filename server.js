@@ -150,6 +150,7 @@ app.post('/api/chat', async (req, res) => {
 
   if (!validation.ok) {
     recordAnalyticsEvent('chat_blocked', { error: validation.error });
+    await persistAnalytics();
     return res.status(validation.status).json({
       mode: 'blocked',
       error: validation.error,
@@ -174,10 +175,14 @@ app.post('/api/chat', async (req, res) => {
   const documentSources = buildDocumentSources(knowledgeResults);
 
   if (!messages.length) {
+    recordAnalyticsEvent('chat_blocked', { error: 'empty_messages' });
+    await persistAnalytics();
     return res.status(400).json({ error: 'messages array is required' });
   }
 
   if (!client) {
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), mode: 'fallback' });
+    await persistAnalytics();
     return res.json({
       mode: 'fallback',
       reply: buildFallbackReply(profile, recommendations),
@@ -216,6 +221,7 @@ app.post('/api/chat', async (req, res) => {
       documentSources
     });
     recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment) });
+    await persistAnalytics();
   } catch (error) {
     console.error(error);
     recordAnalyticsEvent('chat_error', { status: error?.status, code: error?.code });
@@ -230,6 +236,7 @@ app.post('/api/chat', async (req, res) => {
       knowledgeResults,
       documentSources
     });
+    await persistAnalytics();
   }
 });
 
@@ -361,22 +368,41 @@ async function ensureAnalyticsLoaded() {
 
 async function persistAnalytics() {
   if (!HAS_BLOB_STORAGE) return;
-  const snapshot = JSON.stringify(serializeAnalytics());
 
   analyticsSaveQueue = analyticsSaveQueue
-    .then(() =>
-      putBlob(ANALYTICS_BLOB_PATH, snapshot, {
+    .then(async () => {
+      const current = serializeAnalytics();
+      const stored = await readStoredAnalyticsSnapshot();
+      const merged = mergeAnalyticsSnapshots(stored, current);
+
+      await putBlob(ANALYTICS_BLOB_PATH, JSON.stringify(merged), {
         access: 'private',
         allowOverwrite: true,
         contentType: 'application/json',
         cacheControlMaxAge: 60
-      })
-    )
+      });
+
+      hydrateAnalytics(merged);
+    })
     .catch((error) => {
       console.warn('Analytics blob save failed:', error?.message || error);
     });
 
   await analyticsSaveQueue;
+}
+
+async function readStoredAnalyticsSnapshot() {
+  try {
+    const result = await getBlob(ANALYTICS_BLOB_PATH, { access: 'private', useCache: false });
+    if (!result?.stream) return null;
+    const text = await new Response(result.stream).text();
+    return JSON.parse(text);
+  } catch (error) {
+    if (error?.name !== 'BlobNotFoundError') {
+      console.warn('Analytics blob merge load failed:', error?.message || error);
+    }
+    return null;
+  }
 }
 
 function serializeAnalytics() {
@@ -387,6 +413,86 @@ function serializeAnalytics() {
     sessions: [...analytics.sessions.entries()],
     savedAt: new Date().toISOString()
   };
+}
+
+function mergeAnalyticsSnapshots(stored, incoming) {
+  if (!stored || typeof stored !== 'object') {
+    return { ...incoming, savedAt: new Date().toISOString() };
+  }
+
+  const merged = {
+    ...stored,
+    ...incoming,
+    startedAt: stored.startedAt || incoming.startedAt,
+    savedAt: new Date().toISOString()
+  };
+
+  const numericKeys = [
+    'events',
+    'chats',
+    'totalQuestions',
+    'totalSessions',
+    'blocked',
+    'errors',
+    'attachments',
+    'contacts',
+    'contactOffers',
+    'sourceClicks',
+    'quickActions'
+  ];
+
+  for (const key of numericKeys) {
+    merged[key] = Math.max(Number(stored[key] || 0), Number(incoming[key] || 0));
+  }
+
+  merged.topEvents = mergeCountEntries(stored.topEvents, incoming.topEvents);
+  merged.topQuestions = mergeCountEntries(stored.topQuestions, incoming.topQuestions);
+  merged.sessions = mergeSessionEntries(stored.sessions, incoming.sessions);
+  merged.totalSessions = Math.max(merged.totalSessions, merged.sessions.length);
+  merged.lastEvents = mergeLastEvents(stored.lastEvents, incoming.lastEvents);
+
+  return merged;
+}
+
+function mergeCountEntries(leftEntries, rightEntries) {
+  const counts = new Map();
+  for (const entries of [leftEntries, rightEntries]) {
+    if (!Array.isArray(entries)) continue;
+    for (const [key, count] of entries) {
+      const safeKey = String(key || '').slice(0, 500);
+      if (!safeKey) continue;
+      counts.set(safeKey, Math.max(counts.get(safeKey) || 0, Number(count || 0)));
+    }
+  }
+  return [...counts.entries()];
+}
+
+function mergeSessionEntries(leftEntries, rightEntries) {
+  const sessions = new Map();
+  for (const entries of [leftEntries, rightEntries]) {
+    if (!Array.isArray(entries)) continue;
+    for (const [id, session] of entries) {
+      if (!id || !session || typeof session !== 'object') continue;
+      const previous = sessions.get(id);
+      if (!previous || Number(session.lastSeen || 0) >= Number(previous.lastSeen || 0)) {
+        sessions.set(id, session);
+      }
+    }
+  }
+  return [...sessions.entries()];
+}
+
+function mergeLastEvents(leftEvents, rightEvents) {
+  const seen = new Set();
+  const events = [];
+  for (const event of [...(leftEvents || []), ...(rightEvents || [])]) {
+    if (!event || typeof event !== 'object') continue;
+    const key = `${event.type || ''}|${event.at || ''}|${JSON.stringify(event.payload || {})}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    events.push(event);
+  }
+  return events.sort((a, b) => String(b.at || '').localeCompare(String(a.at || ''))).slice(0, 50);
 }
 
 function hydrateAnalytics(stored) {
