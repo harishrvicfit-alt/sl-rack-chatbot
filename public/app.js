@@ -4,10 +4,6 @@ const messageInput = document.querySelector('#messageInput');
 const statusBadge = document.querySelector('#statusBadge');
 const recommendButton = document.querySelector('#recommendButton');
 const recommendationList = document.querySelector('#recommendationList');
-const fileInput = document.querySelector('#fileInput');
-const attachButton = document.querySelector('#attachButton');
-const contactButton = document.querySelector('#contactButton');
-const attachmentPreview = document.querySelector('#attachmentPreview');
 
 const fields = {
   projectType: document.querySelector('#projectType'),
@@ -69,8 +65,6 @@ const guidedTopics = [
   }
 ];
 
-let pendingAttachment = null;
-
 const messages = [
   {
     role: 'assistant',
@@ -91,18 +85,12 @@ window.visualViewport?.addEventListener('resize', syncViewportHeight);
 chatForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const content = messageInput.value.trim();
-  if (!content && !pendingAttachment) return;
+  if (!content) return;
 
-  const attachment = pendingAttachment;
-  const visibleContent = content || `Anhang gesendet: ${attachment.name}`;
-  const outgoingContent = withAttachmentContext(visibleContent, attachment);
-
-  messages.push({ role: 'user', content: visibleContent, attachment });
+  messages.push({ role: 'user', content });
   messageInput.value = '';
-  pendingAttachment = null;
-  renderAttachmentPreview();
   renderMessages();
-  trackEvent('chat_submitted', { hasAttachment: Boolean(attachment), messageLength: visibleContent.length });
+  trackEvent('chat_submitted', { messageLength: content.length });
 
   const typing = addMessage('assistant', 'Thinking through the project details...');
 
@@ -111,9 +99,8 @@ chatForm.addEventListener('submit', async (event) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        messages: buildOutgoingMessages(outgoingContent),
-        profile: getProfile(outgoingContent),
-        attachment
+        messages: buildOutgoingMessages(content),
+        profile: getProfile(content)
       })
     });
 
@@ -121,7 +108,7 @@ chatForm.addEventListener('submit', async (event) => {
     typing.remove();
 
     const reply = data.reply || 'I could not generate a response. Please try again with more project details.';
-    const actions = getGuidedActions(outgoingContent, reply);
+    const actions = getGuidedActions(content, reply);
     messages.push({
       role: 'assistant',
       content: reply,
@@ -132,7 +119,8 @@ chatForm.addEventListener('submit', async (event) => {
     renderMessages();
     renderRecommendations(data.recommendations || []);
     trackEvent('chat_answered', { mode: data.mode, sourceCount: (data.documentSources || []).length });
-  } catch {
+  } catch (error) {
+    console.error(error);
     typing.remove();
     messages.push({
       role: 'assistant',
@@ -173,40 +161,6 @@ chatLog.addEventListener('click', (event) => {
   chatForm.requestSubmit();
 });
 
-attachButton.addEventListener('click', () => {
-  fileInput.click();
-});
-
-fileInput.addEventListener('change', () => {
-  const file = fileInput.files?.[0];
-  fileInput.value = '';
-  if (!file) return;
-
-  if (!/^image\//.test(file.type) && file.type !== 'application/pdf') {
-    setAttachmentError('Bitte nur Bilddateien oder PDF hochladen.');
-    return;
-  }
-
-  if (file.size > 8 * 1024 * 1024) {
-    setAttachmentError('Die Datei ist zu gro\u00df. Bitte maximal 8 MB hochladen.');
-    return;
-  }
-
-  pendingAttachment = {
-    name: file.name,
-    type: file.type || 'unknown',
-    size: file.size,
-    kind: /^image\//.test(file.type) ? 'image' : 'pdf'
-  };
-  renderAttachmentPreview();
-  messageInput.focus();
-  trackEvent('attachment_selected', { kind: pendingAttachment.kind });
-});
-
-contactButton.addEventListener('click', () => {
-  openContactMail();
-});
-
 recommendButton.addEventListener('click', updateRecommendations);
 Object.values(fields).forEach((field) => field.addEventListener('change', updateRecommendations));
 
@@ -238,8 +192,7 @@ function getProfile(message = '') {
     surface: fields.surface.value,
     priority: fields.priority.value,
     orientation: fields.orientation.value,
-    message,
-    attachment: pendingAttachment
+    message
   };
 }
 
@@ -255,10 +208,6 @@ function addMessage(role, content, sources = [], options = {}) {
   const element = document.createElement('div');
   element.className = `message ${role}`;
   element.innerHTML = formatMessage(content);
-
-  if (options.attachment) {
-    element.append(renderAttachmentTag(options.attachment));
-  }
 
   if (role === 'assistant' && sources.length) {
     element.append(renderSources(sources));
@@ -335,40 +284,6 @@ function renderSources(sources) {
   return wrapper;
 }
 
-function renderAttachmentTag(attachment) {
-  const tag = document.createElement('div');
-  tag.className = 'source-list';
-  tag.innerHTML = `<strong class="source-title">Anhang</strong><span class="source-meta">${escapeHtml(attachment.name)} \u00b7 ${formatBytes(attachment.size)}</span>`;
-  return tag;
-}
-
-function renderAttachmentPreview() {
-  if (!pendingAttachment) {
-    attachmentPreview.hidden = true;
-    attachmentPreview.innerHTML = '';
-    return;
-  }
-
-  attachmentPreview.hidden = false;
-  attachmentPreview.innerHTML = `
-    <span>${escapeHtml(pendingAttachment.name)} \u00b7 ${formatBytes(pendingAttachment.size)}</span>
-    <button type="button">Entfernen</button>
-  `;
-  attachmentPreview.querySelector('button').addEventListener('click', () => {
-    pendingAttachment = null;
-    renderAttachmentPreview();
-  });
-}
-
-function setAttachmentError(message) {
-  pendingAttachment = null;
-  attachmentPreview.hidden = false;
-  attachmentPreview.innerHTML = `<span>${escapeHtml(message)}</span><button type="button">OK</button>`;
-  attachmentPreview.querySelector('button').addEventListener('click', () => {
-    attachmentPreview.hidden = true;
-  });
-}
-
 function renderRecommendations(recommendations) {
   recommendationList.innerHTML = '';
 
@@ -403,24 +318,10 @@ function buildOutgoingMessages(currentContent) {
   return [
     ...messages.slice(1, -1).map((message) => ({
       role: message.role,
-      content: withAttachmentContext(message.content, message.attachment)
+      content: message.content
     })),
     { role: 'user', content: currentContent }
   ].slice(-8);
-}
-
-function withAttachmentContext(content, attachment) {
-  if (!attachment) return content;
-  return [
-    content,
-    '',
-    `Anhang-Kontext: Der Nutzer hat eine ${attachment.kind === 'pdf' ? 'PDF-Datei' : 'Bilddatei'} mit dem Namen "${attachment.name}" hochgeladen (${formatBytes(attachment.size)}). Der Inhalt der Datei wurde noch nicht automatisch ausgelesen. Bitte den Nutzer gezielt fragen, welche Details daraus gepr\u00fcft werden sollen, oder bei technischer Unsicherheit an SL Rack verweisen.`
-  ].join('\n');
-}
-
-function openContactMail() {
-  window.location.href = buildContactMailto();
-  trackEvent('contact_clicked');
 }
 
 function buildContactMailto() {
@@ -459,13 +360,6 @@ function formatMessage(value) {
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/(https?:\/\/[^\s<]+?)(?=[).,;!?]*($|\s))/g, '<a href="$1" target="_blank" rel="noreferrer">$1</a>')
     .replace(/\n/g, '<br />');
-}
-
-function formatBytes(bytes) {
-  if (!Number.isFinite(bytes)) return '';
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
-  return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
 
 function trimForEmail(value, maxLength) {
