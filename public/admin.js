@@ -69,17 +69,25 @@ function renderSummary(data) {
   const knowledge = data.knowledge || {};
   const limits = data.limits || {};
   const topEvents = Object.entries(analytics.topEvents || {});
+  const topQuestions = analytics.topQuestions || [];
   const lastEvents = analytics.lastEvents || [];
 
   metrics.innerHTML = [
     metricCard('AI Status', data.aiEnabled ? 'Aktiv' : 'Fallback', data.model, data.aiEnabled ? 'ok' : 'warn'),
     metricCard('Dokumente', knowledge.documentCount ?? '-', `${knowledge.chunkCount ?? '-'} Chunks`),
-    metricCard('Chats/Events', analytics.chats ?? 0, `${analytics.events ?? 0} Events`),
+    metricCard('Ukupno upita', analytics.totalQuestions ?? analytics.chats ?? 0, 'Korisnicka pitanja'),
+    metricCard('Aktivne sesije', analytics.activeSessions ?? 0, 'Zadnjih 30 min'),
+    metricCard('Sesije ukupno', analytics.totalSessions ?? 0, 'Od zadnjeg deploya'),
     metricCard('Blockiert', analytics.blocked ?? 0, 'Rate/Security'),
     metricCard('Quick Actions', analytics.quickActions ?? 0, 'Start- und Folgechips'),
     metricCard('PDF Klicks', analytics.sourceClicks ?? 0, 'Source cards'),
     metricCard('Kontakte', analytics.contacts ?? 0, 'Mail CTA'),
     metricCard('Fehler', analytics.errors ?? 0, 'Runtime/API'),
+    tableCard(
+      'Najtrazenija pitanja',
+      ['Pitanje', 'Broj'],
+      topQuestions.map((item) => [item.question, item.count])
+    ),
     tableCard('Top Events', ['Event', 'Anzahl'], topEvents.map(([event, count]) => [event, count])),
     tableCard(
       'Letzte Events',
