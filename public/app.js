@@ -91,6 +91,7 @@ chatForm.addEventListener('submit', async (event) => {
   messageInput.value = '';
   renderMessages();
   trackEvent('chat_submitted', { messageLength: content.length });
+  trackEvent('question_asked', { question: content });
 
   const typing = addMessage('assistant', 'Thinking through the project details...');
 
@@ -100,7 +101,8 @@ chatForm.addEventListener('submit', async (event) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         messages: buildOutgoingMessages(content),
-        profile: getProfile(content)
+        profile: getProfile(content),
+        analyticsTracked: true
       })
     });
 
@@ -389,6 +391,18 @@ function syncViewportHeight() {
 
 function trackEvent(type, payload = {}) {
   const body = JSON.stringify({ type, payload, at: new Date().toISOString() });
+  const reliableEvents = new Set(['session_started', 'question_asked', 'contact_offered', 'contact_clicked']);
+
+  if (reliableEvents.has(type)) {
+    fetch('/api/analytics', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+      keepalive: true
+    }).catch(() => {});
+    return;
+  }
+
   if (navigator.sendBeacon) {
     navigator.sendBeacon('/api/analytics', new Blob([body], { type: 'application/json' }));
     return;
