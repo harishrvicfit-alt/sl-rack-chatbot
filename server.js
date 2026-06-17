@@ -52,9 +52,12 @@ const analytics = {
   quickActions: 0,
   topEvents: new Map(),
   topQuestions: new Map(),
+  topProducts: new Map(),
   sessions: new Map(),
   lastEvents: []
 };
+
+const productAnalyticsTerms = buildProductAnalyticsTerms();
 
 app.use(securityHeaders);
 app.use(cors({ origin: true, methods: ['GET', 'POST', 'OPTIONS'], allowedHeaders: ['Content-Type'] }));
@@ -410,6 +413,7 @@ function serializeAnalytics() {
     ...analytics,
     topEvents: [...analytics.topEvents.entries()],
     topQuestions: [...analytics.topQuestions.entries()],
+    topProducts: [...analytics.topProducts.entries()],
     sessions: [...analytics.sessions.entries()],
     savedAt: new Date().toISOString()
   };
@@ -447,6 +451,7 @@ function mergeAnalyticsSnapshots(stored, incoming) {
 
   merged.topEvents = mergeCountEntries(stored.topEvents, incoming.topEvents);
   merged.topQuestions = mergeCountEntries(stored.topQuestions, incoming.topQuestions);
+  merged.topProducts = mergeCountEntries(stored.topProducts, incoming.topProducts);
   merged.sessions = mergeSessionEntries(stored.sessions, incoming.sessions);
   merged.totalSessions = Math.max(merged.totalSessions, merged.sessions.length);
   merged.lastEvents = mergeLastEvents(stored.lastEvents, incoming.lastEvents);
@@ -518,6 +523,7 @@ function hydrateAnalytics(stored) {
   analytics.quickActions = Number(stored.quickActions || 0);
   analytics.topEvents = new Map(Array.isArray(stored.topEvents) ? stored.topEvents : []);
   analytics.topQuestions = new Map(Array.isArray(stored.topQuestions) ? stored.topQuestions : []);
+  analytics.topProducts = new Map(Array.isArray(stored.topProducts) ? stored.topProducts : []);
   analytics.sessions = new Map(Array.isArray(stored.sessions) ? stored.sessions : []);
   analytics.lastEvents = Array.isArray(stored.lastEvents) ? stored.lastEvents.slice(0, 50) : [];
 }
@@ -584,6 +590,7 @@ function recordQuestion(question, sessionId) {
   analytics.totalQuestions += 1;
   analytics.chats += 1;
   analytics.topQuestions.set(clean, (analytics.topQuestions.get(clean) || 0) + 1);
+  recordProductInterests(clean);
   if (sessionId) analytics.sessions.set(sessionId, Date.now());
 }
 
@@ -592,6 +599,82 @@ function normalizeQuestion(question) {
     .replace(/\s+/g, ' ')
     .trim()
     .slice(0, 220);
+}
+
+function recordProductInterests(question) {
+  const text = normalizeAnalyticsText(question);
+  if (!text) return;
+
+  const matched = new Set();
+  for (const term of productAnalyticsTerms) {
+    if (term.aliases.some((alias) => text.includes(alias))) {
+      matched.add(term.label);
+    }
+  }
+
+  for (const label of [...matched].slice(0, 8)) {
+    analytics.topProducts.set(label, (analytics.topProducts.get(label) || 0) + 1);
+  }
+}
+
+function buildProductAnalyticsTerms() {
+  const terms = new Map();
+  const add = (label, aliases = []) => {
+    const normalizedLabel = String(label || '').trim();
+    if (!normalizedLabel) return;
+    const existing = terms.get(normalizedLabel) || new Set();
+    for (const value of [normalizedLabel, ...aliases]) {
+      const alias = normalizeAnalyticsText(value);
+      if (alias && alias.length >= 3) existing.add(alias);
+    }
+    terms.set(normalizedLabel, existing);
+  };
+
+  for (const product of productCatalog) {
+    add(product.name, [product.id, product.category, ...(product.triggerWords || []), ...(product.bestFor || [])]);
+    for (const keyProduct of product.keyProducts || []) {
+      add(keyProduct, [product.name, product.id]);
+    }
+  }
+
+  add('Dachhaken', ['dach haken', 'roof hook', 'sl a2', 'a2 dachhaken', 'alu multi hook', 'multi hook', '3d sl alu', 'erlus e58']);
+  add('Dachhaken SL A2', ['sl a2', 'a2 dachhaken', 'dachhaken sl a2']);
+  add('SL Alu Multi Hook', ['alu multi hook', 'multi hook', 'sl alu multi hook']);
+  add('3D SL Alu', ['3d sl alu', '3d alu', 'dachhaken 3d sl alu']);
+  add('Alpha-Platte', ['alpha platte', 'alphaplatte']);
+  add('Beta-Platte', ['beta platte', 'betaplatte']);
+  add('Delta-Platte', ['delta platte', 'deltaplatte']);
+  add('SL Fast Flat', ['fast flat', 'flachdachsystem sl fast flat', 'sl fast flat de']);
+  add('Flachdach Generation 2.0', ['flachdach generation', 'generation 2.0', 'flachdach 2.0']);
+  add('RAIL', ['rail 40', 'rail 60', 'tragprofil', 'montageschiene', 'schiene']);
+  add('RAIL 40', ['rail 40', 'rail40']);
+  add('RAIL 60', ['rail 60', 'rail60']);
+  add('Modulklemmen', ['modulklemme', 'mittelklemme', 'endklemme', 'modul klemme']);
+  add('Falzklemmen', ['falzklemme', 'falz klemme', 'stehfalzklemme', 'dfalzcu', 'dfalzcu', 'zambelli']);
+  add('Stehfalzklemme 2.0 - DFalzCU', ['dfalzcu', 'd falz cu', 'stehfalzklemme dfalzcu', 'stehfalzklemme 2.0 dfalzcu']);
+  add('Zambelli RIB Roof', ['zambelli rib roof500', 'zambelli rib roof465', 'zambelli rib roof evo', 'zambelli']);
+  add('Trapez 1-6', ['trapez', 'trapezblech', 'trapez 1', 'trapez 2', 'trapez 3', 'trapez 4', 'trapez 5', 'trapez 6']);
+  add('SL Energy Wall', ['energy wall', 'fassade', 'fassadensystem']);
+  add('SL Agri Wall', ['agri wall', 'agri pv', 'agri-pv']);
+  add('SL Tracker', ['tracker', 'tracking']);
+  add('Carportsysteme', ['carport', 'carportpfette', 'carportbinder', 'fundamentschuh']);
+  add('Freiflaechensysteme', ['freiflaeche', 'freiflaechensystem', 'solar park', 'w-rammprofil', 'rammprofil', 'binder', 'z-strebe', 'z-pfette']);
+
+  return [...terms.entries()].map(([label, aliases]) => ({ label, aliases: [...aliases] }));
+}
+
+function normalizeAnalyticsText(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/Ã¤/g, 'ae')
+    .replace(/Ã¶/g, 'oe')
+    .replace(/Ã¼/g, 'ue')
+    .replace(/ÃŸ/g, 'ss')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9.]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function getActiveSessionCount() {
@@ -728,6 +811,10 @@ function getAnalyticsSummary() {
       .sort((a, b) => b[1] - a[1])
       .slice(0, 20)
       .map(([question, count]) => ({ question, count })),
+    topProducts: [...analytics.topProducts.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 30)
+      .map(([product, count]) => ({ product, count })),
     lastEvents: analytics.lastEvents
   };
 }
