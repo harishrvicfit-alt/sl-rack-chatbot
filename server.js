@@ -224,53 +224,73 @@ function buildAdminPage() {
     <title>SL Rack Admin</title>
     <link rel="icon" href="/assets/logo_sl-rack.svg" />
     <style>
-      :root { color-scheme: light; --brand:#004528; --accent:#f7a600; --ink:#10231b; --muted:#65736c; --line:#dfe7e2; --surface:#f4f7f2; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      :root { color-scheme: light; --brand:#004528; --brand-2:#075d3a; --accent:#f7a600; --ink:#10231b; --muted:#65736c; --line:#dfe7e2; --surface:#eef4ef; --panel:#ffffff; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
       * { box-sizing: border-box; }
-      body { margin: 0; min-height: 100vh; background: var(--surface); color: var(--ink); }
+      body { margin: 0; min-height: 100vh; background: linear-gradient(180deg, #eaf2ec 0, #f8faf8 420px); color: var(--ink); }
       .admin-shell { min-height: 100vh; display: grid; grid-template-rows: auto 1fr; }
-      header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 22px; background: #fff; border-bottom: 1px solid var(--line); }
+      header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 24px; background: rgba(255,255,255,.92); border-bottom: 1px solid rgba(0,69,40,.12); backdrop-filter: blur(14px); }
       header img { width: 132px; height: auto; display: block; }
-      main { width: min(1120px, 100%); margin: 0 auto; padding: 24px; }
-      .login, .panel { background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 18px 48px rgba(0, 69, 40, .08); }
-      .login { width: min(430px, 100%); margin: 10vh auto 0; padding: 24px; }
+      .admin-pill { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(0,69,40,.16); border-radius: 999px; padding: 8px 12px; background: #fff; color: var(--brand); font-size: .86rem; font-weight: 900; }
+      .admin-pill::before { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); content: ""; }
+      main { width: min(1180px, 100%); margin: 0 auto; padding: 24px; }
+      .login, .panel { background: rgba(255,255,255,.96); border: 1px solid rgba(0,69,40,.12); border-radius: 8px; box-shadow: 0 24px 70px rgba(0, 69, 40, .12); }
+      .login { width: min(460px, 100%); margin: 9vh auto 0; padding: 0; overflow: hidden; }
+      .login-hero { padding: 24px; background: linear-gradient(135deg, rgba(0,69,40,.98), rgba(7,93,58,.88)); color: #fff; }
+      .login-hero img { width: 136px; padding: 8px 10px; border-radius: 8px; background: #fff; }
+      .login-body { padding: 24px; }
       h1, h2, p { margin-top: 0; }
-      h1 { font-size: 1.25rem; }
+      h1 { margin-bottom: 7px; font-size: clamp(1.35rem, 2vw, 2rem); letter-spacing: 0; }
+      h2 { font-size: 1.02rem; }
       label { display: grid; gap: 7px; margin-top: 14px; font-weight: 800; color: #26362f; }
       input { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 12px 13px; font: inherit; }
       input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(247,166,0,.16); outline: none; }
-      button { border: 0; border-radius: 8px; padding: 12px 16px; background: var(--accent); color: #00331e; font: inherit; font-weight: 900; cursor: pointer; }
+      button { border: 0; border-radius: 8px; padding: 12px 16px; background: var(--accent); color: #00331e; font: inherit; font-weight: 900; cursor: pointer; transition: transform .16s ease, box-shadow .16s ease, background .16s ease; }
+      button:hover { background: #ffc247; box-shadow: 0 12px 24px rgba(247,166,0,.22); transform: translateY(-1px); }
       button.secondary { background: var(--brand); color: #fff; }
-      .toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
-      .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-      .card { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
-      .metric { color: var(--muted); font-size: .78rem; font-weight: 900; text-transform: uppercase; }
-      .value { display: block; margin-top: 8px; font-size: 1.7rem; font-weight: 900; color: var(--brand); }
+      button.secondary:hover { background: #00331e; box-shadow: 0 12px 24px rgba(0,69,40,.2); }
+      .toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 18px; padding: 22px; border-bottom: 1px solid rgba(0,69,40,.1); background: linear-gradient(135deg, rgba(0,69,40,.96), rgba(7,93,58,.82)); color: #fff; border-radius: 8px 8px 0 0; }
+      .toolbar .muted { color: rgba(255,255,255,.78); }
+      .toolbar-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+      .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; padding: 18px; }
+      .card { position: relative; overflow: hidden; background: #fff; border: 1px solid rgba(0,69,40,.11); border-radius: 8px; padding: 16px; box-shadow: 0 14px 34px rgba(0,69,40,.06); }
+      .card::before { position: absolute; inset: 0 auto 0 0; width: 4px; background: linear-gradient(180deg, var(--brand), var(--accent)); content: ""; }
+      .card.ok::before { background: linear-gradient(180deg, #0a7d4f, #4fc47b); }
+      .card.warn::before { background: linear-gradient(180deg, #a46a00, var(--accent)); }
+      .metric { color: var(--muted); font-size: .75rem; font-weight: 900; text-transform: uppercase; }
+      .value { display: block; margin-top: 9px; font-size: clamp(1.55rem, 3vw, 2.25rem); font-weight: 950; color: var(--brand); line-height: 1; }
       .wide { grid-column: 1 / -1; }
       table { width: 100%; border-collapse: collapse; font-size: .92rem; }
-      th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; }
-      th { color: #26362f; font-size: .78rem; text-transform: uppercase; }
+      th, td { border-bottom: 1px solid var(--line); padding: 11px 10px; text-align: left; vertical-align: top; }
+      th { color: #26362f; font-size: .74rem; letter-spacing: .02em; text-transform: uppercase; }
+      tr:hover td { background: #f8fbf9; }
       .muted { color: var(--muted); }
       .hidden { display: none !important; }
       .error { color: #a33; font-weight: 800; min-height: 1.4em; }
-      @media (max-width: 780px) { main { padding: 14px; } .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } header { padding: 12px 14px; } }
+      @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+      @media (max-width: 620px) { main { padding: 12px; } header { padding: 12px 14px; } header img { width: 112px; } .grid { grid-template-columns: 1fr; padding: 12px; } .toolbar { padding: 16px; } .login { margin-top: 5vh; } }
     </style>
   </head>
   <body>
     <div class="admin-shell">
       <header>
         <img src="/assets/logo_sl-rack.svg" alt="SL Rack" />
-        <strong>Admin</strong>
+        <span class="admin-pill">Private Admin</span>
       </header>
       <main>
         <section id="loginView" class="login hidden">
-          <h1>SL Rack Admin Login</h1>
-          <p class="muted">Geschuetzter Bereich fuer interne Auswertung.</p>
-          <form id="loginForm">
-            <label>Benutzername <input id="adminUser" autocomplete="username" required /></label>
-            <label>Passwort <input id="adminPass" type="password" autocomplete="current-password" required /></label>
-            <p id="loginError" class="error"></p>
-            <button type="submit">Anmelden</button>
-          </form>
+          <div class="login-hero">
+            <img src="/assets/logo_sl-rack.svg" alt="SL Rack" />
+            <h1>Chatbot Admin</h1>
+            <p>Geschuetzter Bereich fuer interne Auswertung.</p>
+          </div>
+          <div class="login-body">
+            <form id="loginForm">
+              <label>Benutzername <input id="adminUser" autocomplete="username" required /></label>
+              <label>Passwort <input id="adminPass" type="password" autocomplete="current-password" required /></label>
+              <p id="loginError" class="error"></p>
+              <button type="submit">Anmelden</button>
+            </form>
+          </div>
         </section>
         <section id="panelView" class="panel hidden">
           <div class="toolbar">
@@ -278,7 +298,7 @@ function buildAdminPage() {
               <h1>SL Rack Chatbot Admin</h1>
               <p id="statusText" class="muted">Lade Daten...</p>
             </div>
-            <div>
+            <div class="toolbar-actions">
               <button id="refreshButton" type="button">Aktualisieren</button>
               <button id="logoutButton" class="secondary" type="button">Abmelden</button>
             </div>
