@@ -57,6 +57,10 @@ app.get('/api/catalog', (_req, res) => {
 });
 
 app.get('/api/analytics/summary', (_req, res) => {
+  if (!canReadAnalytics(_req)) {
+    return res.status(404).json({ error: 'not_found' });
+  }
+
   res.json(getAnalyticsSummary());
 });
 
@@ -245,6 +249,17 @@ function getAnalyticsSummary() {
     topEvents: Object.fromEntries([...analytics.topEvents.entries()].sort((a, b) => b[1] - a[1]).slice(0, 20)),
     lastEvents: analytics.lastEvents
   };
+}
+
+function canReadAnalytics(req) {
+  const token = process.env.ANALYTICS_TOKEN;
+  if (token) {
+    const headerToken = String(req.headers.authorization || '').replace(/^Bearer\s+/i, '');
+    const queryToken = String(req.query?.token || '');
+    return headerToken === token || queryToken === token;
+  }
+
+  return process.env.VERCEL !== '1';
 }
 
 function buildFallbackReply(profile, recommendations) {
