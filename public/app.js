@@ -432,10 +432,10 @@ function buildContactMailto() {
 function buildConversationSummary() {
   const recent = messages
     .slice(-6)
-    .map((message) => `${message.role === 'user' ? 'Kunde' : 'AI'}: ${message.content}`)
+    .map((message) => `${message.role === 'user' ? 'Kunde' : 'AI'}: ${trimForEmail(message.content, 520)}`)
     .join('\n\n');
 
-  return [
+  const summary = [
     'Hallo SL Rack Team,',
     '',
     'bitte pr\u00fcfen Sie folgende Anfrage aus dem AI Assistant:',
@@ -450,6 +450,8 @@ function buildConversationSummary() {
     '',
     'Vielen Dank.'
   ].join('\n');
+
+  return trimForEmail(summary, 2600);
 }
 
 function formatMessage(value) {
@@ -464,6 +466,15 @@ function formatBytes(bytes) {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+}
+
+function trimForEmail(value, maxLength) {
+  const text = String(value || '')
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength - 1)}â€¦`;
 }
 
 function escapeHtml(value) {
