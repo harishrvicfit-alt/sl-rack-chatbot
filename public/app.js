@@ -32,6 +32,9 @@ const messages = [
 renderMessages();
 updateHealth();
 updateRecommendations();
+syncViewportHeight();
+window.addEventListener('resize', syncViewportHeight);
+window.visualViewport?.addEventListener('resize', syncViewportHeight);
 
 chatForm.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -66,6 +69,12 @@ messageInput.addEventListener('keydown', (event) => {
   if (event.key !== 'Enter' || event.shiftKey) return;
   event.preventDefault();
   chatForm.requestSubmit();
+});
+
+messageInput.addEventListener('focus', () => {
+  requestAnimationFrame(() => {
+    chatLog.scrollTop = chatLog.scrollHeight;
+  });
 });
 
 recommendButton.addEventListener('click', updateRecommendations);
@@ -181,4 +190,9 @@ function escapeHtml(value) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
+}
+
+function syncViewportHeight() {
+  const height = window.visualViewport?.height || window.innerHeight;
+  document.documentElement.style.setProperty('--viewport-height', `${height}px`);
 }
