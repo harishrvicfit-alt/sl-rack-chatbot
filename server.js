@@ -24,8 +24,22 @@ const RATE_WINDOW_MS = Number(process.env.CHAT_RATE_WINDOW_MS || 60_000);
 const RATE_MAX_REQUESTS = Number(process.env.CHAT_RATE_MAX_REQUESTS || 12);
 const DAILY_MAX_REQUESTS = Number(process.env.CHAT_DAILY_MAX_REQUESTS || 120);
 const DAILY_MAX_INPUT_CHARS = Number(process.env.CHAT_DAILY_MAX_INPUT_CHARS || 120_000);
+const analytics = {
+  startedAt: new Date().toISOString(),
+  events: 0,
+  chats: 0,
+  blocked: 0,
+  errors: 0,
+  attachments: 0,
+  contacts: 0,
+  sourceClicks: 0,
+  quickActions: 0,
+  topEvents: new Map(),
+  lastEvents: []
+};
 
-app.use(cors());
+app.use(securityHeaders);
+app.use(cors({ origin: true, methods: ['GET', 'POST', 'OPTIONS'], allowedHeaders: ['Content-Type'] }));
 app.use(express.json({ limit: '80kb' }));
 app.use(express.static(publicDir));
 
@@ -42,6 +56,15 @@ app.get('/api/catalog', (_req, res) => {
   res.json({ companyFacts, products: productCatalog });
 });
 
+app.get('/api/analytics/summary', (_req, res) => {
+  res.json(getAnalyticsSummary());
+});
+
+app.post('/api/analytics', (req, res) => {
+  recordAnalyticsEvent(req.body?.type, req.body?.payload);
+  res.status(204).end();
+});
+
 app.get('/', (_req, res) => {
   res.sendFile(path.join(publicDir, 'index.html'));
 });
@@ -56,6 +79,7 @@ app.post('/api/chat', async (req, res) => {
   const validation = validateChatRequest(req, rawMessages);
 
   if (!validation.ok) {
+    recordAnalyticsEvent('chat_blocked', { error: validation.error });
     return res.status(validation.status).json({
       mode: 'blocked',
       error: validation.error,
@@ -68,6 +92,8 @@ app.post('/api/chat', async (req, res) => {
 
   const messages = validation.messages;
   const profile = req.body?.profile || {};
+  const attachment = sanitizeAttachment(req.body?.attachment);
+  if (attachment) recordAnalyticsEvent('attachment_received', { kind: attachment.kind });
   const recommendations = scoreProducts(profile).slice(0, 3);
   const latestUserMessage = [...messages].reverse().find((message) => message.role !== 'assistant')?.content || '';
   const knowledgeResults = searchKnowledge(latestUserMessage, profile, 6);
@@ -115,8 +141,10 @@ app.post('/api/chat', async (req, res) => {
       knowledgeResults,
       documentSources
     });
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment) });
   } catch (error) {
     console.error(error);
+    recordAnalyticsEvent('chat_error', { status: error?.status, code: error?.code });
     const quotaError = error?.code === 'insufficient_quota' || error?.status === 429;
     res.status(quotaError ? 200 : 500).json({
       mode: quotaError ? 'quota_fallback' : 'error_fallback',
@@ -138,6 +166,86 @@ if (process.env.VERCEL !== '1') {
 }
 
 export default app;
+
+function securityHeaders(_req, res, next) {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  res.setHeader(
+    'Content-Security-Policy',
+    [
+      "default-src 'self'",
+      "script-src 'self'",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' https: data:",
+      "connect-src 'self'",
+      "font-src 'self' data:",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "frame-ancestors 'self'"
+    ].join('; ')
+  );
+  next();
+}
+
+function sanitizeAttachment(value) {
+  if (!value || typeof value !== 'object') return null;
+  const name = String(value.name || '').slice(0, 160);
+  const type = String(value.type || '').slice(0, 80);
+  const size = Number(value.size || 0);
+  const kind = value.kind === 'pdf' ? 'pdf' : value.kind === 'image' ? 'image' : 'unknown';
+
+  if (!name || !Number.isFinite(size) || size < 0 || size > 8 * 1024 * 1024) return null;
+  return { name, type, size, kind };
+}
+
+function recordAnalyticsEvent(type = 'unknown', payload = {}) {
+  const eventType = String(type || 'unknown').slice(0, 80);
+  analytics.events += 1;
+  analytics.topEvents.set(eventType, (analytics.topEvents.get(eventType) || 0) + 1);
+
+  if (eventType === 'chat_submitted' || eventType === 'chat_answered') analytics.chats += 1;
+  if (eventType === 'chat_blocked') analytics.blocked += 1;
+  if (eventType === 'chat_error' || eventType === 'chat_failed') analytics.errors += 1;
+  if (eventType === 'attachment_selected' || eventType === 'attachment_received') analytics.attachments += 1;
+  if (eventType === 'contact_clicked') analytics.contacts += 1;
+  if (eventType === 'source_clicked') analytics.sourceClicks += 1;
+  if (eventType === 'quick_action_clicked') analytics.quickActions += 1;
+
+  analytics.lastEvents.unshift({
+    type: eventType,
+    at: new Date().toISOString(),
+    payload: sanitizeAnalyticsPayload(payload)
+  });
+  analytics.lastEvents = analytics.lastEvents.slice(0, 50);
+}
+
+function sanitizeAnalyticsPayload(payload) {
+  if (!payload || typeof payload !== 'object') return {};
+  const clean = {};
+  for (const [key, value] of Object.entries(payload).slice(0, 10)) {
+    if (typeof value === 'string') clean[key] = value.slice(0, 120);
+    else if (typeof value === 'number' || typeof value === 'boolean') clean[key] = value;
+  }
+  return clean;
+}
+
+function getAnalyticsSummary() {
+  return {
+    startedAt: analytics.startedAt,
+    events: analytics.events,
+    chats: analytics.chats,
+    blocked: analytics.blocked,
+    errors: analytics.errors,
+    attachments: analytics.attachments,
+    contacts: analytics.contacts,
+    sourceClicks: analytics.sourceClicks,
+    quickActions: analytics.quickActions,
+    topEvents: Object.fromEntries([...analytics.topEvents.entries()].sort((a, b) => b[1] - a[1]).slice(0, 20)),
+    lastEvents: analytics.lastEvents
+  };
+}
 
 function buildFallbackReply(profile, recommendations) {
   const top = recommendations[0];
