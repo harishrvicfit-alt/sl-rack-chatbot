@@ -42,6 +42,7 @@ const analytics = {
   errors: 0,
   attachments: 0,
   contacts: 0,
+  contactOffers: 0,
   sourceClicks: 0,
   quickActions: 0,
   topEvents: new Map(),
@@ -482,6 +483,7 @@ function recordAnalyticsEvent(type = 'unknown', payload = {}) {
   if (eventType === 'chat_error' || eventType === 'chat_failed') analytics.errors += 1;
   if (eventType === 'attachment_selected' || eventType === 'attachment_received') analytics.attachments += 1;
   if (eventType === 'contact_clicked') analytics.contacts += 1;
+  if (eventType === 'contact_offered') analytics.contactOffers += 1;
   if (eventType === 'source_clicked') analytics.sourceClicks += 1;
   if (eventType === 'quick_action_clicked') analytics.quickActions += 1;
 
@@ -515,6 +517,7 @@ function getAnalyticsSummary() {
     errors: analytics.errors,
     attachments: analytics.attachments,
     contacts: analytics.contacts,
+    contactOffers: analytics.contactOffers,
     sourceClicks: analytics.sourceClicks,
     quickActions: analytics.quickActions,
     topEvents: Object.fromEntries([...analytics.topEvents.entries()].sort((a, b) => b[1] - a[1]).slice(0, 20)),
