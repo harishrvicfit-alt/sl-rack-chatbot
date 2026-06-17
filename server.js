@@ -30,10 +30,14 @@ const ADMIN_USER = process.env.ADMIN_USER || '';
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || '';
 const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || process.env.OPENAI_API_KEY || crypto.randomBytes(32).toString('hex');
 const ADMIN_COOKIE = 'slrack_admin_session';
+const CHAT_SESSION_COOKIE = 'slrack_chat_session';
+const ACTIVE_SESSION_MS = Number(process.env.ACTIVE_SESSION_MS || 30 * 60 * 1000);
 const analytics = {
   startedAt: new Date().toISOString(),
   events: 0,
   chats: 0,
+  totalQuestions: 0,
+  totalSessions: 0,
   blocked: 0,
   errors: 0,
   attachments: 0,
@@ -41,6 +45,8 @@ const analytics = {
   sourceClicks: 0,
   quickActions: 0,
   topEvents: new Map(),
+  topQuestions: new Map(),
+  sessions: new Map(),
   lastEvents: []
 };
 
@@ -123,6 +129,7 @@ app.post('/api/recommend', (req, res) => {
 });
 
 app.post('/api/chat', async (req, res) => {
+  const sessionId = getOrCreateChatSession(req, res);
   const rawMessages = Array.isArray(req.body?.messages) ? req.body.messages : [];
   const validation = validateChatRequest(req, rawMessages);
 
@@ -144,6 +151,7 @@ app.post('/api/chat', async (req, res) => {
   if (attachment) recordAnalyticsEvent('attachment_received', { kind: attachment.kind });
   const recommendations = scoreProducts(profile).slice(0, 3);
   const latestUserMessage = [...messages].reverse().find((message) => message.role !== 'assistant')?.content || '';
+  recordQuestion(latestUserMessage, sessionId);
   const knowledgeResults = searchKnowledge(latestUserMessage, profile, 6);
   const documentSources = buildDocumentSources(knowledgeResults);
 
@@ -297,6 +305,7 @@ function buildAdminPage() {
             <div>
               <h1>SL Rack Chatbot Admin</h1>
               <p id="statusText" class="muted">Lade Daten...</p>
+              <p class="muted">Statistik za trenutnu produkcijsku instancu. Za trajnu historiju dodajemo bazu u narednom koraku.</p>
             </div>
             <div class="toolbar-actions">
               <button id="refreshButton" type="button">Aktualisieren</button>
@@ -343,6 +352,64 @@ function sanitizeAttachment(value) {
 
   if (!name || !Number.isFinite(size) || size < 0 || size > 8 * 1024 * 1024) return null;
   return { name, type, size, kind };
+}
+
+function getOrCreateChatSession(req, res) {
+  const cookies = parseCookies(req.headers.cookie || '');
+  let sessionId = cookies[CHAT_SESSION_COOKIE];
+
+  if (!/^[a-f0-9]{32}$/.test(sessionId || '')) {
+    sessionId = crypto.randomBytes(16).toString('hex');
+    const secure = process.env.VERCEL === '1' ? '; Secure' : '';
+    res.setHeader(
+      'Set-Cookie',
+      `${CHAT_SESSION_COOKIE}=${sessionId}; HttpOnly; SameSite=Lax; Path=/; Max-Age=2592000${secure}`
+    );
+  }
+
+  if (!analytics.sessions.has(sessionId)) {
+    analytics.totalSessions += 1;
+  }
+
+  analytics.sessions.set(sessionId, Date.now());
+  pruneChatSessions();
+  return sessionId;
+}
+
+function recordQuestion(question, sessionId) {
+  const clean = normalizeQuestion(question);
+  if (!clean) return;
+
+  analytics.totalQuestions += 1;
+  analytics.chats += 1;
+  analytics.topQuestions.set(clean, (analytics.topQuestions.get(clean) || 0) + 1);
+  if (sessionId) analytics.sessions.set(sessionId, Date.now());
+}
+
+function normalizeQuestion(question) {
+  return String(question || '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 220);
+}
+
+function getActiveSessionCount() {
+  const now = Date.now();
+  let active = 0;
+  for (const lastSeen of analytics.sessions.values()) {
+    if (now - lastSeen <= ACTIVE_SESSION_MS) active += 1;
+  }
+  return active;
+}
+
+function pruneChatSessions() {
+  if (analytics.sessions.size < 5000) return;
+  const now = Date.now();
+  for (const [sessionId, lastSeen] of analytics.sessions.entries()) {
+    if (now - lastSeen > 24 * 60 * 60 * 1000) {
+      analytics.sessions.delete(sessionId);
+    }
+  }
 }
 
 function isValidAdminLogin(username, password) {
@@ -441,6 +508,9 @@ function getAnalyticsSummary() {
     startedAt: analytics.startedAt,
     events: analytics.events,
     chats: analytics.chats,
+    totalQuestions: analytics.totalQuestions,
+    totalSessions: analytics.totalSessions,
+    activeSessions: getActiveSessionCount(),
     blocked: analytics.blocked,
     errors: analytics.errors,
     attachments: analytics.attachments,
@@ -448,6 +518,10 @@ function getAnalyticsSummary() {
     sourceClicks: analytics.sourceClicks,
     quickActions: analytics.quickActions,
     topEvents: Object.fromEntries([...analytics.topEvents.entries()].sort((a, b) => b[1] - a[1]).slice(0, 20)),
+    topQuestions: [...analytics.topQuestions.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 20)
+      .map(([question, count]) => ({ question, count })),
     lastEvents: analytics.lastEvents
   };
 }
