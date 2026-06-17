@@ -472,14 +472,21 @@ function mergeSessionEntries(leftEntries, rightEntries) {
   for (const entries of [leftEntries, rightEntries]) {
     if (!Array.isArray(entries)) continue;
     for (const [id, session] of entries) {
-      if (!id || !session || typeof session !== 'object') continue;
+      if (!id) continue;
+      const lastSeen = normalizeSessionLastSeen(session);
+      if (!lastSeen) continue;
       const previous = sessions.get(id);
-      if (!previous || Number(session.lastSeen || 0) >= Number(previous.lastSeen || 0)) {
-        sessions.set(id, session);
+      if (!previous || lastSeen >= normalizeSessionLastSeen(previous)) {
+        sessions.set(id, lastSeen);
       }
     }
   }
   return [...sessions.entries()];
+}
+
+function normalizeSessionLastSeen(session) {
+  const lastSeen = typeof session === 'object' ? Number(session?.lastSeen || 0) : Number(session || 0);
+  return Number.isFinite(lastSeen) && lastSeen > 0 ? lastSeen : 0;
 }
 
 function mergeLastEvents(leftEvents, rightEvents) {
