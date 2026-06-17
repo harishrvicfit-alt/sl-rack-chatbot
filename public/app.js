@@ -109,16 +109,18 @@ chatForm.addEventListener('submit', async (event) => {
 
     const reply = data.reply || 'I could not generate a response. Please try again with more project details.';
     const actions = getGuidedActions(content, reply);
+    const offerContact = shouldOfferContact(reply, data.documentSources || []);
     messages.push({
       role: 'assistant',
       content: reply,
       sources: data.documentSources || [],
       actions,
-      contact: shouldOfferContact(reply, data.documentSources || [])
+      contact: offerContact
     });
     renderMessages();
     renderRecommendations(data.recommendations || []);
     trackEvent('chat_answered', { mode: data.mode, sourceCount: (data.documentSources || []).length });
+    if (offerContact) trackEvent('contact_offered', { reason: 'assistant_answer' });
   } catch (error) {
     console.error(error);
     typing.remove();
@@ -251,7 +253,7 @@ function renderContactActions() {
   link.className = 'contact-link';
   link.href = buildContactMailto();
   link.textContent = 'Technisches Team kontaktieren';
-  link.addEventListener('click', () => trackEvent('contact_clicked'));
+  link.addEventListener('click', () => trackEvent('contact_clicked', { channel: 'vertrieb_email' }));
   wrapper.append(link);
 
   return wrapper;
