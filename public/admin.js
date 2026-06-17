@@ -81,7 +81,8 @@ function renderSummary(data) {
     metricCard('Blockiert', analytics.blocked ?? 0, 'Rate/Security'),
     metricCard('Quick Actions', analytics.quickActions ?? 0, 'Start- und Folgechips'),
     metricCard('PDF Klicks', analytics.sourceClicks ?? 0, 'Source cards'),
-    metricCard('Kontakte', analytics.contacts ?? 0, 'Mail CTA'),
+    metricCard('Kontakt angeboten', analytics.contactOffers ?? 0, 'CTA angezeigt'),
+    metricCard('Weiterleitung Vertrieb', analytics.contacts ?? 0, 'Klick auf Mail CTA'),
     metricCard('Fehler', analytics.errors ?? 0, 'Runtime/API'),
     tableCard(
       'Najtrazenija pitanja',
