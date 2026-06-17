@@ -462,29 +462,38 @@ label {
 }
 
 @media (max-width: 920px) {
+  html,
   body {
-    overflow: auto;
+    height: 100%;
+    overflow: hidden;
   }
 
   .brand-header {
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 14px;
+    align-items: center;
+    flex-direction: row;
+    height: 60px;
+    min-height: 60px;
+    padding: 10px 14px;
   }
 
   .brand-header nav {
-    justify-content: flex-start;
+    display: none;
   }
 
   .app-shell {
     grid-template-columns: 1fr;
-    height: auto;
-    padding: 12px;
-    min-height: auto;
+    gap: 0;
+    height: calc(var(--viewport-height, 100dvh) - 60px);
+    min-height: 0;
+    padding: 0;
   }
 
   .assistant-panel {
-    min-height: 78vh;
+    min-height: 0;
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .topbar,
@@ -493,33 +502,119 @@ label {
   }
 
   .topbar {
-    padding: 22px;
+    gap: 12px;
+    padding: 16px;
   }
 
   .hero-card {
-    min-height: 120px;
+    display: none;
+  }
+
+  .hero-copy {
+    max-width: none;
+  }
+
+  h1 {
+    max-width: 620px;
+    font-size: 1.72rem;
+    line-height: 1.08;
+  }
+
+  .intro {
+    max-width: 620px;
+    margin-top: 8px;
+    font-size: 0.98rem;
+  }
+
+  .chat-log {
+    padding: 16px;
+    overscroll-behavior: contain;
+  }
+
+  .composer {
+    gap: 10px;
+    padding: 12px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    box-shadow: 0 -12px 30px rgba(0, 69, 40, 0.08);
+  }
+
+  textarea {
+    min-height: 48px;
+    max-height: 112px;
+    resize: none;
   }
 
   button {
     min-height: 44px;
   }
+
+  .decision-panel {
+    display: none;
+  }
 }
 
 @media (max-width: 560px) {
   .brand-logo img {
-    width: 132px;
+    width: 106px;
+    max-height: 38px;
   }
 
-  .brand-header nav a {
-    padding: 7px 10px;
+  .topbar {
+    min-height: 146px;
+    padding: 13px 15px;
+    background:
+      linear-gradient(90deg, rgba(0, 69, 40, 0.96), rgba(0, 69, 40, 0.68)),
+      url("/assets/hero-sl-tracker.jpg") center / cover;
+  }
+
+  .eyebrow {
+    margin-bottom: 7px;
+    font-size: 0.7rem;
+  }
+
+  h1 {
+    font-size: 1.28rem;
+    line-height: 1.12;
+  }
+
+  .intro {
+    margin-top: 7px;
+    font-size: 0.84rem;
+    line-height: 1.32;
   }
 
   .chat-log {
-    padding: 16px;
+    gap: 10px;
+    padding: 12px;
   }
 
   .message {
     width: 100%;
+    padding: 13px 14px;
+    font-size: 0.95rem;
+    line-height: 1.43;
+  }
+
+  .composer {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    padding-top: 10px;
+  }
+
+  .composer button {
+    width: 46px;
+    min-width: 46px;
+    padding: 0;
+  }
+
+  .composer button span {
+    display: none;
+  }
+
+  .composer button::before {
+    content: "\2191";
+    font-size: 1.25rem;
+    line-height: 1;
   }
 
   .recommendation-card {
