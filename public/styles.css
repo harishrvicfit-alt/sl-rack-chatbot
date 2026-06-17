@@ -271,13 +271,110 @@ h2 {
   background: rgba(247, 166, 0, 0.08);
 }
 
+.source-meta {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.source-open {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--brand);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.quick-actions,
+.guided-actions,
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.quick-chip,
+.guide-chip,
+.contact-link {
+  border: 1px solid rgba(0, 69, 40, 0.16);
+  border-radius: 999px;
+  padding: 9px 12px;
+  background: #ffffff;
+  color: var(--brand);
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.quick-chip:hover,
+.guide-chip:hover,
+.contact-link:hover {
+  border-color: rgba(247, 166, 0, 0.75);
+  background: rgba(247, 166, 0, 0.1);
+}
+
 .composer {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr auto;
+  align-items: end;
   gap: 12px;
   padding: 18px;
   border-top: 1px solid var(--line);
   background: #ffffff;
+}
+
+.composer-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid rgba(0, 69, 40, 0.16);
+  border-radius: 8px;
+  background: #f7faf8;
+  color: var(--brand);
+  font-size: 1.05rem;
+}
+
+.icon-button:hover {
+  background: rgba(247, 166, 0, 0.12);
+  box-shadow: none;
+}
+
+.attachment-preview {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid rgba(0, 69, 40, 0.14);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #f7faf8;
+  color: var(--steel);
+  font-size: 0.86rem;
+}
+
+.attachment-preview[hidden] {
+  display: none;
+}
+
+.attachment-preview button {
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid rgba(0, 69, 40, 0.18);
+  background: #ffffff;
+  color: var(--brand);
 }
 
 textarea,
@@ -632,22 +729,30 @@ label {
   }
 
   .composer {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto 1fr auto;
     align-items: end;
     padding: 10px 12px max(10px, env(safe-area-inset-bottom, 0px));
   }
 
-  .composer button {
+  #contactButton {
+    display: none;
+  }
+
+  .composer-actions {
+    gap: 0;
+  }
+
+  .composer > button {
     width: 46px;
     min-width: 46px;
     padding: 0;
   }
 
-  .composer button span {
+  .composer > button span {
     display: none;
   }
 
-  .composer button::before {
+  .composer > button::before {
     content: "\2191";
     font-size: 1.25rem;
     line-height: 1;
