@@ -292,6 +292,10 @@ function buildAdminPage() {
       .card::before { position: absolute; inset: 0 auto 0 0; width: 4px; background: linear-gradient(180deg, var(--brand), var(--accent)); content: ""; }
       .card.ok::before { background: linear-gradient(180deg, #0a7d4f, #4fc47b); }
       .card.warn::before { background: linear-gradient(180deg, #a46a00, var(--accent)); }
+      .card[data-tooltip] { cursor: help; }
+      .card[data-tooltip]::after { position: absolute; left: 16px; right: 16px; bottom: calc(100% - 8px); z-index: 20; display: block; width: max-content; max-width: min(360px, calc(100vw - 48px)); padding: 10px 12px; border: 1px solid rgba(0,69,40,.14); border-radius: 8px; background: #0f2f22; box-shadow: 0 18px 38px rgba(0,69,40,.2); color: #fff; content: attr(data-tooltip); font-size: .78rem; font-weight: 750; line-height: 1.35; opacity: 0; pointer-events: none; transform: translateY(6px); transition: opacity .15s ease, transform .15s ease; white-space: normal; }
+      .card[data-tooltip]:hover { overflow: visible; z-index: 30; border-color: rgba(247,166,0,.45); }
+      .card[data-tooltip]:hover::after { opacity: 1; transform: translateY(0); }
       .metric { color: var(--muted); font-size: .75rem; font-weight: 900; text-transform: uppercase; }
       .value { display: block; margin-top: 9px; font-size: clamp(1.55rem, 3vw, 2.25rem); font-weight: 950; color: var(--brand); line-height: 1; }
       .wide { grid-column: 1 / -1; }
