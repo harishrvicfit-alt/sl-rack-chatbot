@@ -319,62 +319,12 @@ h2 {
 
 .composer {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 1fr auto;
   align-items: end;
   gap: 12px;
   padding: 18px;
   border-top: 1px solid var(--line);
   background: #ffffff;
-}
-
-.composer-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.icon-button {
-  display: inline-grid;
-  place-items: center;
-  width: 44px;
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0;
-  border: 1px solid rgba(0, 69, 40, 0.16);
-  border-radius: 8px;
-  background: #f7faf8;
-  color: var(--brand);
-  font-size: 1.05rem;
-}
-
-.icon-button:hover {
-  background: rgba(247, 166, 0, 0.12);
-  box-shadow: none;
-}
-
-.attachment-preview {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  border: 1px solid rgba(0, 69, 40, 0.14);
-  border-radius: 8px;
-  padding: 8px 10px;
-  background: #f7faf8;
-  color: var(--steel);
-  font-size: 0.86rem;
-}
-
-.attachment-preview[hidden] {
-  display: none;
-}
-
-.attachment-preview button {
-  min-height: 30px;
-  padding: 0 10px;
-  border: 1px solid rgba(0, 69, 40, 0.18);
-  background: #ffffff;
-  color: var(--brand);
 }
 
 textarea,
@@ -729,17 +679,9 @@ label {
   }
 
   .composer {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: end;
     padding: 10px 12px max(10px, env(safe-area-inset-bottom, 0px));
-  }
-
-  #contactButton {
-    display: none;
-  }
-
-  .composer-actions {
-    gap: 0;
   }
 
   .composer > button {
