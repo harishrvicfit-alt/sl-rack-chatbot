@@ -72,7 +72,7 @@ function renderSummary(data) {
   const lastEvents = analytics.lastEvents || [];
 
   metrics.innerHTML = [
-    metricCard('AI Status', data.aiEnabled ? 'Aktiv' : 'Fallback', data.model),
+    metricCard('AI Status', data.aiEnabled ? 'Aktiv' : 'Fallback', data.model, data.aiEnabled ? 'ok' : 'warn'),
     metricCard('Dokumente', knowledge.documentCount ?? '-', `${knowledge.chunkCount ?? '-'} Chunks`),
     metricCard('Chats/Events', analytics.chats ?? 0, `${analytics.events ?? 0} Events`),
     metricCard('Blockiert', analytics.blocked ?? 0, 'Rate/Security'),
@@ -96,9 +96,9 @@ function renderSummary(data) {
   ].join('');
 }
 
-function metricCard(label, value, hint = '') {
+function metricCard(label, value, hint = '', tone = '') {
   return `
-    <article class="card">
+    <article class="card ${escapeHtml(tone)}">
       <span class="metric">${escapeHtml(label)}</span>
       <span class="value">${escapeHtml(value)}</span>
       <span class="muted">${escapeHtml(hint)}</span>
