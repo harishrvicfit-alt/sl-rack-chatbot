@@ -70,7 +70,9 @@ function renderSummary(data) {
   const limits = data.limits || {};
   const topEvents = Object.entries(analytics.topEvents || {});
   const topQuestions = analytics.topQuestions || [];
+  const topProducts = analytics.topProducts || [];
   const lastEvents = analytics.lastEvents || [];
+  const leadingProduct = topProducts[0]?.product || '-';
 
   metrics.innerHTML = [
     metricCard('AI Status', data.aiEnabled ? 'Aktiv' : 'Fallback', data.model, data.aiEnabled ? 'ok' : 'warn'),
@@ -83,7 +85,13 @@ function renderSummary(data) {
     metricCard('PDF Klicks', analytics.sourceClicks ?? 0, 'Source cards'),
     metricCard('Kontakt angeboten', analytics.contactOffers ?? 0, 'CTA angezeigt'),
     metricCard('Weiterleitung Vertrieb', analytics.contacts ?? 0, 'Klick auf Mail CTA'),
+    metricCard('Top Produkt', leadingProduct, 'Meist gefragt'),
     metricCard('Fehler', analytics.errors ?? 0, 'Runtime/API'),
+    tableCard(
+      'Top Produkte / Modelle',
+      ['Produkt / Modell', 'Broj'],
+      topProducts.map((item) => [item.product, item.count])
+    ),
     tableCard(
       'Najtrazenija pitanja',
       ['Pitanje', 'Broj'],
