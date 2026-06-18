@@ -68,12 +68,7 @@ app.use(express.json({ limit: '80kb' }));
 app.use(express.static(publicDir));
 
 app.get('/api/health', (_req, res) => {
-  res.json({
-    ok: true,
-    aiEnabled: Boolean(client),
-    model: client ? model : 'fallback-recommender',
-    knowledge: getKnowledgeStatus()
-  });
+  res.json({ ok: true });
 });
 
 app.get('/api/catalog', (_req, res) => {

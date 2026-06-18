@@ -171,12 +171,12 @@ Object.values(fields).forEach((field) => field.addEventListener('change', update
 async function updateHealth() {
   try {
     const response = await fetch('/api/health');
-    const data = await response.json();
-    const docs = data.knowledge?.available ? ` \u00b7 ${data.knowledge.documentCount} docs` : '';
-    statusBadge.textContent = data.aiEnabled ? `AI aktiv: ${data.model}${docs}` : `Demo mode${docs}`;
-    statusBadge.classList.toggle('ai', data.aiEnabled);
+    if (!response.ok) throw new Error('service_unavailable');
+    statusBadge.textContent = 'SL Rack AI Beratung';
+    statusBadge.classList.add('ai');
   } catch {
-    statusBadge.textContent = 'Offline';
+    statusBadge.textContent = 'Service aktuell nicht verfügbar';
+    statusBadge.classList.remove('ai');
   }
 }
 
@@ -372,7 +372,7 @@ function trimForEmail(value, maxLength) {
     .replace(/\n{3,}/g, '\n\n')
     .trim();
   if (text.length <= maxLength) return text;
-  return `${text.slice(0, maxLength - 1)}â€¦`;
+  return `${text.slice(0, maxLength - 1)}…`;
 }
 
 function escapeHtml(value) {
