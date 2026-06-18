@@ -9,7 +9,22 @@ export const companyFacts = {
     'planning support through SL Planner and Solar.Pro.Tool',
     'German engineering with production sites in Germany and Europe'
   ],
-  values: ['Sicherheit', 'Leidenschaft', 'Respekt']
+  values: ['Sicherheit', 'Leidenschaft', 'Respekt'],
+  publicFinancialInformation: {
+    revenue: {
+      value: '85 Mio. bis 425 Mio. EUR',
+      valueType: 'public third-party revenue range, not an audited exact figure published by SL Rack',
+      sourceTitle: 'Indeed Unternehmensprofil: SL Rack GmbH',
+      sourceUrl: 'https://de.indeed.com/cmp/Sl-Rack-Gmbh-1/about'
+    },
+    balanceSheetTotal: {
+      value: '53,2 Mio. EUR',
+      date: '31.12.2024',
+      note: 'Bilanzsumme, nicht Umsatz',
+      sourceTitle: 'North Data: SL Rack GmbH, Haag, HRB 26984',
+      sourceUrl: 'https://www.northdata.de/SL%20Rack%20GmbH,%20Haag/Amtsgericht%20Traunstein%20HRB%2026984'
+    }
+  }
 };
 
 export const productCatalog = [

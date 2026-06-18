@@ -186,12 +186,28 @@ app.post('/api/chat', async (req, res) => {
     await persistAnalytics();
   }
   const knowledgeResults = searchKnowledge(latestUserMessage, profile, 6);
-  const documentSources = buildDocumentSources(knowledgeResults);
+  const publicCompanySources = buildPublicCompanySources(latestUserMessage);
+  const documentSources = publicCompanySources.length
+    ? publicCompanySources
+    : buildDocumentSources(knowledgeResults);
 
   if (!messages.length) {
     recordAnalyticsEvent('chat_blocked', { error: 'empty_messages' });
     await persistAnalytics();
     return res.status(400).json({ error: 'messages array is required' });
+  }
+
+  if (isRevenueQuestion(latestUserMessage)) {
+    const reply = buildPublicRevenueReply(latestUserMessage);
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, mode: 'public_company_info' });
+    await persistAnalytics();
+    return res.json({
+      mode: 'public_company_info',
+      reply,
+      recommendations,
+      knowledgeResults,
+      documentSources
+    });
   }
 
   if (!client) {
@@ -959,6 +975,60 @@ function buildDocumentSources(knowledgeResults = []) {
   }
 
   return [...seen.values()].slice(0, 4);
+}
+
+function isRevenueQuestion(message = '') {
+  return /\b(umsatz|jahresumsatz|erl(?:ö|oe)s|revenue|turnover|promet|prihod)\b/i.test(String(message));
+}
+
+function buildPublicCompanySources(message = '') {
+  if (!isRevenueQuestion(message)) return [];
+  const financials = companyFacts.publicFinancialInformation;
+  return [
+    {
+      title: financials.revenue.sourceTitle,
+      category: 'Öffentliche Unternehmensinformation',
+      url: financials.revenue.sourceUrl
+    },
+    {
+      title: financials.balanceSheetTotal.sourceTitle,
+      category: 'Registerbasierte Finanzinformation',
+      url: financials.balanceSheetTotal.sourceUrl
+    }
+  ];
+}
+
+function buildPublicRevenueReply(message = '') {
+  const financials = companyFacts.publicFinancialInformation;
+  const text = String(message);
+
+  if (/\b(revenue|turnover)\b/i.test(text)) {
+    return [
+      `Publicly accessible company profiles currently place SL Rack GmbH's revenue in the range of **EUR ${financials.revenue.value.replace(' EUR', '')}**.`,
+      `Source: ${financials.revenue.sourceTitle} – ${financials.revenue.sourceUrl}`,
+      'This is a public third-party range, not an audited exact revenue figure published by SL Rack.',
+      `For additional context, register-based data reports total assets of **${financials.balanceSheetTotal.value} as of ${financials.balanceSheetTotal.date}**. Total assets are not revenue.`,
+      `Source: ${financials.balanceSheetTotal.sourceTitle} – ${financials.balanceSheetTotal.sourceUrl}`
+    ].join('\n\n');
+  }
+
+  if (/\b(promet|prihod)\b/i.test(text)) {
+    return [
+      `Javno dostupan profil kompanije trenutno svrstava promet SL Rack GmbH u raspon od **${financials.revenue.value}**.`,
+      `Izvor: ${financials.revenue.sourceTitle} – ${financials.revenue.sourceUrl}`,
+      'To je javno objavljen raspon treće strane, a ne tačan revidirani iznos koji je objavio SL Rack.',
+      `Kao dodatni kontekst, register-bazirani podaci navode bilančnu sumu od **${financials.balanceSheetTotal.value} na dan ${financials.balanceSheetTotal.date}**. Bilančna suma nije promet.`,
+      `Izvor: ${financials.balanceSheetTotal.sourceTitle} – ${financials.balanceSheetTotal.sourceUrl}`
+    ].join('\n\n');
+  }
+
+  return [
+    `Öffentlich zugängliche Unternehmensprofile ordnen den Umsatz der SL Rack GmbH derzeit in die Spanne von **${financials.revenue.value}** ein.`,
+    `Quelle: ${financials.revenue.sourceTitle} – ${financials.revenue.sourceUrl}`,
+    'Dabei handelt es sich um eine öffentlich angegebene Bandbreite eines Drittanbieters, nicht um einen von SL Rack veröffentlichten, testierten Einzelwert.',
+    `Als zusätzlicher Kontext nennen registerbasierte Daten eine Bilanzsumme von **${financials.balanceSheetTotal.value} zum ${financials.balanceSheetTotal.date}**. Die Bilanzsumme ist nicht mit dem Umsatz gleichzusetzen.`,
+    `Quelle: ${financials.balanceSheetTotal.sourceTitle} – ${financials.balanceSheetTotal.sourceUrl}`
+  ].join('\n\n');
 }
 
 function validateChatRequest(req, rawMessages) {
