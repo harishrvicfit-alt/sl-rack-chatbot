@@ -119,7 +119,7 @@ chatForm.addEventListener('submit', async (event) => {
       actions,
       contact: offerContact
     });
-    renderMessages();
+    renderMessages({ focusLatestAssistant: true });
     renderRecommendations(data.recommendations || []);
     trackEvent('chat_answered', { mode: data.mode, sourceCount: (data.documentSources || []).length });
     if (offerContact) trackEvent('contact_offered', { reason: 'assistant_answer' });
@@ -131,7 +131,7 @@ chatForm.addEventListener('submit', async (event) => {
       content: 'Die Antwort konnte gerade nicht geladen werden. Bitte versuchen Sie es erneut oder kontaktieren Sie SL Rack direkt.',
       contact: true
     });
-    renderMessages();
+    renderMessages({ focusLatestAssistant: true });
     trackEvent('chat_failed');
   }
 });
@@ -200,15 +200,23 @@ function getProfile(message = '') {
   };
 }
 
-function renderMessages() {
+function renderMessages({ focusLatestAssistant = false } = {}) {
   chatLog.innerHTML = '';
+  let latestAssistant = null;
   for (const message of messages) {
-    addMessage(message.role, message.content, message.sources || [], message);
+    const element = addMessage(message.role, message.content, message.sources || [], message, false);
+    if (message.role === 'assistant') latestAssistant = element;
   }
+
+  if (focusLatestAssistant && latestAssistant) {
+    scrollMessageToStart(latestAssistant);
+    return;
+  }
+
   chatLog.scrollTop = chatLog.scrollHeight;
 }
 
-function addMessage(role, content, sources = [], options = {}) {
+function addMessage(role, content, sources = [], options = {}, scrollToEnd = true) {
   const element = document.createElement('div');
   element.className = `message ${role}`;
   element.innerHTML = formatMessage(content);
@@ -226,8 +234,16 @@ function addMessage(role, content, sources = [], options = {}) {
   }
 
   chatLog.append(element);
-  chatLog.scrollTop = chatLog.scrollHeight;
+  if (scrollToEnd) chatLog.scrollTop = chatLog.scrollHeight;
   return element;
+}
+
+function scrollMessageToStart(element) {
+  const logRect = chatLog.getBoundingClientRect();
+  const messageRect = element.getBoundingClientRect();
+  const topPadding = window.innerWidth <= 560 ? 10 : 16;
+  const target = chatLog.scrollTop + messageRect.top - logRect.top - topPadding;
+  chatLog.scrollTop = Math.max(0, target);
 }
 
 function renderActions(actions) {
