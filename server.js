@@ -33,6 +33,8 @@ const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || process.env.OPE
 const ADMIN_COOKIE = 'slrack_admin_session';
 const CHAT_SESSION_COOKIE = 'slrack_chat_session';
 const ACTIVE_SESSION_MS = Number(process.env.ACTIVE_SESSION_MS || 30 * 60 * 1000);
+const ADMIN_EVENT_WINDOW_MS = 5 * 60 * 60 * 1000;
+const ADMIN_EVENT_PREVIEW_LIMIT = 10;
 const ANALYTICS_BLOB_PATH = process.env.ANALYTICS_BLOB_PATH || 'analytics/live.json';
 const HAS_BLOB_STORAGE = Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 let analyticsLoaded = false;
@@ -54,6 +56,7 @@ const analytics = {
   topQuestions: new Map(),
   topProducts: new Map(),
   sessions: new Map(),
+  eventLog: [],
   lastEvents: []
 };
 
@@ -117,6 +120,19 @@ app.get('/api/admin/summary', async (req, res) => {
 
   await ensureAnalyticsLoaded();
   res.json(buildAdminSummary());
+});
+
+app.get('/api/admin/events.csv', async (req, res) => {
+  if (!isAdminRequest(req)) {
+    return res.status(404).json({ error: 'not_found' });
+  }
+
+  await ensureAnalyticsLoaded();
+  const date = new Date().toISOString().slice(0, 10);
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="sl-rack-chatbot-event-log-${date}.csv"`);
+  res.setHeader('Cache-Control', 'private, no-store');
+  res.send(`\uFEFF${buildEventLogCsv(analytics.eventLog)}`);
 });
 
 app.get('/api/analytics/summary', async (req, res) => {
@@ -299,6 +315,10 @@ function buildAdminPage() {
       .metric { color: var(--muted); font-size: .75rem; font-weight: 900; text-transform: uppercase; }
       .value { display: block; margin-top: 9px; font-size: clamp(1.55rem, 3vw, 2.25rem); font-weight: 950; color: var(--brand); line-height: 1; }
       .wide { grid-column: 1 / -1; }
+      .card-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+      .card-heading h2 { margin: 0; }
+      .download-link { display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; padding: 9px 12px; background: var(--brand); color: #fff; font-size: .82rem; font-weight: 900; text-decoration: none; }
+      .download-link:hover { background: #00331e; box-shadow: 0 10px 22px rgba(0,69,40,.18); }
       table { width: 100%; border-collapse: collapse; font-size: .92rem; }
       th, td { border-bottom: 1px solid var(--line); padding: 11px 10px; text-align: left; vertical-align: top; }
       th { color: #26362f; font-size: .74rem; letter-spacing: .02em; text-transform: uppercase; }
@@ -337,7 +357,7 @@ function buildAdminPage() {
             <div>
               <h1>SL Rack Chatbot Admin</h1>
               <p id="statusText" class="muted">Lade Daten...</p>
-              <p class="muted">Statistik za trenutnu produkcijsku instancu. Za trajnu historiju dodajemo bazu u narednom koraku.</p>
+              <p class="muted">Persistente Statistik der aktuellen Produktionsinstanz.</p>
             </div>
             <div class="toolbar-actions">
               <button id="refreshButton" type="button">Aktualisieren</button>
@@ -458,7 +478,11 @@ function mergeAnalyticsSnapshots(stored, incoming) {
   merged.topProducts = mergeCountEntries(stored.topProducts, incoming.topProducts);
   merged.sessions = mergeSessionEntries(stored.sessions, incoming.sessions);
   merged.totalSessions = Math.max(merged.totalSessions, merged.sessions.length);
-  merged.lastEvents = mergeLastEvents(stored.lastEvents, incoming.lastEvents);
+  merged.eventLog = mergeEventLogs(
+    stored.eventLog || stored.lastEvents,
+    incoming.eventLog || incoming.lastEvents
+  );
+  merged.lastEvents = merged.eventLog.slice(0, 50);
 
   return merged;
 }
@@ -498,17 +522,17 @@ function normalizeSessionLastSeen(session) {
   return Number.isFinite(lastSeen) && lastSeen > 0 ? lastSeen : 0;
 }
 
-function mergeLastEvents(leftEvents, rightEvents) {
+function mergeEventLogs(leftEvents, rightEvents) {
   const seen = new Set();
   const events = [];
   for (const event of [...(leftEvents || []), ...(rightEvents || [])]) {
     if (!event || typeof event !== 'object') continue;
-    const key = `${event.type || ''}|${event.at || ''}|${JSON.stringify(event.payload || {})}`;
+    const key = event.id || `${event.type || ''}|${event.at || ''}|${JSON.stringify(event.payload || {})}`;
     if (seen.has(key)) continue;
     seen.add(key);
     events.push(event);
   }
-  return events.sort((a, b) => String(b.at || '').localeCompare(String(a.at || ''))).slice(0, 50);
+  return events.sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')));
 }
 
 function hydrateAnalytics(stored) {
@@ -529,7 +553,8 @@ function hydrateAnalytics(stored) {
   analytics.topQuestions = new Map(Array.isArray(stored.topQuestions) ? stored.topQuestions : []);
   analytics.topProducts = new Map(Array.isArray(stored.topProducts) ? stored.topProducts : []);
   analytics.sessions = new Map(Array.isArray(stored.sessions) ? stored.sessions : []);
-  analytics.lastEvents = Array.isArray(stored.lastEvents) ? stored.lastEvents.slice(0, 50) : [];
+  analytics.eventLog = mergeEventLogs(stored.eventLog || stored.lastEvents, []);
+  analytics.lastEvents = analytics.eventLog.slice(0, 50);
 }
 
 function securityHeaders(_req, res, next) {
@@ -670,10 +695,10 @@ function buildProductAnalyticsTerms() {
 function normalizeAnalyticsText(value) {
   return String(value || '')
     .toLowerCase()
-    .replace(/Ã¤/g, 'ae')
-    .replace(/Ã¶/g, 'oe')
-    .replace(/Ã¼/g, 'ue')
-    .replace(/ÃŸ/g, 'ss')
+    .replace(/ä/g, 'ae')
+    .replace(/ö/g, 'oe')
+    .replace(/ü/g, 'ue')
+    .replace(/ß/g, 'ss')
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9.]+/g, ' ')
@@ -777,12 +802,34 @@ function recordAnalyticsEvent(type = 'unknown', payload = {}, sessionId = '') {
   if (eventType === 'source_clicked') analytics.sourceClicks += 1;
   if (eventType === 'quick_action_clicked') analytics.quickActions += 1;
 
-  analytics.lastEvents.unshift({
+  const event = {
+    id: crypto.randomUUID(),
     type: eventType,
     at: new Date().toISOString(),
     payload: sanitizeAnalyticsPayload(payload)
-  });
-  analytics.lastEvents = analytics.lastEvents.slice(0, 50);
+  };
+  analytics.eventLog.unshift(event);
+  analytics.lastEvents = analytics.eventLog.slice(0, 50);
+}
+
+function buildEventLogCsv(events) {
+  const rows = [['Zeit', 'Event', 'Details']];
+  for (const event of mergeEventLogs(events, [])) {
+    rows.push([
+      event.at || '',
+      event.type || 'unknown',
+      Object.entries(event.payload || {})
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(', ')
+    ]);
+  }
+  return rows.map((row) => row.map(csvCell).join(';')).join('\r\n');
+}
+
+function csvCell(value) {
+  let safe = String(value ?? '');
+  if (/^[=+\-@\t\r]/.test(safe)) safe = `'${safe}`;
+  return `"${safe.replaceAll('"', '""')}"`;
 }
 
 function sanitizeAnalyticsPayload(payload) {
@@ -796,6 +843,14 @@ function sanitizeAnalyticsPayload(payload) {
 }
 
 function getAnalyticsSummary() {
+  const recentCutoff = Date.now() - ADMIN_EVENT_WINDOW_MS;
+  const recentEvents = analytics.eventLog
+    .filter((event) => {
+      const timestamp = Date.parse(event?.at || '');
+      return Number.isFinite(timestamp) && timestamp >= recentCutoff;
+    })
+    .slice(0, ADMIN_EVENT_PREVIEW_LIMIT);
+
   return {
     startedAt: analytics.startedAt,
     events: analytics.events,
@@ -819,7 +874,10 @@ function getAnalyticsSummary() {
       .sort((a, b) => b[1] - a[1])
       .slice(0, 30)
       .map(([product, count]) => ({ product, count })),
-    lastEvents: analytics.lastEvents
+    lastEvents: recentEvents,
+    eventPreviewHours: ADMIN_EVENT_WINDOW_MS / (60 * 60 * 1000),
+    eventPreviewLimit: ADMIN_EVENT_PREVIEW_LIMIT,
+    eventLogCount: analytics.eventLog.length
   };
 }
 
@@ -1053,21 +1111,21 @@ function postProcessSalesReply(reply, userMessage = '') {
   let output = String(reply || '');
   const query = String(userMessage || '').toLowerCase();
   const isTileRoofQuestion = /(ziegel|zieldach|dachhaken|erus|e58|tonziegel|betondachstein)/i.test(query);
-  const asksHookQuantity = /(wie viele|wieviele|anzahl|dachhaken.*ben[oÃ¶]tig|ben[oÃ¶]tige.*dachhaken)/i.test(query);
+  const asksHookQuantity = /(wie viele|wieviele|anzahl|dachhaken.*ben[oö]tig|ben[oö]tige.*dachhaken)/i.test(query);
 
   if (isTileRoofQuestion && (!/Alpha-Platte/i.test(output) || !/Delta-Platte/i.test(output))) {
     output += [
       '',
       'Zusatzhinweis aus der SL Rack Vertriebslogik:',
-      'Bei ZiegeldÃ¤chern bitte nicht nur Dachhaken betrachten. Je nach Ziegeltyp und Projekt kÃ¶nnen auch Alpha-Platte und Delta-Platte relevante SL Rack Optionen sein. FÃ¼r eine belastbare Auswahl bitte den exakten Ziegeltyp, Tonziegel/Betondachstein, Dachneigung und Lattungsabstand prÃ¼fen.'
+      'Bei Ziegeldächern bitte nicht nur Dachhaken betrachten. Je nach Ziegeltyp und Projekt können auch Alpha-Platte und Delta-Platte relevante SL Rack Optionen sein. Für eine belastbare Auswahl bitte den exakten Ziegeltyp, Tonziegel/Betondachstein, Dachneigung und Lattungsabstand prüfen.'
     ].join('\n');
   }
 
-  if (/dachhaken|edelstahl|sl a2/i.test(output) && /preiswert|gÃ¼nstig|guenstig|cheap|low-cost/i.test(output)) {
+  if (/dachhaken|edelstahl|sl a2/i.test(output) && /preiswert|günstig|guenstig|cheap|low-cost/i.test(output)) {
     output += [
       '',
       'Hinweis zur Preisbewertung:',
-      'Eine pauschale Aussage wie preiswert oder gÃ¼nstig ist bei Edelstahl-Dachhaken nicht belastbar. Die wirtschaftlich passende LÃ¶sung hÃ¤ngt vom Dach, Material, Ziegeltyp, statischer Auslegung und den verfÃ¼gbaren SL Rack Alternativen ab.'
+      'Eine pauschale Aussage wie preiswert oder günstig ist bei Edelstahl-Dachhaken nicht belastbar. Die wirtschaftlich passende Lösung hängt vom Dach, Material, Ziegeltyp, statischer Auslegung und den verfügbaren SL Rack Alternativen ab.'
     ].join('\n');
   }
 
@@ -1075,7 +1133,7 @@ function postProcessSalesReply(reply, userMessage = '') {
     output += [
       '',
       'Planungshinweis:',
-      'FÃ¼r RAIL 40 ist aus dem Vertriebs-/Planungskontext eine maximale Ãœberspannung von ca. 1,50 m als relevanter Planungswert bekannt. Die tatsÃ¤chliche Anzahl der Dachhaken muss dennoch projektspezifisch mit Wind-/Schneelast, Randzonen, Modulbelegung und Statik geprÃ¼ft werden.'
+      'Für RAIL 40 ist aus dem Vertriebs-/Planungskontext eine maximale Überspannung von ca. 1,50 m als relevanter Planungswert bekannt. Die tatsächliche Anzahl der Dachhaken muss dennoch projektspezifisch mit Wind-/Schneelast, Randzonen, Modulbelegung und Statik geprüft werden.'
     ].join('\n');
   }
 

@@ -22,7 +22,7 @@ const metricTooltips = {
   'Top Produkte / Modelle': 'Lista proizvoda i tacnih modela za koje su se korisnici najvise raspitivali.',
   'Najtrazenija pitanja': 'Najcesce ponovljena ili slicna korisnicka pitanja.',
   'Top Events': 'Najcesci sistemski dogadjaji, npr. login, poslano pitanje, ponudjen kontakt ili klik na izvor.',
-  'Letzte Events': 'Zadnji evidentirani dogadjaji u admin statistici sa vremenom i kratkim detaljima.',
+  'Letzte Events': 'Dogadjaji iz posljednjih 5 sati, maksimalno 10 redova. Kompletan event log dostupan je kao CSV.',
   'Aktive Limits': 'Trenutno podesena sigurnosna i potrosacka ogranicenja za chatbot.'
 };
 
@@ -115,17 +115,7 @@ function renderSummary(data) {
       topQuestions.map((item) => [item.question, item.count])
     ),
     tableCard('Top Events', ['Event', 'Anzahl'], topEvents.map(([event, count]) => [event, count])),
-    tableCard(
-      'Letzte Events',
-      ['Zeit', 'Event', 'Details'],
-      lastEvents.map((event) => [
-        new Date(event.at).toLocaleString('de-DE'),
-        event.type,
-        Object.entries(event.payload || {})
-          .map(([key, value]) => `${key}: ${value}`)
-          .join(', ') || '-'
-      ])
-    ),
+    eventLogCard(lastEvents, analytics.eventPreviewHours, analytics.eventPreviewLimit, analytics.eventLogCount),
     tableCard('Aktive Limits', ['Limit', 'Wert'], Object.entries(limits))
   ].join('');
 }
@@ -152,6 +142,36 @@ function tableCard(title, headers, rows) {
       <h2>${escapeHtml(title)}</h2>
       <table>
         <thead><tr>${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join('')}</tr></thead>
+        <tbody>${body}</tbody>
+      </table>
+    </article>
+  `;
+}
+
+function eventLogCard(events, previewHours = 5, previewLimit = 10, totalCount = 0) {
+  const tooltip = metricTooltips['Letzte Events'] || '';
+  const rows = events.map((event) => [
+    new Date(event.at).toLocaleString('de-DE'),
+    event.type,
+    Object.entries(event.payload || {})
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(', ') || '-'
+  ]);
+  const body = rows.length
+    ? rows.map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
+    : '<tr><td colspan="3" class="muted">Keine Events in diesem Zeitraum</td></tr>';
+
+  return `
+    <article class="card wide" ${tooltipAttr(tooltip)}>
+      <div class="card-heading">
+        <div>
+          <h2>Letzte Events</h2>
+          <span class="muted">Letzte ${escapeHtml(previewHours)} Stunden · max. ${escapeHtml(previewLimit)} Events · ${escapeHtml(totalCount)} gesamt</span>
+        </div>
+        <a class="download-link" href="/api/admin/events.csv" download>Event-Log herunterladen</a>
+      </div>
+      <table>
+        <thead><tr><th>Zeit</th><th>Event</th><th>Details</th></tr></thead>
         <tbody>${body}</tbody>
       </table>
     </article>
