@@ -18,7 +18,6 @@ const metricTooltips = {
   'PDF Klicks': 'Koliko puta su korisnici kliknuli na izvor, dokumentaciju ili PDF karticu koju je chatbot ponudio.',
   'Kontakt angeboten': 'Koliko puta je chatbot u odgovoru korisniku ponudio kontakt sa SL Rack timom ili Vertriebom.',
   'Weiterleitung Vertrieb': 'Koliko puta je korisnik kliknuo na kontakt/Email CTA i bio preusmjeren prema SL Rack Vertrieb timu.',
-  'Top Produkt': 'Najcesce prepoznati proizvod ili model iz korisnickih pitanja.',
   Fehler: 'Broj tehnickih gresaka u radu chatbota, API pozivima ili runtime obradi.',
   'Top Produkte / Modelle': 'Lista proizvoda i tacnih modela za koje su se korisnici najvise raspitivali.',
   'Najtrazenija pitanja': 'Najcesce ponovljena ili slicna korisnicka pitanja.',
@@ -92,7 +91,6 @@ function renderSummary(data) {
   const topQuestions = analytics.topQuestions || [];
   const topProducts = analytics.topProducts || [];
   const lastEvents = analytics.lastEvents || [];
-  const leadingProduct = topProducts[0]?.product || '-';
 
   metrics.innerHTML = [
     metricCard('AI Status', data.aiEnabled ? 'Aktiv' : 'Fallback', data.model, data.aiEnabled ? 'ok' : 'warn'),
@@ -105,7 +103,6 @@ function renderSummary(data) {
     metricCard('PDF Klicks', analytics.sourceClicks ?? 0, 'Source cards'),
     metricCard('Kontakt angeboten', analytics.contactOffers ?? 0, 'CTA angezeigt'),
     metricCard('Weiterleitung Vertrieb', analytics.contacts ?? 0, 'Klick auf Mail CTA'),
-    metricCard('Top Produkt', leadingProduct, 'Meist gefragt'),
     metricCard('Fehler', analytics.errors ?? 0, 'Runtime/API'),
     tableCard(
       'Top Produkte / Modelle',
