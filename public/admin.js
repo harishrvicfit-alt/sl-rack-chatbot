@@ -134,7 +134,7 @@ function metricCard(label, value, hint = '', tone = '') {
 function tableCard(title, headers, rows) {
   const tooltip = metricTooltips[title] || '';
   const body = rows.length
-    ? rows.map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
+    ? rows.map((row) => `<tr>${row.map((cell, index) => `<td data-label="${escapeHtml(headers[index] || '')}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
     : `<tr><td colspan="${headers.length}" class="muted">Keine Daten</td></tr>`;
 
   return `
@@ -158,7 +158,7 @@ function eventLogCard(events, previewHours = 5, previewLimit = 10, totalCount = 
       .join(', ') || '-'
   ]);
   const body = rows.length
-    ? rows.map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
+    ? rows.map((row) => `<tr>${row.map((cell, index) => `<td data-label="${escapeHtml(['Zeit', 'Event', 'Details'][index])}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
     : '<tr><td colspan="3" class="muted">Keine Events in diesem Zeitraum</td></tr>';
 
   return `

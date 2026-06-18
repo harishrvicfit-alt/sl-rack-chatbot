@@ -319,15 +319,37 @@ function buildAdminPage() {
       .card-heading h2 { margin: 0; }
       .download-link { display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; padding: 9px 12px; background: var(--brand); color: #fff; font-size: .82rem; font-weight: 900; text-decoration: none; }
       .download-link:hover { background: #00331e; box-shadow: 0 10px 22px rgba(0,69,40,.18); }
-      table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+      table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: .92rem; }
       th, td { border-bottom: 1px solid var(--line); padding: 11px 10px; text-align: left; vertical-align: top; }
       th { color: #26362f; font-size: .74rem; letter-spacing: .02em; text-transform: uppercase; }
+      td { min-width: 0; overflow-wrap: anywhere; word-break: break-word; }
       tr:hover td { background: #f8fbf9; }
       .muted { color: var(--muted); }
       .hidden { display: none !important; }
       .error { color: #a33; font-weight: 800; min-height: 1.4em; }
       @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-      @media (max-width: 620px) { main { padding: 12px; } header { padding: 12px 14px; } header img { width: 112px; } .grid { grid-template-columns: 1fr; padding: 12px; } .toolbar { padding: 16px; } .login { margin-top: 5vh; } }
+      @media (max-width: 620px) {
+        body { overflow-x: hidden; }
+        main { min-width: 0; padding: 12px; }
+        header { padding: 12px 14px; }
+        header img { width: 112px; }
+        .admin-pill { padding: 7px 10px; font-size: .78rem; }
+        .grid { grid-template-columns: minmax(0, 1fr); padding: 12px; }
+        .toolbar { padding: 16px; }
+        .login { margin-top: 5vh; }
+        .card, .wide { min-width: 0; max-width: 100%; }
+        .card-heading { align-items: stretch; }
+        .card-heading > * { min-width: 0; }
+        .download-link { width: 100%; }
+        table, tbody, tr, td { display: block; width: 100%; }
+        table { table-layout: auto; }
+        thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+        tbody tr { padding: 9px 0; border-bottom: 1px solid var(--line); }
+        tbody tr:last-child { border-bottom: 0; }
+        td { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 10px; border: 0; padding: 6px 4px; overflow-wrap: anywhere; word-break: break-word; }
+        td::before { color: var(--muted); content: attr(data-label); font-size: .7rem; font-weight: 900; letter-spacing: .02em; text-transform: uppercase; }
+        tr:hover td { background: transparent; }
+      }
     </style>
   </head>
   <body>
