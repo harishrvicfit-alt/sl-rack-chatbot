@@ -88,10 +88,9 @@ chatForm.addEventListener('submit', async (event) => {
   if (!content) return;
 
   messages.push({ role: 'user', content });
+  const requestId = createRequestId();
   messageInput.value = '';
   renderMessages();
-  trackEvent('chat_submitted', { messageLength: content.length });
-  trackEvent('question_asked', { question: content });
 
   const typing = addMessage('assistant', 'Thinking through the project details...');
 
@@ -102,7 +101,7 @@ chatForm.addEventListener('submit', async (event) => {
       body: JSON.stringify({
         messages: buildOutgoingMessages(content),
         profile: getProfile(content),
-        analyticsTracked: true
+        requestId
       })
     });
 
@@ -121,7 +120,6 @@ chatForm.addEventListener('submit', async (event) => {
     });
     renderMessages({ focusLatestAssistant: true });
     renderRecommendations(data.recommendations || []);
-    trackEvent('chat_answered', { mode: data.mode, sourceCount: (data.documentSources || []).length });
     if (offerContact) trackEvent('contact_offered', { reason: 'assistant_answer' });
   } catch (error) {
     console.error(error);
@@ -407,7 +405,7 @@ function syncViewportHeight() {
 
 function trackEvent(type, payload = {}) {
   const body = JSON.stringify({ type, payload, at: new Date().toISOString() });
-  const reliableEvents = new Set(['session_started', 'question_asked', 'contact_offered', 'contact_clicked']);
+  const reliableEvents = new Set(['session_started', 'contact_offered', 'contact_clicked']);
 
   if (reliableEvents.has(type)) {
     fetch('/api/analytics', {
@@ -430,4 +428,9 @@ function trackEvent(type, payload = {}) {
     body,
     keepalive: true
   }).catch(() => {});
+}
+
+function createRequestId() {
+  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
+  return `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 14)}`;
 }

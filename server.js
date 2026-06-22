@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import express from 'express';
 import cors from 'cors';
 import OpenAI from 'openai';
-import { get as getBlob, put as putBlob } from '@vercel/blob';
+import { BlobPreconditionFailedError, get as getBlob, put as putBlob } from '@vercel/blob';
 import { productCatalog, companyFacts, scoreProducts } from './src/slRackKnowledge.js';
 import { buildSystemPrompt } from './src/systemPrompt.js';
 import { getKnowledgeStatus, searchKnowledge } from './src/knowledgeSearch.js';
@@ -35,6 +35,15 @@ const CHAT_SESSION_COOKIE = 'slrack_chat_session';
 const ACTIVE_SESSION_MS = Number(process.env.ACTIVE_SESSION_MS || 30 * 60 * 1000);
 const ADMIN_EVENT_WINDOW_MS = 5 * 60 * 60 * 1000;
 const ADMIN_EVENT_PREVIEW_LIMIT = 10;
+const ANALYTICS_WRITE_RETRIES = 8;
+const ANALYTICS_TIME_ZONE = 'Europe/Berlin';
+const CLIENT_ANALYTICS_EVENTS = new Set([
+  'session_started',
+  'quick_action_clicked',
+  'source_clicked',
+  'contact_offered',
+  'contact_clicked'
+]);
 const ANALYTICS_BLOB_PATH = process.env.ANALYTICS_BLOB_PATH || 'analytics/live.json';
 const HAS_BLOB_STORAGE = Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 let analyticsLoaded = false;
@@ -113,7 +122,7 @@ app.get('/api/admin/summary', async (req, res) => {
     return res.status(404).json({ error: 'not_found' });
   }
 
-  await ensureAnalyticsLoaded();
+  await refreshAnalyticsFromStorage();
   res.json(buildAdminSummary());
 });
 
@@ -122,7 +131,7 @@ app.get('/api/admin/events.csv', async (req, res) => {
     return res.status(404).json({ error: 'not_found' });
   }
 
-  await ensureAnalyticsLoaded();
+  await refreshAnalyticsFromStorage();
   const date = new Date().toISOString().slice(0, 10);
   res.setHeader('Content-Type', 'text/csv; charset=utf-8');
   res.setHeader('Content-Disposition', `attachment; filename="sl-rack-chatbot-event-log-${date}.csv"`);
@@ -135,14 +144,16 @@ app.get('/api/analytics/summary', async (req, res) => {
     return res.status(404).json({ error: 'not_found' });
   }
 
-  await ensureAnalyticsLoaded();
+  await refreshAnalyticsFromStorage();
   res.json(getAnalyticsSummary());
 });
 
 app.post('/api/analytics', async (req, res) => {
   await ensureAnalyticsLoaded();
+  const eventType = String(req.body?.type || '');
+  if (!CLIENT_ANALYTICS_EVENTS.has(eventType)) return res.status(204).end();
   const sessionId = getOrCreateChatSession(req, res);
-  recordAnalyticsEvent(req.body?.type, req.body?.payload, sessionId);
+  recordAnalyticsEvent(eventType, req.body?.payload, sessionId);
   await persistAnalytics();
   res.status(204).end();
 });
@@ -163,7 +174,7 @@ app.post('/api/chat', async (req, res) => {
   const validation = validateChatRequest(req, rawMessages);
 
   if (!validation.ok) {
-    recordAnalyticsEvent('chat_blocked', { error: validation.error });
+    recordAnalyticsEvent('chat_blocked', { error: validation.error }, sessionId);
     await persistAnalytics();
     return res.status(validation.status).json({
       mode: 'blocked',
@@ -178,13 +189,13 @@ app.post('/api/chat', async (req, res) => {
   const messages = validation.messages;
   const profile = req.body?.profile || {};
   const attachment = sanitizeAttachment(req.body?.attachment);
-  if (attachment) recordAnalyticsEvent('attachment_received', { kind: attachment.kind });
+  if (attachment) recordAnalyticsEvent('attachment_received', { kind: attachment.kind }, sessionId);
   const recommendations = scoreProducts(profile).slice(0, 3);
   const latestUserMessage = [...messages].reverse().find((message) => message.role !== 'assistant')?.content || '';
-  if (req.body?.analyticsTracked !== true) {
-    recordQuestion(latestUserMessage, sessionId);
-    await persistAnalytics();
-  }
+  const requestId = normalizeRequestId(req.body?.requestId) || crypto.randomUUID();
+  recordAnalyticsEvent('chat_submitted', { messageLength: latestUserMessage.length, requestId, source: 'chat_api' }, sessionId);
+  recordAnalyticsEvent('question_asked', { question: latestUserMessage, requestId, source: 'chat_api' }, sessionId);
+  await persistAnalytics();
   const knowledgeResults = searchKnowledge(latestUserMessage, profile, 6);
   const publicCompanySources = buildPublicCompanySources(latestUserMessage);
   const documentSources = publicCompanySources.length
@@ -192,14 +203,14 @@ app.post('/api/chat', async (req, res) => {
     : buildDocumentSources(knowledgeResults);
 
   if (!messages.length) {
-    recordAnalyticsEvent('chat_blocked', { error: 'empty_messages' });
+    recordAnalyticsEvent('chat_blocked', { error: 'empty_messages' }, sessionId);
     await persistAnalytics();
     return res.status(400).json({ error: 'messages array is required' });
   }
 
   if (isRevenueQuestion(latestUserMessage)) {
     const reply = buildPublicRevenueReply(latestUserMessage);
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, mode: 'public_company_info' });
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, mode: 'public_company_info', requestId }, sessionId);
     await persistAnalytics();
     return res.json({
       mode: 'public_company_info',
@@ -211,7 +222,7 @@ app.post('/api/chat', async (req, res) => {
   }
 
   if (!client) {
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), mode: 'fallback' });
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), mode: 'fallback', requestId }, sessionId);
     await persistAnalytics();
     return res.json({
       mode: 'fallback',
@@ -243,6 +254,8 @@ app.post('/api/chat', async (req, res) => {
 
     const reply = postProcessSalesReplySafe(response.output_text, latestUserMessage);
 
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), requestId }, sessionId);
+    await persistAnalytics();
     res.json({
       mode: 'ai',
       reply,
@@ -250,12 +263,11 @@ app.post('/api/chat', async (req, res) => {
       knowledgeResults,
       documentSources
     });
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment) });
-    await persistAnalytics();
   } catch (error) {
     console.error(error);
-    recordAnalyticsEvent('chat_error', { status: error?.status, code: error?.code });
+    recordAnalyticsEvent('chat_error', { status: error?.status, code: error?.code, requestId }, sessionId);
     const quotaError = error?.code === 'insufficient_quota' || error?.status === 429;
+    await persistAnalytics();
     res.status(quotaError ? 200 : 500).json({
       mode: quotaError ? 'quota_fallback' : 'error_fallback',
       error: quotaError
@@ -266,7 +278,6 @@ app.post('/api/chat', async (req, res) => {
       knowledgeResults,
       documentSources
     });
-    await persistAnalytics();
   }
 });
 
@@ -431,18 +442,32 @@ async function persistAnalytics() {
 
   analyticsSaveQueue = analyticsSaveQueue
     .then(async () => {
-      const current = serializeAnalytics();
-      const stored = await readStoredAnalyticsSnapshot();
-      const merged = mergeAnalyticsSnapshots(stored, current);
+      for (let attempt = 0; attempt < ANALYTICS_WRITE_RETRIES; attempt += 1) {
+        const current = serializeAnalytics();
+        const storedResult = await readStoredAnalyticsSnapshot();
+        const merged = mergeAnalyticsSnapshots(storedResult?.snapshot, current);
 
-      await putBlob(ANALYTICS_BLOB_PATH, JSON.stringify(merged), {
-        access: 'private',
-        allowOverwrite: true,
-        contentType: 'application/json',
-        cacheControlMaxAge: 60
-      });
+        try {
+          await putBlob(ANALYTICS_BLOB_PATH, JSON.stringify(merged), {
+            access: 'private',
+            allowOverwrite: true,
+            contentType: 'application/json',
+            cacheControlMaxAge: 60,
+            ...(storedResult?.etag ? { ifMatch: storedResult.etag } : {})
+          });
 
-      hydrateAnalytics(merged);
+          // Preserve events accepted by this instance while the Blob write was in flight.
+          hydrateAnalytics(mergeAnalyticsSnapshots(merged, serializeAnalytics()));
+          return;
+        } catch (error) {
+          if (!(error instanceof BlobPreconditionFailedError) && error?.name !== 'BlobPreconditionFailedError') {
+            throw error;
+          }
+          await wait(20 + Math.floor(Math.random() * 40) + attempt * 25);
+        }
+      }
+
+      throw new Error('Analytics write conflict retry limit reached');
     })
     .catch((error) => {
       console.warn('Analytics blob save failed:', error?.message || error);
@@ -456,12 +481,25 @@ async function readStoredAnalyticsSnapshot() {
     const result = await getBlob(ANALYTICS_BLOB_PATH, { access: 'private', useCache: false });
     if (!result?.stream) return null;
     const text = await new Response(result.stream).text();
-    return JSON.parse(text);
+    return { snapshot: JSON.parse(text), etag: result.etag };
   } catch (error) {
     if (error?.name !== 'BlobNotFoundError') {
       console.warn('Analytics blob merge load failed:', error?.message || error);
     }
     return null;
+  }
+}
+
+async function refreshAnalyticsFromStorage() {
+  await ensureAnalyticsLoaded();
+  if (!HAS_BLOB_STORAGE) return;
+  await analyticsSaveQueue;
+  const firstRead = await readStoredAnalyticsSnapshot();
+  await wait(80);
+  const secondRead = await readStoredAnalyticsSnapshot();
+  const storedSnapshot = mergeAnalyticsSnapshots(firstRead?.snapshot, secondRead?.snapshot || firstRead?.snapshot);
+  if (storedSnapshot) {
+    hydrateAnalytics(mergeAnalyticsSnapshots(storedSnapshot, serializeAnalytics()));
   }
 }
 
@@ -478,7 +516,7 @@ function serializeAnalytics() {
 
 function mergeAnalyticsSnapshots(stored, incoming) {
   if (!stored || typeof stored !== 'object') {
-    return { ...incoming, savedAt: new Date().toISOString() };
+    return deriveAnalyticsSnapshot({ ...incoming, savedAt: new Date().toISOString() });
   }
 
   const merged = {
@@ -488,49 +526,88 @@ function mergeAnalyticsSnapshots(stored, incoming) {
     savedAt: new Date().toISOString()
   };
 
-  const numericKeys = [
-    'events',
-    'chats',
-    'totalQuestions',
-    'totalSessions',
-    'blocked',
-    'errors',
-    'attachments',
-    'contacts',
-    'contactOffers',
-    'sourceClicks',
-    'quickActions'
-  ];
-
-  for (const key of numericKeys) {
-    merged[key] = Math.max(Number(stored[key] || 0), Number(incoming[key] || 0));
-  }
-
-  merged.topEvents = mergeCountEntries(stored.topEvents, incoming.topEvents);
-  merged.topQuestions = mergeCountEntries(stored.topQuestions, incoming.topQuestions);
-  merged.topProducts = mergeCountEntries(stored.topProducts, incoming.topProducts);
   merged.sessions = mergeSessionEntries(stored.sessions, incoming.sessions);
-  merged.totalSessions = Math.max(merged.totalSessions, merged.sessions.length);
   merged.eventLog = mergeEventLogs(
     stored.eventLog || stored.lastEvents,
     incoming.eventLog || incoming.lastEvents
   );
-  merged.lastEvents = merged.eventLog.slice(0, 50);
-
-  return merged;
+  return deriveAnalyticsSnapshot(merged);
 }
 
-function mergeCountEntries(leftEntries, rightEntries) {
-  const counts = new Map();
-  for (const entries of [leftEntries, rightEntries]) {
-    if (!Array.isArray(entries)) continue;
-    for (const [key, count] of entries) {
-      const safeKey = String(key || '').slice(0, 500);
-      if (!safeKey) continue;
-      counts.set(safeKey, Math.max(counts.get(safeKey) || 0, Number(count || 0)));
+function deriveAnalyticsSnapshot(snapshot) {
+  const events = mergeEventLogs(snapshot?.eventLog || snapshot?.lastEvents, []);
+  const topEvents = new Map();
+  const topQuestions = new Map();
+  const topProducts = new Map();
+  const sessions = new Map(mergeSessionEntries(snapshot?.sessions, []));
+  const seenQuestions = new Set();
+  const seenAnswers = new Set();
+  const counters = {
+    chats: 0,
+    totalQuestions: 0,
+    blocked: 0,
+    errors: 0,
+    attachments: 0,
+    contacts: 0,
+    contactOffers: 0,
+    sourceClicks: 0,
+    quickActions: 0
+  };
+
+  for (const event of events) {
+    const type = String(event?.type || 'unknown');
+    topEvents.set(type, (topEvents.get(type) || 0) + 1);
+
+    const timestamp = Date.parse(event?.at || '');
+    if (event?.sessionId && Number.isFinite(timestamp)) {
+      const previous = sessions.get(event.sessionId) || 0;
+      sessions.set(event.sessionId, Math.max(previous, timestamp));
     }
+
+    if (type === 'question_asked') {
+      const questionKey = event?.payload?.requestId || event.id;
+      if (!seenQuestions.has(questionKey)) {
+        seenQuestions.add(questionKey);
+        const question = normalizeQuestion(event?.payload?.question);
+        if (question) {
+          counters.totalQuestions += 1;
+          topQuestions.set(question, (topQuestions.get(question) || 0) + 1);
+          for (const label of getProductInterestLabels(question)) {
+            topProducts.set(label, (topProducts.get(label) || 0) + 1);
+          }
+        }
+      }
+    }
+
+    if (type === 'chat_answered') {
+      const answerKey = event?.payload?.requestId || event.id;
+      if (!seenAnswers.has(answerKey)) {
+        seenAnswers.add(answerKey);
+        counters.chats += 1;
+      }
+    }
+    if (type === 'chat_blocked') counters.blocked += 1;
+    if (type === 'chat_error' || type === 'chat_failed') counters.errors += 1;
+    if (type === 'attachment_selected' || type === 'attachment_received') counters.attachments += 1;
+    if (type === 'contact_clicked') counters.contacts += 1;
+    if (type === 'contact_offered') counters.contactOffers += 1;
+    if (type === 'source_clicked') counters.sourceClicks += 1;
+    if (type === 'quick_action_clicked') counters.quickActions += 1;
   }
-  return [...counts.entries()];
+
+  return {
+    ...snapshot,
+    ...counters,
+    events: events.length,
+    totalSessions: sessions.size,
+    topEvents: [...topEvents.entries()],
+    topQuestions: [...topQuestions.entries()],
+    topProducts: [...topProducts.entries()],
+    sessions: [...sessions.entries()],
+    eventLog: events,
+    lastEvents: events.slice(0, 50),
+    savedAt: new Date().toISOString()
+  };
 }
 
 function mergeSessionEntries(leftEntries, rightEntries) {
@@ -570,24 +647,29 @@ function mergeEventLogs(leftEvents, rightEvents) {
 
 function hydrateAnalytics(stored) {
   if (!stored || typeof stored !== 'object') return;
-  analytics.startedAt = stored.startedAt || analytics.startedAt;
-  analytics.events = Number(stored.events || 0);
-  analytics.chats = Number(stored.chats || 0);
-  analytics.totalQuestions = Number(stored.totalQuestions || 0);
-  analytics.totalSessions = Number(stored.totalSessions || 0);
-  analytics.blocked = Number(stored.blocked || 0);
-  analytics.errors = Number(stored.errors || 0);
-  analytics.attachments = Number(stored.attachments || 0);
-  analytics.contacts = Number(stored.contacts || 0);
-  analytics.contactOffers = Number(stored.contactOffers || 0);
-  analytics.sourceClicks = Number(stored.sourceClicks || 0);
-  analytics.quickActions = Number(stored.quickActions || 0);
-  analytics.topEvents = new Map(Array.isArray(stored.topEvents) ? stored.topEvents : []);
-  analytics.topQuestions = new Map(Array.isArray(stored.topQuestions) ? stored.topQuestions : []);
-  analytics.topProducts = new Map(Array.isArray(stored.topProducts) ? stored.topProducts : []);
-  analytics.sessions = new Map(Array.isArray(stored.sessions) ? stored.sessions : []);
-  analytics.eventLog = mergeEventLogs(stored.eventLog || stored.lastEvents, []);
-  analytics.lastEvents = analytics.eventLog.slice(0, 50);
+  const derived = deriveAnalyticsSnapshot(stored);
+  analytics.startedAt = derived.startedAt || analytics.startedAt;
+  analytics.events = Number(derived.events || 0);
+  analytics.chats = Number(derived.chats || 0);
+  analytics.totalQuestions = Number(derived.totalQuestions || 0);
+  analytics.totalSessions = Number(derived.totalSessions || 0);
+  analytics.blocked = Number(derived.blocked || 0);
+  analytics.errors = Number(derived.errors || 0);
+  analytics.attachments = Number(derived.attachments || 0);
+  analytics.contacts = Number(derived.contacts || 0);
+  analytics.contactOffers = Number(derived.contactOffers || 0);
+  analytics.sourceClicks = Number(derived.sourceClicks || 0);
+  analytics.quickActions = Number(derived.quickActions || 0);
+  analytics.topEvents = new Map(derived.topEvents);
+  analytics.topQuestions = new Map(derived.topQuestions);
+  analytics.topProducts = new Map(derived.topProducts);
+  analytics.sessions = new Map(derived.sessions);
+  analytics.eventLog = derived.eventLog;
+  analytics.lastEvents = derived.lastEvents;
+}
+
+function wait(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
 function securityHeaders(_req, res, next) {
@@ -645,17 +727,6 @@ function getOrCreateChatSession(req, res) {
   return sessionId;
 }
 
-function recordQuestion(question, sessionId) {
-  const clean = normalizeQuestion(question);
-  if (!clean) return;
-
-  analytics.totalQuestions += 1;
-  analytics.chats += 1;
-  analytics.topQuestions.set(clean, (analytics.topQuestions.get(clean) || 0) + 1);
-  recordProductInterests(clean);
-  if (sessionId) analytics.sessions.set(sessionId, Date.now());
-}
-
 function normalizeQuestion(question) {
   return String(question || '')
     .replace(/\s+/g, ' ')
@@ -663,20 +734,20 @@ function normalizeQuestion(question) {
     .slice(0, 220);
 }
 
-function recordProductInterests(question) {
+function getProductInterestLabels(question) {
   const text = normalizeAnalyticsText(question);
-  if (!text) return;
+  if (!text) return [];
 
   const matched = new Set();
   for (const term of productAnalyticsTerms) {
-    if (term.aliases.some((alias) => text.includes(alias))) {
-      matched.add(term.label);
-    }
+    if (term.aliases.some((alias) => text.includes(alias))) matched.add(term.label);
   }
+  return [...matched].slice(0, 8);
+}
 
-  for (const label of [...matched].slice(0, 8)) {
-    analytics.topProducts.set(label, (analytics.topProducts.get(label) || 0) + 1);
-  }
+function normalizeRequestId(value) {
+  const id = String(value || '').trim();
+  return /^[a-zA-Z0-9_-]{12,80}$/.test(id) ? id : '';
 }
 
 function buildProductAnalyticsTerms() {
@@ -820,37 +891,26 @@ function timingSafeEqualString(a, b) {
 
 function recordAnalyticsEvent(type = 'unknown', payload = {}, sessionId = '') {
   const eventType = String(type || 'unknown').slice(0, 80);
-  analytics.events += 1;
-  analytics.topEvents.set(eventType, (analytics.topEvents.get(eventType) || 0) + 1);
-
-  if (eventType === 'question_asked') {
-    recordQuestion(payload?.question, sessionId);
-  }
-  if (eventType === 'chat_submitted' || eventType === 'chat_answered') analytics.chats += 1;
-  if (eventType === 'chat_blocked') analytics.blocked += 1;
-  if (eventType === 'chat_error' || eventType === 'chat_failed') analytics.errors += 1;
-  if (eventType === 'attachment_selected' || eventType === 'attachment_received') analytics.attachments += 1;
-  if (eventType === 'contact_clicked') analytics.contacts += 1;
-  if (eventType === 'contact_offered') analytics.contactOffers += 1;
-  if (eventType === 'source_clicked') analytics.sourceClicks += 1;
-  if (eventType === 'quick_action_clicked') analytics.quickActions += 1;
-
   const event = {
     id: crypto.randomUUID(),
     type: eventType,
     at: new Date().toISOString(),
+    sessionId: /^[a-f0-9]{32}$/.test(sessionId) ? sessionId : '',
     payload: sanitizeAnalyticsPayload(payload)
   };
   analytics.eventLog.unshift(event);
   analytics.lastEvents = analytics.eventLog.slice(0, 50);
+  if (event.sessionId) analytics.sessions.set(event.sessionId, Date.now());
 }
 
 function buildEventLogCsv(events) {
-  const rows = [['Zeit', 'Event', 'Details']];
+  const rows = [['Zeit (Europe/Berlin)', 'Zeit (UTC)', 'Event', 'Session', 'Details']];
   for (const event of mergeEventLogs(events, [])) {
     rows.push([
+      formatBerlinDateTime(event.at),
       event.at || '',
       event.type || 'unknown',
+      event.sessionId || '',
       Object.entries(event.payload || {})
         .map(([key, value]) => `${key}: ${value}`)
         .join(', ')
@@ -869,13 +929,29 @@ function sanitizeAnalyticsPayload(payload) {
   if (!payload || typeof payload !== 'object') return {};
   const clean = {};
   for (const [key, value] of Object.entries(payload).slice(0, 10)) {
-    if (typeof value === 'string') clean[key] = value.slice(0, 120);
+    if (typeof value === 'string') clean[key] = value.slice(0, key === 'question' ? 500 : 160);
     else if (typeof value === 'number' || typeof value === 'boolean') clean[key] = value;
   }
   return clean;
 }
 
+function formatBerlinDateTime(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  return new Intl.DateTimeFormat('de-DE', {
+    timeZone: ANALYTICS_TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  }).format(date);
+}
+
 function getAnalyticsSummary() {
+  hydrateAnalytics(serializeAnalytics());
   const recentCutoff = Date.now() - ADMIN_EVENT_WINDOW_MS;
   const recentEvents = analytics.eventLog
     .filter((event) => {
@@ -885,6 +961,7 @@ function getAnalyticsSummary() {
     .slice(0, ADMIN_EVENT_PREVIEW_LIMIT);
 
   return {
+    timeZone: ANALYTICS_TIME_ZONE,
     startedAt: analytics.startedAt,
     events: analytics.events,
     chats: analytics.chats,
@@ -921,6 +998,7 @@ function buildAdminSummary() {
     model: client ? model : 'fallback-recommender',
     aiEnabled: Boolean(client),
     knowledge: getKnowledgeStatus(),
+    timeZone: ANALYTICS_TIME_ZONE,
     analytics: getAnalyticsSummary(),
     limits: {
       maxMessages: MAX_MESSAGES,

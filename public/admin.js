@@ -6,11 +6,12 @@ const refreshButton = document.querySelector('#refreshButton');
 const logoutButton = document.querySelector('#logoutButton');
 const metrics = document.querySelector('#metrics');
 const statusText = document.querySelector('#statusText');
+let adminTimeZone = 'Europe/Berlin';
 
 const metricTooltips = {
   'AI Status': 'Pokazuje da li chatbot trenutno koristi OpenAI API model ili fallback logiku bez AI odgovora.',
   Dokumente: 'Broj dokumenata i tekstualnih dijelova iz SL Rack baze znanja koje chatbot koristi za odgovore.',
-  'Ukupno upita': 'Ukupan broj korisnickih pitanja koja su evidentirana u admin statistici.',
+  'Ukupno upita': 'Ukupan broj jedinstvenih korisnickih pitanja koja je chat API prihvatio i evidentirao.',
   'Aktivne sesije': 'Broj korisnickih sesija koje su bile aktivne u zadnjih 30 minuta.',
   'Sesije ukupno': 'Ukupan broj jedinstvenih chat sesija koje su evidentirane od pocetka mjerenja.',
   Blockiert: 'Broj zahtjeva koje je sistem blokirao zbog rate limita, predugog unosa ili sigurnosnih pravila.',
@@ -79,7 +80,8 @@ async function loadSummary() {
     return;
   }
 
-  statusText.textContent = `Aktualisiert: ${new Date(data.generatedAt).toLocaleString('de-DE')}`;
+  adminTimeZone = data.timeZone || 'Europe/Berlin';
+  statusText.textContent = `Aktualisiert: ${formatAdminDateTime(data.generatedAt)} (${adminTimeZone})`;
   renderSummary(data);
 }
 
@@ -151,7 +153,7 @@ function tableCard(title, headers, rows) {
 function eventLogCard(events, previewHours = 5, previewLimit = 10, totalCount = 0) {
   const tooltip = metricTooltips['Letzte Events'] || '';
   const rows = events.map((event) => [
-    new Date(event.at).toLocaleString('de-DE'),
+    formatAdminDateTime(event.at),
     event.type,
     Object.entries(event.payload || {})
       .map(([key, value]) => `${key}: ${value}`)
@@ -211,4 +213,19 @@ function tooltipAttr(value) {
   if (!value) return '';
   const safe = escapeHtml(value);
   return `title="${safe}" data-tooltip="${safe}" aria-label="${safe}"`;
+}
+
+function formatAdminDateTime(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '-';
+  return new Intl.DateTimeFormat('de-DE', {
+    timeZone: adminTimeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  }).format(date);
 }
