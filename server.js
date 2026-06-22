@@ -49,6 +49,8 @@ const HAS_BLOB_STORAGE = Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.en
 let analyticsLoaded = false;
 let analyticsSaveQueue = Promise.resolve();
 const analytics = {
+  schemaVersion: 2,
+  legacyTotals: { questions: 0, sessions: 0 },
   startedAt: new Date().toISOString(),
   events: 0,
   chats: 0,
@@ -526,6 +528,8 @@ function mergeAnalyticsSnapshots(stored, incoming) {
     savedAt: new Date().toISOString()
   };
 
+  merged.schemaVersion = 2;
+  merged.legacyTotals = mergeLegacyTotals(stored.legacyTotals, incoming.legacyTotals);
   merged.sessions = mergeSessionEntries(stored.sessions, incoming.sessions);
   merged.eventLog = mergeEventLogs(
     stored.eventLog || stored.lastEvents,
@@ -595,11 +599,21 @@ function deriveAnalyticsSnapshot(snapshot) {
     if (type === 'quick_action_clicked') counters.quickActions += 1;
   }
 
+  const migratedLegacyTotals = snapshot?.schemaVersion === 2 || snapshot?.legacyTotals
+    ? normalizeLegacyTotals(snapshot?.legacyTotals)
+    : {
+        questions: Math.max(0, Number(snapshot?.totalQuestions || 0) - counters.totalQuestions),
+        sessions: Math.max(0, Number(snapshot?.totalSessions || 0) - sessions.size)
+      };
+
   return {
     ...snapshot,
     ...counters,
+    schemaVersion: 2,
+    legacyTotals: migratedLegacyTotals,
     events: events.length,
-    totalSessions: sessions.size,
+    totalQuestions: counters.totalQuestions + migratedLegacyTotals.questions,
+    totalSessions: sessions.size + migratedLegacyTotals.sessions,
     topEvents: [...topEvents.entries()],
     topQuestions: [...topQuestions.entries()],
     topProducts: [...topProducts.entries()],
@@ -607,6 +621,22 @@ function deriveAnalyticsSnapshot(snapshot) {
     eventLog: events,
     lastEvents: events.slice(0, 50),
     savedAt: new Date().toISOString()
+  };
+}
+
+function normalizeLegacyTotals(value) {
+  return {
+    questions: Math.max(0, Number(value?.questions || 0)),
+    sessions: Math.max(0, Number(value?.sessions || 0))
+  };
+}
+
+function mergeLegacyTotals(left, right) {
+  const leftTotals = normalizeLegacyTotals(left);
+  const rightTotals = normalizeLegacyTotals(right);
+  return {
+    questions: Math.max(leftTotals.questions, rightTotals.questions),
+    sessions: Math.max(leftTotals.sessions, rightTotals.sessions)
   };
 }
 
@@ -648,6 +678,8 @@ function mergeEventLogs(leftEvents, rightEvents) {
 function hydrateAnalytics(stored) {
   if (!stored || typeof stored !== 'object') return;
   const derived = deriveAnalyticsSnapshot(stored);
+  analytics.schemaVersion = derived.schemaVersion;
+  analytics.legacyTotals = derived.legacyTotals;
   analytics.startedAt = derived.startedAt || analytics.startedAt;
   analytics.events = Number(derived.events || 0);
   analytics.chats = Number(derived.chats || 0);
