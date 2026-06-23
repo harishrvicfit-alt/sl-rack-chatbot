@@ -66,12 +66,14 @@ const analytics = {
   topEvents: new Map(),
   topQuestions: new Map(),
   topProducts: new Map(),
+  topTopics: new Map(),
   sessions: new Map(),
   eventLog: [],
   lastEvents: []
 };
 
 const productAnalyticsTerms = buildProductAnalyticsTerms();
+const topicAnalyticsTerms = buildTopicAnalyticsTerms();
 
 app.use(securityHeaders);
 app.use(cors({ origin: true, methods: ['GET', 'POST', 'OPTIONS'], allowedHeaders: ['Content-Type'] }));
@@ -154,6 +156,32 @@ app.get('/api/admin/questions.csv', async (req, res) => {
   res.send(`\uFEFF${buildQuestionsCsv(analytics.eventLog)}`);
 });
 
+app.get('/api/admin/topics.csv', async (req, res) => {
+  if (!isAdminRequest(req)) {
+    return res.status(404).json({ error: 'not_found' });
+  }
+
+  await refreshAnalyticsFromStorage();
+  const date = new Date().toISOString().slice(0, 10);
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="sl-rack-chatbot-top-themen-${date}.csv"`);
+  res.setHeader('Cache-Control', 'private, no-store');
+  res.send(`\uFEFF${buildTopicsCsv(analytics.eventLog)}`);
+});
+
+app.get('/api/admin/unresolved-questions.csv', async (req, res) => {
+  if (!isAdminRequest(req)) {
+    return res.status(404).json({ error: 'not_found' });
+  }
+
+  await refreshAnalyticsFromStorage();
+  const date = new Date().toISOString().slice(0, 10);
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="sl-rack-chatbot-upiti-bez-dobrog-odgovora-${date}.csv"`);
+  res.setHeader('Cache-Control', 'private, no-store');
+  res.send(`\uFEFF${buildUnresolvedQuestionsCsv(analytics.eventLog)}`);
+});
+
 app.get('/api/analytics/summary', async (req, res) => {
   if (!canReadAnalytics(req)) {
     return res.status(404).json({ error: 'not_found' });
@@ -225,7 +253,8 @@ app.post('/api/chat', async (req, res) => {
 
   if (isRevenueQuestion(latestUserMessage)) {
     const reply = buildPublicRevenueReply(latestUserMessage);
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, mode: 'public_company_info', requestId }, sessionId);
+    const quality = analyzeReplyQuality(reply, 'public_company_info');
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, mode: 'public_company_info', requestId, ...quality }, sessionId);
     await persistAnalytics();
     return res.json({
       mode: 'public_company_info',
@@ -238,7 +267,8 @@ app.post('/api/chat', async (req, res) => {
 
   if (!client) {
     const reply = postProcessSalesReplySafe(buildFallbackReply(profile, recommendations), latestUserMessage);
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), mode: 'fallback', requestId }, sessionId);
+    const quality = analyzeReplyQuality(reply, 'fallback');
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), mode: 'fallback', requestId, ...quality }, sessionId);
     await persistAnalytics();
     return res.json({
       mode: 'fallback',
@@ -269,8 +299,9 @@ app.post('/api/chat', async (req, res) => {
     });
 
     const reply = postProcessSalesReplySafe(response.output_text, latestUserMessage);
+    const quality = analyzeReplyQuality(reply, 'ai');
 
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), requestId }, sessionId);
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), requestId, ...quality }, sessionId);
     await persistAnalytics();
     res.json({
       mode: 'ai',
@@ -356,6 +387,7 @@ function buildAdminPage() {
       .wide { grid-column: 1 / -1; }
       .card-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 12px; }
       .card-heading h2 { margin: 0; }
+      .card-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; }
       .download-link { display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; padding: 10px 13px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #fff; font-size: .82rem; font-weight: 950; text-decoration: none; box-shadow: 0 12px 28px rgba(0,69,40,.14); transition: transform .16s ease, box-shadow .16s ease; }
       .download-link::after { margin-left: 8px; color: var(--accent-2); content: "CSV"; font-size: .68rem; font-weight: 950; }
       .download-link:hover { transform: translateY(-1px); box-shadow: 0 16px 32px rgba(0,69,40,.2); }
@@ -394,6 +426,8 @@ function buildAdminPage() {
         .card, .wide { min-width: 0; max-width: 100%; }
         .card-heading { align-items: stretch; }
         .card-heading > * { min-width: 0; }
+        .card-actions { justify-content: stretch; }
+        .card-actions > * { width: 100%; }
         .download-link { width: 100%; }
         .product-chart { padding: 12px; }
         .bar-row { grid-template-columns: 28px minmax(0, 1fr) 42px; gap: 8px; }
@@ -545,6 +579,7 @@ function serializeAnalytics() {
     topEvents: [...analytics.topEvents.entries()],
     topQuestions: [...analytics.topQuestions.entries()],
     topProducts: [...analytics.topProducts.entries()],
+    topTopics: [...analytics.topTopics.entries()],
     sessions: [...analytics.sessions.entries()],
     savedAt: new Date().toISOString()
   };
@@ -577,6 +612,7 @@ function deriveAnalyticsSnapshot(snapshot) {
   const topEvents = new Map();
   const topQuestions = new Map();
   const topProducts = new Map();
+  const topTopics = new Map();
   const sessions = new Map(mergeSessionEntries(snapshot?.sessions, []));
   const seenQuestions = new Set();
   const seenAnswers = new Set();
@@ -612,6 +648,9 @@ function deriveAnalyticsSnapshot(snapshot) {
           topQuestions.set(question, (topQuestions.get(question) || 0) + 1);
           for (const label of getProductInterestLabels(question)) {
             topProducts.set(label, (topProducts.get(label) || 0) + 1);
+          }
+          for (const topic of getTopicLabels(question)) {
+            topTopics.set(topic, (topTopics.get(topic) || 0) + 1);
           }
         }
       }
@@ -651,6 +690,7 @@ function deriveAnalyticsSnapshot(snapshot) {
     topEvents: [...topEvents.entries()],
     topQuestions: [...topQuestions.entries()],
     topProducts: [...topProducts.entries()],
+    topTopics: [...topTopics.entries()],
     sessions: [...sessions.entries()],
     eventLog: events,
     lastEvents: events.slice(0, 50),
@@ -729,6 +769,7 @@ function hydrateAnalytics(stored) {
   analytics.topEvents = new Map(derived.topEvents);
   analytics.topQuestions = new Map(derived.topQuestions);
   analytics.topProducts = new Map(derived.topProducts);
+  analytics.topTopics = new Map(derived.topTopics);
   analytics.sessions = new Map(derived.sessions);
   analytics.eventLog = derived.eventLog;
   analytics.lastEvents = derived.lastEvents;
@@ -811,6 +852,17 @@ function getProductInterestLabels(question) {
   return [...matched].slice(0, 8);
 }
 
+function getTopicLabels(question) {
+  const text = normalizeAnalyticsText(question);
+  if (!text) return ['Sonstiges'];
+
+  const matched = new Set();
+  for (const term of topicAnalyticsTerms) {
+    if (term.aliases.some((alias) => text.includes(alias))) matched.add(term.label);
+  }
+  return matched.size ? [...matched].slice(0, 8) : ['Sonstiges'];
+}
+
 function normalizeRequestId(value) {
   const id = String(value || '').trim();
   return /^[a-zA-Z0-9_-]{12,80}$/.test(id) ? id : '';
@@ -858,6 +910,39 @@ function buildProductAnalyticsTerms() {
   add('SL Tracker', ['tracker', 'tracking']);
   add('Carportsysteme', ['carport', 'carportpfette', 'carportbinder', 'fundamentschuh']);
   add('Freiflaechensysteme', ['freiflaeche', 'freiflaechensystem', 'solar park', 'w-rammprofil', 'rammprofil', 'binder', 'z-strebe', 'z-pfette']);
+
+  return [...terms.entries()].map(([label, aliases]) => ({ label, aliases: [...aliases] }));
+}
+
+function buildTopicAnalyticsTerms() {
+  const terms = new Map();
+  const add = (label, aliases = []) => {
+    const normalizedLabel = String(label || '').trim();
+    if (!normalizedLabel) return;
+    const existing = terms.get(normalizedLabel) || new Set();
+    for (const value of [normalizedLabel, ...aliases]) {
+      const alias = normalizeAnalyticsText(value);
+      if (alias && alias.length >= 3) existing.add(alias);
+    }
+    terms.set(normalizedLabel, existing);
+  };
+
+  add('Dachhaken', ['dachhaken', 'dach haken', 'roof hook', 'haken', 'edelstahlhaken', 'sl a2', '3d sl alu', 'multi hook']);
+  add('Schraeg-/Ziegeldach', ['schraeg dach', 'schraegdach', 'schragdach', 'ziegeldach', 'ziegel', 'tonziegel', 'betondachstein', 'erlus', 'e58', 'favorit', 'topwinner']);
+  add('Flachdach', ['flachdach', 'flat roof', 'fast flat', 'ballast', 'ost west', 'sued', 'sud', 'suedausrichtung', 'sudausrichtung', 'dachlast']);
+  add('Freiflaeche', ['freiflaeche', 'freiflache', 'freifl che', 'freiflachensystem', 'ground mount', 'solarpark', 'rammprofil', 'pfettensystem', 'sparrensystem']);
+  add('Dokumentation / PDF', ['dokumentation', 'dokument', 'pdf', 'datenblatt', 'produktdatenblatt', 'montageanleitung', 'prospekt', 'checkliste', 'zertifikat', 'garantie']);
+  add('Preise / Kosten', ['preis', 'preise', 'kosten', 'kostet', 'guenstig', 'gunstig', 'gunstige', 'guenstige', 'g nstig', 'g nstige', 'günstig', 'günstige', 'preiswert', 'angebot', 'rabatt', 'budget']);
+  add('Statik / Planung', ['statik', 'planung', 'auslegung', 'windlast', 'schneelast', 'last', 'ueberspannung', 'uberspannung', 'rail 40', 'solar.pro.tool', 'sl planner']);
+  add('Kontakt / Vertrieb', ['kontakt', 'vertrieb', 'sales', 'angebot anfordern', 'mail', 'email', 'telefon', 'ansprechpartner', 'beratung']);
+  add('Montage', ['montage', 'montieren', 'installation', 'installieren', 'befestigung', 'drehmoment', 'werkzeug', 'schraube']);
+  add('RAIL / Schienen', ['rail', 'schiene', 'tragschiene', 'montageschiene', 'rail 40', 'rail 60', 'rail inlay']);
+  add('Modulklemmen', ['modulklemme', 'mittelklemme', 'endklemme', 'klemme', 'klemmen']);
+  add('Blechdach / Falz', ['blechdach', 'falz', 'falzklemme', 'stehfalz', 'trapez', 'trapezblech', 'zambelli', 'dfalzcu', 'kupferfalzdach']);
+  add('Fassade', ['fassade', 'fassadensystem', 'energy wall', 'wall']);
+  add('Carport', ['carport', 'parkplatz', 'stellplatz']);
+  add('Agri-PV / Tracker', ['agri', 'agri pv', 'tracker', 'tracking', 'landwirtschaft']);
+  add('Unternehmen', ['sl rack', 'firma', 'unternehmen', 'umsatz', 'revenue', 'promet', 'prihod']);
 
   return [...terms.entries()].map(([label, aliases]) => ({ label, aliases: [...aliases] }));
 }
@@ -1017,6 +1102,56 @@ function buildQuestionsCsv(events) {
   return rows.map((row) => row.map(csvCell).join(';')).join('\r\n');
 }
 
+function buildTopicsCsv(events) {
+  const topicCounts = getTopicCountRows(events);
+  const total = topicCounts.reduce((sum, item) => sum + item.count, 0);
+  const rows = [['Thema / Kategorie', 'Anzahl', 'Anteil %']];
+
+  for (const item of topicCounts) {
+    rows.push([
+      item.topic,
+      item.count,
+      total ? Math.round((item.count / total) * 1000) / 10 : 0
+    ]);
+  }
+
+  return rows.map((row) => row.map(csvCell).join(';')).join('\r\n');
+}
+
+function buildUnresolvedQuestionsCsv(events) {
+  const rows = [
+    [
+      'Nr.',
+      'Zeit (Europe/Berlin)',
+      'Zeit (UTC)',
+      'Frage',
+      'Grund',
+      'Antwortmodus',
+      'Session',
+      'Request ID',
+      'Themen',
+      'Erkannte Produkte / Modelle'
+    ]
+  ];
+
+  getUnresolvedQuestionRows(events).forEach((row, index) => {
+    rows.push([
+      index + 1,
+      formatBerlinDateTime(row.at),
+      row.at || '',
+      row.question,
+      row.reason,
+      row.mode,
+      row.sessionId || '',
+      row.requestId || '',
+      row.topics.join(', '),
+      row.products.join(', ')
+    ]);
+  });
+
+  return rows.map((row) => row.map(csvCell).join(';')).join('\r\n');
+}
+
 function getQuestionLogRows(events) {
   const seen = new Set();
   return mergeEventLogs(events, [])
@@ -1027,6 +1162,76 @@ function getQuestionLogRows(events) {
       seen.add(key);
       return true;
     });
+}
+
+function getTopicCountRows(events) {
+  const topics = new Map();
+  for (const event of getQuestionLogRows(events)) {
+    const question = normalizeQuestion(event.payload?.question);
+    for (const topic of getTopicLabels(question)) {
+      topics.set(topic, (topics.get(topic) || 0) + 1);
+    }
+  }
+  return [...topics.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([topic, count]) => ({ topic, count }));
+}
+
+function getUnresolvedQuestionRows(events) {
+  const mergedEvents = mergeEventLogs(events, []);
+  const questionsByRequest = new Map();
+  const unresolvedByRequest = new Map();
+
+  for (const event of mergedEvents) {
+    const requestId = event?.payload?.requestId || '';
+    if (event?.type === 'question_asked') {
+      const question = normalizeQuestion(event.payload?.question);
+      if (question && requestId && !questionsByRequest.has(requestId)) {
+        questionsByRequest.set(requestId, event);
+      }
+    }
+
+    if (event?.type === 'chat_answered' && requestId && isUnresolvedPayload(event.payload)) {
+      unresolvedByRequest.set(requestId, {
+        at: event.at,
+        sessionId: event.sessionId,
+        requestId,
+        mode: event.payload?.mode || 'ai',
+        reason: event.payload?.unresolvedReason || 'Antwort als unsicher markiert'
+      });
+    }
+
+    if (event?.type === 'chat_error' && requestId) {
+      unresolvedByRequest.set(requestId, {
+        at: event.at,
+        sessionId: event.sessionId,
+        requestId,
+        mode: 'error',
+        reason: 'Technischer Fehler oder API-Fehler'
+      });
+    }
+  }
+
+  return [...unresolvedByRequest.values()]
+    .map((entry) => {
+      const questionEvent = questionsByRequest.get(entry.requestId);
+      const question = normalizeQuestion(questionEvent?.payload?.question);
+      if (!question) return null;
+      return {
+        ...entry,
+        at: questionEvent?.at || entry.at,
+        sessionId: questionEvent?.sessionId || entry.sessionId,
+        question,
+        topics: getTopicLabels(question),
+        products: getProductInterestLabels(question)
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')));
+}
+
+function isUnresolvedPayload(payload = {}) {
+  return payload?.quality === 'needs_review' || payload?.unresolved === true || Boolean(payload?.unresolvedReason);
 }
 
 function csvCell(value) {
@@ -1063,6 +1268,7 @@ function formatBerlinDateTime(value) {
 function getAnalyticsSummary() {
   hydrateAnalytics(serializeAnalytics());
   const recentCutoff = Date.now() - ADMIN_EVENT_WINDOW_MS;
+  const unresolvedQuestions = getUnresolvedQuestionRows(analytics.eventLog);
   const recentEvents = analytics.eventLog
     .filter((event) => {
       const timestamp = Date.parse(event?.at || '');
@@ -1094,6 +1300,12 @@ function getAnalyticsSummary() {
       .sort((a, b) => b[1] - a[1])
       .slice(0, 30)
       .map(([product, count]) => ({ product, count })),
+    topTopics: [...analytics.topTopics.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 30)
+      .map(([topic, count]) => ({ topic, count })),
+    unresolvedQuestions: unresolvedQuestions.slice(0, 20),
+    unresolvedQuestionCount: unresolvedQuestions.length,
     lastEvents: recentEvents,
     eventPreviewHours: ADMIN_EVENT_WINDOW_MS / (60 * 60 * 1000),
     eventPreviewLimit: ADMIN_EVENT_PREVIEW_LIMIT,
@@ -1132,6 +1344,34 @@ function canReadAnalytics(req) {
   }
 
   return process.env.VERCEL !== '1' || isAdminRequest(req);
+}
+
+function analyzeReplyQuality(reply = '', mode = 'ai') {
+  const text = normalizeAnalyticsText(reply);
+  const reasons = [];
+
+  if (mode === 'fallback' || mode === 'quota_fallback' || mode === 'error_fallback') {
+    reasons.push('Fallback-Antwort statt vollstaendiger AI-Antwort');
+  }
+  if (/(keinen belastbaren beleg|nicht belastbar|nicht pauschal|keine verbindliche aussage|unsicher|uncertain)/i.test(text)) {
+    reasons.push('Antwort enthaelt Unsicherheit oder keinen belastbaren Beleg');
+  }
+  if (/(nicht genug|nicht ausreichend|zu wenig|fehlende angaben|brauche.*angaben|benoetige.*angaben|benotige.*angaben|mehr daten|weitere daten)/i.test(text)) {
+    reasons.push('Antwort benoetigt weitere Kundendaten');
+  }
+  if (/(kontaktieren sie|vertrieb|technical sales|technische.*pruefung|technische.*prufung|technisch.*pruefen|technisch.*prufen|sl rack.*pruefen|sl rack.*prufen|technical review)/i.test(text)) {
+    reasons.push('Antwort verweist auf Vertrieb oder technische Pruefung');
+  }
+  if (/(keine information|nicht verfuegbar|nicht in den unterlagen|sehe ich nicht|nicht dokumentiert)/i.test(text)) {
+    reasons.push('Information fehlt oder ist in den Unterlagen nicht dokumentiert');
+  }
+
+  const unresolvedReason = reasons.filter(Boolean).join(' | ');
+  return {
+    quality: unresolvedReason ? 'needs_review' : 'good',
+    unresolved: Boolean(unresolvedReason),
+    unresolvedReason
+  };
 }
 
 function buildFallbackReply(profile, recommendations) {

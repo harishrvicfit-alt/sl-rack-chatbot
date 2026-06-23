@@ -21,7 +21,9 @@ const metricTooltips = {
   'Weiterleitung Vertrieb': 'Koliko puta je korisnik kliknuo na kontakt/Email CTA i bio preusmjeren prema SL Rack Vertrieb timu.',
   Fehler: 'Broj tehnickih gresaka u radu chatbota, API pozivima ili runtime obradi.',
   'Top Produkte / Modelle': 'Lista proizvoda i tacnih modela za koje su se korisnici najvise raspitivali.',
+  'Top Themen / Kategorien': 'Najcesce teme iz svih korisnickih pitanja, npr. Dachhaken, Flachdach, Dokumentation, Preise, Statik ili Kontakt.',
   'Najtrazenija pitanja': 'Najcesce ponovljena ili slicna korisnicka pitanja.',
+  'Upiti bez dobrog odgovora': 'Pitanja kod kojih je chatbot dao nesiguran odgovor, trazio dodatne podatke, prebacio na tehnicku provjeru ili imao tehnicki fallback.',
   'Top Events': 'Najcesci sistemski dogadjaji, npr. login, poslano pitanje, ponudjen kontakt ili klik na izvor.',
   'Letzte Events': 'Dogadjaji iz posljednjih 5 sati, maksimalno 10 redova. Kompletan event log dostupan je kao CSV.',
   'Aktive Limits': 'Trenutno podesena sigurnosna i potrosacka ogranicenja za chatbot.'
@@ -92,6 +94,8 @@ function renderSummary(data) {
   const topEvents = Object.entries(analytics.topEvents || {});
   const topQuestions = analytics.topQuestions || [];
   const topProducts = analytics.topProducts || [];
+  const topTopics = analytics.topTopics || [];
+  const unresolvedQuestions = analytics.unresolvedQuestions || [];
   const lastEvents = analytics.lastEvents || [];
 
   metrics.innerHTML = [
@@ -110,6 +114,17 @@ function renderSummary(data) {
       'Top Produkte / Modelle',
       ['Produkt / Modell', 'Broj'],
       topProducts.map((item) => [item.product, item.count])
+    ),
+    topicStatsCard(
+      'Top Themen / Kategorien',
+      ['Thema / Kategorie', 'Broj'],
+      topTopics.map((item) => [item.topic, item.count])
+    ),
+    unresolvedQuestionsCard(
+      'Upiti bez dobrog odgovora',
+      ['Zeit', 'Pitanje', 'Grund'],
+      unresolvedQuestions.map((item) => [formatAdminDateTime(item.at), item.question, item.reason]),
+      analytics.unresolvedQuestionCount || 0
     ),
     questionsTableCard(
       'Najtrazenija pitanja',
@@ -193,6 +208,78 @@ function productStatsCard(title, headers, rows) {
       <table>
         <thead><tr>${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join('')}</tr></thead>
         <tbody>${tableBody}</tbody>
+      </table>
+    </article>
+  `;
+}
+
+function topicStatsCard(title, headers, rows) {
+  const tooltip = metricTooltips[title] || '';
+  const maxCount = Math.max(...rows.map((row) => Number(row[1]) || 0), 0);
+  const totalMentions = rows.reduce((sum, row) => sum + (Number(row[1]) || 0), 0);
+  const chartRows = rows.slice(0, 12);
+  const chart = chartRows.length
+    ? chartRows.map((row, index) => {
+        const label = String(row[0] ?? '');
+        const count = Number(row[1]) || 0;
+        const percent = maxCount ? Math.max(4, Math.round((count / maxCount) * 100)) : 0;
+        return `
+          <div class="bar-row ${index === 0 ? 'top' : ''}" title="${escapeHtml(`${label}: ${count}`)}" style="--bar-width: ${percent}%">
+            <span class="bar-rank">${escapeHtml(index + 1)}</span>
+            <span class="bar-label">${escapeHtml(label)}</span>
+            <span class="bar-track" aria-hidden="true"><span class="bar-fill"></span></span>
+            <span class="bar-count">${escapeHtml(count)}</span>
+          </div>
+        `;
+      }).join('')
+    : '<p class="muted">Noch keine Themendaten vorhanden.</p>';
+  const tableBody = rows.length
+    ? rows.map((row) => `<tr>${row.map((cell, index) => `<td data-label="${escapeHtml(headers[index] || '')}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
+    : `<tr><td colspan="${headers.length}" class="muted">Keine Daten</td></tr>`;
+
+  return `
+    <article class="card wide" ${tooltipAttr(tooltip)}>
+      <div class="card-heading">
+        <div>
+          <h2>${escapeHtml(title)}</h2>
+          <span class="muted">Automatisch aus allen gespeicherten Nutzerfragen kategorisiert.</span>
+        </div>
+        <div class="card-actions">
+          <div class="chart-summary" aria-label="Zusammenfassung Top Themen">
+            <span><strong>${escapeHtml(totalMentions)}</strong> Zuordnungen</span>
+          </div>
+          <a class="download-link" href="/api/admin/topics.csv" download>Themen CSV</a>
+        </div>
+      </div>
+      <div class="product-chart" aria-label="Grafik Top Themen und Kategorien">
+        ${chart}
+      </div>
+      <table>
+        <thead><tr>${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join('')}</tr></thead>
+        <tbody>${tableBody}</tbody>
+      </table>
+    </article>
+  `;
+}
+
+function unresolvedQuestionsCard(title, headers, rows, totalCount = 0) {
+  const tooltip = metricTooltips[title] || '';
+  const body = rows.length
+    ? rows.map((row) => `<tr>${row.map((cell, index) => `<td data-label="${escapeHtml(headers[index] || '')}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
+    : `<tr><td colspan="${headers.length}" class="muted">Keine review-pflichtigen Antworten seit Aktivierung der Bewertung</td></tr>`;
+
+  return `
+    <article class="card wide" ${tooltipAttr(tooltip)}>
+      <div class="card-heading">
+        <div>
+          <h2>${escapeHtml(title)}</h2>
+          <span class="muted">${escapeHtml(totalCount)} gesamt seit Aktivierung der Antwortbewertung · letzte ${escapeHtml(rows.length)} im Panel</span>
+        </div>
+        <a class="download-link" href="/api/admin/unresolved-questions.csv" download>Review CSV</a>
+      </div>
+      <table>
+        <thead><tr>${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join('')}</tr></thead>
+        <tbody>${body}</tbody>
       </table>
     </article>
   `;
