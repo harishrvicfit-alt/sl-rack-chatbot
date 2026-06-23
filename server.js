@@ -141,6 +141,19 @@ app.get('/api/admin/events.csv', async (req, res) => {
   res.send(`\uFEFF${buildEventLogCsv(analytics.eventLog)}`);
 });
 
+app.get('/api/admin/questions.csv', async (req, res) => {
+  if (!isAdminRequest(req)) {
+    return res.status(404).json({ error: 'not_found' });
+  }
+
+  await refreshAnalyticsFromStorage();
+  const date = new Date().toISOString().slice(0, 10);
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="sl-rack-chatbot-all-questions-${date}.csv"`);
+  res.setHeader('Cache-Control', 'private, no-store');
+  res.send(`\uFEFF${buildQuestionsCsv(analytics.eventLog)}`);
+});
+
 app.get('/api/analytics/summary', async (req, res) => {
   if (!canReadAnalytics(req)) {
     return res.status(404).json({ error: 'not_found' });
@@ -950,6 +963,50 @@ function buildEventLogCsv(events) {
     ]);
   }
   return rows.map((row) => row.map(csvCell).join(';')).join('\r\n');
+}
+
+function buildQuestionsCsv(events) {
+  const rows = [
+    [
+      'Nr.',
+      'Zeit (Europe/Berlin)',
+      'Zeit (UTC)',
+      'Frage',
+      'Session',
+      'Request ID',
+      'Quelle',
+      'Erkannte Produkte / Modelle'
+    ]
+  ];
+  const questions = getQuestionLogRows(events);
+
+  questions.forEach((event, index) => {
+    const question = normalizeQuestion(event.payload?.question);
+    rows.push([
+      index + 1,
+      formatBerlinDateTime(event.at),
+      event.at || '',
+      question,
+      event.sessionId || '',
+      event.payload?.requestId || '',
+      event.payload?.source || '',
+      getProductInterestLabels(question).join(', ')
+    ]);
+  });
+
+  return rows.map((row) => row.map(csvCell).join(';')).join('\r\n');
+}
+
+function getQuestionLogRows(events) {
+  const seen = new Set();
+  return mergeEventLogs(events, [])
+    .filter((event) => event?.type === 'question_asked' && normalizeQuestion(event.payload?.question))
+    .filter((event) => {
+      const key = event.payload?.requestId || event.id;
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
 }
 
 function csvCell(value) {

@@ -111,7 +111,7 @@ function renderSummary(data) {
       ['Produkt / Modell', 'Broj'],
       topProducts.map((item) => [item.product, item.count])
     ),
-    tableCard(
+    questionsTableCard(
       'Najtrazenija pitanja',
       ['Pitanje', 'Broj'],
       topQuestions.map((item) => [item.question, item.count])
@@ -142,6 +142,29 @@ function tableCard(title, headers, rows) {
   return `
     <article class="card wide" ${tooltipAttr(tooltip)}>
       <h2>${escapeHtml(title)}</h2>
+      <table>
+        <thead><tr>${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join('')}</tr></thead>
+        <tbody>${body}</tbody>
+      </table>
+    </article>
+  `;
+}
+
+function questionsTableCard(title, headers, rows) {
+  const tooltip = metricTooltips[title] || '';
+  const body = rows.length
+    ? rows.map((row) => `<tr>${row.map((cell, index) => `<td data-label="${escapeHtml(headers[index] || '')}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
+    : `<tr><td colspan="${headers.length}" class="muted">Keine Daten</td></tr>`;
+
+  return `
+    <article class="card wide" ${tooltipAttr(tooltip)}>
+      <div class="card-heading">
+        <div>
+          <h2>${escapeHtml(title)}</h2>
+          <span class="muted">Top-Liste im Panel, kompletter Fragenverlauf als CSV.</span>
+        </div>
+        <a class="download-link" href="/api/admin/questions.csv" download>Alle Fragen CSV</a>
+      </div>
       <table>
         <thead><tr>${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join('')}</tr></thead>
         <tbody>${body}</tbody>
