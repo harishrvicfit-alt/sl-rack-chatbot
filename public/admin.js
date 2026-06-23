@@ -154,16 +154,18 @@ function productStatsCard(title, headers, rows) {
   const tooltip = metricTooltips[title] || '';
   const maxCount = Math.max(...rows.map((row) => Number(row[1]) || 0), 0);
   const chartRows = rows.slice(0, 10);
+  const totalMentions = rows.reduce((sum, row) => sum + (Number(row[1]) || 0), 0);
+  const topShare = totalMentions && chartRows[0] ? Math.round(((Number(chartRows[0][1]) || 0) / totalMentions) * 100) : 0;
   const chart = chartRows.length
     ? chartRows.map((row, index) => {
         const label = String(row[0] ?? '');
         const count = Number(row[1]) || 0;
         const percent = maxCount ? Math.max(4, Math.round((count / maxCount) * 100)) : 0;
         return `
-          <div class="bar-row" title="${escapeHtml(`${label}: ${count}`)}">
+          <div class="bar-row ${index === 0 ? 'top' : ''}" title="${escapeHtml(`${label}: ${count}`)}" style="--bar-width: ${percent}%">
             <span class="bar-rank">${escapeHtml(index + 1)}</span>
             <span class="bar-label">${escapeHtml(label)}</span>
-            <span class="bar-track" aria-hidden="true"><span class="bar-fill" style="width: ${percent}%"></span></span>
+            <span class="bar-track" aria-hidden="true"><span class="bar-fill"></span></span>
             <span class="bar-count">${escapeHtml(count)}</span>
           </div>
         `;
@@ -179,6 +181,10 @@ function productStatsCard(title, headers, rows) {
         <div>
           <h2>${escapeHtml(title)}</h2>
           <span class="muted">Grafische Auswertung der am haeufigsten genannten Produkte und Modelle.</span>
+        </div>
+        <div class="chart-summary" aria-label="Zusammenfassung Top Produkte">
+          <span><strong>${escapeHtml(totalMentions)}</strong> Erwaehnungen</span>
+          <span><strong>${escapeHtml(topShare)}%</strong> Top-Anteil</span>
         </div>
       </div>
       <div class="product-chart" aria-label="Grafik Top Produkte und Modelle">
