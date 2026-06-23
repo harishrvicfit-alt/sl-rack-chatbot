@@ -198,7 +198,7 @@ app.post('/api/chat', async (req, res) => {
   recordAnalyticsEvent('chat_submitted', { messageLength: latestUserMessage.length, requestId, source: 'chat_api' }, sessionId);
   recordAnalyticsEvent('question_asked', { question: latestUserMessage, requestId, source: 'chat_api' }, sessionId);
   await persistAnalytics();
-  const knowledgeResults = searchKnowledge(latestUserMessage, profile, 6);
+  const knowledgeResults = buildKnowledgeContext(latestUserMessage, profile, 6);
   const publicCompanySources = buildPublicCompanySources(latestUserMessage);
   const documentSources = publicCompanySources.length
     ? publicCompanySources
@@ -224,11 +224,12 @@ app.post('/api/chat', async (req, res) => {
   }
 
   if (!client) {
+    const reply = postProcessSalesReplySafe(buildFallbackReply(profile, recommendations), latestUserMessage);
     recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), mode: 'fallback', requestId }, sessionId);
     await persistAnalytics();
     return res.json({
       mode: 'fallback',
-      reply: buildFallbackReply(profile, recommendations),
+      reply,
       recommendations,
       knowledgeResults,
       documentSources
@@ -275,7 +276,7 @@ app.post('/api/chat', async (req, res) => {
       error: quotaError
         ? 'OpenAI API key is valid, but the account has no available API quota. Please add billing or credits in the OpenAI platform.'
         : 'AI response failed',
-      reply: buildFallbackReply(profile, recommendations),
+      reply: postProcessSalesReplySafe(buildFallbackReply(profile, recommendations), latestUserMessage),
       recommendations,
       knowledgeResults,
       documentSources
@@ -1075,6 +1076,7 @@ function buildDocumentSources(knowledgeResults = []) {
   const seen = new Map();
 
   for (const result of knowledgeResults) {
+    if (result?.category === 'Interne Antwortlogik') continue;
     if (!result?.sourceUrl || seen.has(result.sourceUrl)) continue;
     seen.set(result.sourceUrl, {
       title: result.title,
@@ -1085,6 +1087,61 @@ function buildDocumentSources(knowledgeResults = []) {
   }
 
   return [...seen.values()].slice(0, 4);
+}
+
+function buildKnowledgeContext(message = '', profile = {}, limit = 6) {
+  const guidanceResults = buildSalesGuidanceResults(message);
+  const officialResults = searchKnowledge(message, profile, limit);
+  return [...guidanceResults, ...officialResults].slice(0, limit + guidanceResults.length);
+}
+
+function buildSalesGuidanceResults(message = '') {
+  const text = String(message || '');
+  const isTileRoofQuestion = /(ziegel|zieldach|dachhaken|erlus|erus|e58|favorit|topwinner|top winner|tonziegel|betondachstein)/i.test(text);
+  if (!isTileRoofQuestion) return [];
+
+  return [
+    {
+      id: 'sales-guidance-tile-roof-options',
+      title: 'SL Rack Vertriebsleitlinie: Ziegeldach-Vorqualifikation',
+      category: 'Interne Antwortlogik',
+      page: null,
+      sourceUrl: 'https://www.sl-rack.com/downloads',
+      score: 999,
+      excerpt:
+        'Bei Ziegeldach-Anfragen keine pauschale Ein-Produkt-Empfehlung geben. Neben Dachhaken muessen auch Dachersatzplatten und Plattenloesungen geprueft werden: Alpha-Platte, Beta-Platte, Delta-Platte sowie Dachhaken 3D SL Alu und SL Alu Multi Hook. Fuer eine belastbare Empfehlung werden Hersteller, exaktes Ziegelmodell, Tonziegel oder Betondachstein, Dachneigung, Lattungsabstand, Sparrenlage und Lastannahmen benoetigt.'
+    },
+    {
+      id: 'sales-guidance-favorit-topwinner',
+      title: 'SL Rack Vertriebsleitlinie: Favorit / TopWinner',
+      category: 'Interne Antwortlogik',
+      page: null,
+      sourceUrl: 'https://www.sl-rack.com/downloads',
+      score: 998,
+      excerpt:
+        'Bei Favorit und TopWinner nicht behaupten, dass beide pauschal denselben Edelstahl-Dachhaken verwenden. Keine Aussage wie "meistverkauft", "selten verkauft" oder "preiswert" ohne offizielle SL Rack Verkaufsdaten. Stattdessen sagen: In den vorliegenden Unterlagen ist diese exakte Zuordnung nicht belastbar belegt; relevante Optionen sind Delta-Platte bzw. modellbezogene Dachersatzplatte, 3D SL Alu, SL Alu Multi Hook sowie Alpha-/Beta-Platte je nach Ziegeltyp und Dachaufbau. Fuer TopWinner/Favorit technische Pruefung mit exaktem Hersteller- und Modelldatenblatt empfehlen.'
+    },
+    {
+      id: 'official-delta-plate-erlus-models',
+      title: 'Delta-Platte',
+      category: 'Datenblaetter',
+      page: 9,
+      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Datenblaetter/Delta-Platte/SL_Rack_Delta-Platte_Produktblatt-DE.pdf',
+      score: 997,
+      excerpt:
+        'Die Delta-Platte ist als modellbezogene Dachersatzplatte dokumentiert. In der SL Rack Produktuebersicht sind Varianten unter anderem fuer Frankfurter Pfanne, Erlus Forma, Erlus E58/E58S, Erlus Reformpfanne XXL, Creaton MZ3 Neu und Biberschwanz aufgefuehrt. Das ist ein wichtiger Gegencheck, bevor nur ein Dachhaken empfohlen wird.'
+    },
+    {
+      id: 'official-3d-sl-alu-options',
+      title: 'Dachhaken 3D SL Alu',
+      category: 'Datenblaetter',
+      page: 1,
+      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Datenblaetter/Dachhaken_3D_SL_Alu/SL_Rack_Dachhaken_3D_SL_Alu_Produktblatt_DE.pdf',
+      score: 996,
+      excerpt:
+        'Dachhaken 3D SL Alu ist als SL Rack Option fuer Ziegeldach-Anbindungen dokumentiert, mit Varianten K, L, 36 L und XL. Er darf als zu pruefende Alternative genannt werden, aber nicht als exakte Loesung fuer ein konkretes Ziegelmodell ohne Beleg und Projektpruefung.'
+    }
+  ];
 }
 
 function isRevenueQuestion(message = '') {
@@ -1274,14 +1331,15 @@ function looksLikeAbuse(text) {
 function postProcessSalesReplySafe(reply, userMessage = '') {
   let output = String(reply || '');
   const query = String(userMessage || '').toLowerCase();
-  const isTileRoofQuestion = /(ziegel|zieldach|dachhaken|erus|e58|tonziegel|betondachstein)/i.test(query);
+  const isTileRoofQuestion = /(ziegel|zieldach|dachhaken|erlus|erus|e58|favorit|topwinner|top winner|tonziegel|betondachstein)/i.test(query);
+  const isFavoritTopWinnerQuestion = /(favorit|topwinner|top winner)/i.test(query);
   const asksHookQuantity = /(wie viele|wieviele|anzahl|dachhaken.*ben[o\u00f6]tig|ben[o\u00f6]tige.*dachhaken)/i.test(query);
 
-  if (isTileRoofQuestion && (!/Alpha-Platte/i.test(output) || !/Delta-Platte/i.test(output))) {
+  if (isTileRoofQuestion && (!/Alpha-Platte/i.test(output) || !/Delta-Platte/i.test(output) || !/(3D SL Alu|SL Alu Multi Hook)/i.test(output))) {
     output += [
       '',
       'Zusatzhinweis aus der SL Rack Vertriebslogik:',
-      'Bei Ziegeld\u00e4chern bitte nicht nur Dachhaken betrachten. Je nach Ziegeltyp und Projekt k\u00f6nnen auch Alpha-Platte und Delta-Platte relevante SL Rack Optionen sein. F\u00fcr eine belastbare Auswahl bitte den exakten Ziegeltyp, Tonziegel/Betondachstein, Dachneigung und Lattungsabstand pr\u00fcfen.'
+      'Bei Ziegeld\u00e4chern bitte nicht nur einen Dachhaken betrachten. Je nach Ziegeltyp und Projekt k\u00f6nnen auch Alpha-Platte, Beta-Platte, Delta-Platte, Dachhaken 3D SL Alu und SL Alu Multi Hook relevante SL Rack Optionen sein. F\u00fcr eine belastbare Auswahl bitte Hersteller, exaktes Ziegelmodell, Tonziegel/Betondachstein, Dachneigung, Lattungsabstand und Sparrenlage pr\u00fcfen.'
     ].join('\n');
   }
 
@@ -1290,6 +1348,22 @@ function postProcessSalesReplySafe(reply, userMessage = '') {
       '',
       'Hinweis zur Preisbewertung:',
       'Eine pauschale Aussage wie preiswert oder g\u00fcnstig ist bei Edelstahl-Dachhaken nicht belastbar. Die wirtschaftlich passende L\u00f6sung h\u00e4ngt vom Dach, Material, Ziegeltyp, statischer Auslegung und den verf\u00fcgbaren SL Rack Alternativen ab.'
+    ].join('\n');
+  }
+
+  if (isFavoritTopWinnerQuestion && /(edelstahl|sl a2|dachhaken)/i.test(output)) {
+    output += [
+      '',
+      'Korrektur f\u00fcr Favorit / TopWinner:',
+      'Favorit und TopWinner d\u00fcrfen nicht pauschal demselben Edelstahl-Dachhaken zugeordnet werden. In den vorliegenden Unterlagen sehe ich daf\u00fcr keinen belastbaren Beleg. Bitte diese Ziegel mit exaktem Hersteller- und Modelldatenblatt technisch pr\u00fcfen und parallel Delta-Platte bzw. passende Dachersatzplatte, 3D SL Alu, SL Alu Multi Hook sowie Alpha-/Beta-Platte als Alternativen betrachten.'
+    ].join('\n');
+  }
+
+  if (isFavoritTopWinnerQuestion && /(meistverkauft|selten verkauft|topseller|top-seller|best[- ]seller)/i.test(output)) {
+    output += [
+      '',
+      'Hinweis zu Verkaufs-/Popularit\u00e4tsaussagen:',
+      'Ohne offizielle SL Rack Verkaufsdaten sollte der Chatbot keine Aussage treffen, ob ein Produkt besonders h\u00e4ufig oder selten verkauft wird. Besser ist die technische Bewertung anhand von Ziegeltyp, Dachaufbau und Projektparametern.'
     ].join('\n');
   }
 

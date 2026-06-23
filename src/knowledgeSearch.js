@@ -120,8 +120,10 @@ function expandSalesTerms(query = '') {
   const text = String(query).toLowerCase();
   const expansions = [];
 
-  if (/(ziegel|dachhaken|erus|e58|tonziegel|betondachstein)/i.test(text)) {
-    expansions.push('Dachhaken Alpha-Platte Delta-Platte Beta-Platte Ziegeldach Tonziegel Betondachstein Dachersatzplatte');
+  if (/(ziegel|dachhaken|erlus|erus|e58|favorit|topwinner|top winner|tonziegel|betondachstein)/i.test(text)) {
+    expansions.push(
+      'Dachhaken Alpha-Platte Delta-Platte Beta-Platte Ziegeldach Tonziegel Betondachstein Dachersatzplatte 3D SL Alu SL Alu Multi Hook Erlus E58 Favorit TopWinner'
+    );
   }
 
   if (/(anzahl|wie viele|wieviele|dachhaken|befestigungspunkte|haken)/i.test(text)) {
