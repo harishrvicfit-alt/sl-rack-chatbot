@@ -106,7 +106,7 @@ function renderSummary(data) {
     metricCard('Kontakt angeboten', analytics.contactOffers ?? 0, 'CTA angezeigt'),
     metricCard('Weiterleitung Vertrieb', analytics.contacts ?? 0, 'Klick auf Mail CTA'),
     metricCard('Fehler', analytics.errors ?? 0, 'Runtime/API'),
-    tableCard(
+    productStatsCard(
       'Top Produkte / Modelle',
       ['Produkt / Modell', 'Broj'],
       topProducts.map((item) => [item.product, item.count])
@@ -145,6 +145,48 @@ function tableCard(title, headers, rows) {
       <table>
         <thead><tr>${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join('')}</tr></thead>
         <tbody>${body}</tbody>
+      </table>
+    </article>
+  `;
+}
+
+function productStatsCard(title, headers, rows) {
+  const tooltip = metricTooltips[title] || '';
+  const maxCount = Math.max(...rows.map((row) => Number(row[1]) || 0), 0);
+  const chartRows = rows.slice(0, 10);
+  const chart = chartRows.length
+    ? chartRows.map((row, index) => {
+        const label = String(row[0] ?? '');
+        const count = Number(row[1]) || 0;
+        const percent = maxCount ? Math.max(4, Math.round((count / maxCount) * 100)) : 0;
+        return `
+          <div class="bar-row" title="${escapeHtml(`${label}: ${count}`)}">
+            <span class="bar-rank">${escapeHtml(index + 1)}</span>
+            <span class="bar-label">${escapeHtml(label)}</span>
+            <span class="bar-track" aria-hidden="true"><span class="bar-fill" style="width: ${percent}%"></span></span>
+            <span class="bar-count">${escapeHtml(count)}</span>
+          </div>
+        `;
+      }).join('')
+    : '<p class="muted">Noch keine Produktdaten vorhanden.</p>';
+  const tableBody = rows.length
+    ? rows.map((row) => `<tr>${row.map((cell, index) => `<td data-label="${escapeHtml(headers[index] || '')}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
+    : `<tr><td colspan="${headers.length}" class="muted">Keine Daten</td></tr>`;
+
+  return `
+    <article class="card wide" ${tooltipAttr(tooltip)}>
+      <div class="card-heading">
+        <div>
+          <h2>${escapeHtml(title)}</h2>
+          <span class="muted">Grafische Auswertung der am haeufigsten genannten Produkte und Modelle.</span>
+        </div>
+      </div>
+      <div class="product-chart" aria-label="Grafik Top Produkte und Modelle">
+        ${chart}
+      </div>
+      <table>
+        <thead><tr>${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join('')}</tr></thead>
+        <tbody>${tableBody}</tbody>
       </table>
     </article>
   `;

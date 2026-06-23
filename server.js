@@ -357,6 +357,13 @@ function buildAdminPage() {
       .card-heading h2 { margin: 0; }
       .download-link { display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; padding: 9px 12px; background: var(--brand); color: #fff; font-size: .82rem; font-weight: 900; text-decoration: none; }
       .download-link:hover { background: #00331e; box-shadow: 0 10px 22px rgba(0,69,40,.18); }
+      .product-chart { display: grid; gap: 10px; margin: 14px 0 18px; padding: 14px; border: 1px solid rgba(0,69,40,.1); border-radius: 8px; background: linear-gradient(180deg, #f7fbf8, #fff); }
+      .bar-row { display: grid; grid-template-columns: 30px minmax(150px, 1fr) minmax(180px, 2.1fr) 46px; align-items: center; gap: 10px; min-width: 0; }
+      .bar-rank { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 999px; background: rgba(247,166,0,.16); color: #7a5200; font-size: .78rem; font-weight: 950; }
+      .bar-label { min-width: 0; color: #22362d; font-size: .9rem; font-weight: 850; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .bar-track { position: relative; height: 14px; overflow: hidden; border-radius: 999px; background: #e8f0eb; box-shadow: inset 0 0 0 1px rgba(0,69,40,.08); }
+      .bar-fill { display: block; height: 100%; min-width: 6px; border-radius: inherit; background: linear-gradient(90deg, var(--brand), var(--accent)); box-shadow: 0 8px 16px rgba(0,69,40,.16); }
+      .bar-count { color: var(--brand); font-weight: 950; text-align: right; }
       table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: .92rem; }
       th, td { border-bottom: 1px solid var(--line); padding: 11px 10px; text-align: left; vertical-align: top; }
       th { color: #26362f; font-size: .74rem; letter-spacing: .02em; text-transform: uppercase; }
@@ -379,6 +386,10 @@ function buildAdminPage() {
         .card-heading { align-items: stretch; }
         .card-heading > * { min-width: 0; }
         .download-link { width: 100%; }
+        .product-chart { padding: 12px; }
+        .bar-row { grid-template-columns: 28px minmax(0, 1fr) 42px; gap: 8px; }
+        .bar-track { grid-column: 2 / 4; }
+        .bar-label { white-space: normal; overflow: visible; text-overflow: clip; }
         table, tbody, tr, td { display: block; width: 100%; }
         table { table-layout: auto; }
         thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
