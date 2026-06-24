@@ -1563,6 +1563,16 @@ function validateChatRequest(req, rawMessages) {
     };
   }
 
+  const latestUserMessage = [...messages].reverse().find((message) => message.role !== 'assistant')?.content || '';
+  if (isOffTopicRequest(latestUserMessage, messages)) {
+    return {
+      ok: false,
+      status: 400,
+      error: 'off_topic_request',
+      reply: buildOffTopicReply(latestUserMessage)
+    };
+  }
+
   const bucketResult = checkRateLimit(getClientIp(req), totalChars);
   if (!bucketResult.ok) {
     return {
@@ -1643,6 +1653,63 @@ function looksLikeAbuse(text) {
     /repeat (this|the following).{0,40}(1000|10000|forever)/,
     /(.)\1{300,}/
   ].some((pattern) => pattern.test(normalized));
+}
+
+function isOffTopicRequest(latestMessage = '', messages = []) {
+  const latest = normalizeAnalyticsText(latestMessage);
+  if (!latest) return false;
+  if (hasSlRackDomainSignal(latest)) return false;
+
+  const conversationText = normalizeAnalyticsText(messages.map((message) => message.content).join(' '));
+  if (hasSlRackDomainSignal(conversationText) && isFollowUpQuestion(latest)) return false;
+
+  const offTopicPatterns = [
+    /\b(lektira|lektiru|lektire|prepricaj|prepricati|sastav|esej|seminarski|referat|maturski|domaci|zadaca|zadacu|school essay|book report)\b/i,
+    /\b(write|writ(e|ing)|napisi|napisati|sastavi|sastaviti|create|generate|generisi|generiraj|erstelle|schreib(e|en)?)\b.{0,80}\b(poem|pjesm|pesm|story|pric|roman|lektira|essay|aufsatz|bewerbung|cv|resume|code|program|script|rezept|recipe)\b/i,
+    /\b(recept|recipe|kuhanje|cooking|fitness|trening|dijeta|diet|horoskop|astrolog|vic|joke|song|lyrics|pjesma|pesma|film|movie)\b/i,
+    /\b(javascript|python|java|c\+\+|html|css|sql|programir|kod|code|skripta|script|app|website)\b/i,
+    /\b(prevodi|translate|uebersetze|übersetze|gramatika|grammar)\b/i
+  ];
+
+  if (offTopicPatterns.some((pattern) => pattern.test(latest))) return true;
+
+  const generalQuestion = /\b(ko je|sta je|šta je|kako se|objasni|explain|who is|what is|how to|hilfe bei|help me)\b/i.test(latest);
+  return generalQuestion && !hasSlRackDomainSignal(conversationText);
+}
+
+function hasSlRackDomainSignal(text = '') {
+  return [
+    /\b(sl rack|slrack|schletter ludwig|pv|photovoltaik|photovoltaic|solar|solaranlage|module|modul|montage|unterkonstruktion|montagesystem)\b/i,
+    /\b(dach|roof|ziegel|dachhaken|flachdach|freiflaeche|freiflache|fassade|carport|agri|tracker|trapez|falz|rail|schiene)\b/i,
+    /\b(alpha platte|beta platte|delta platte|fast flat|energy wall|solar\.pro\.tool|sl planner|windlast|schneelast|statik)\b/i,
+    /\b(datenblatt|montageanleitung|produktdatenblatt|prospekt|checkliste|garantie|zertifikat)\b/i,
+    /\b(umsatz|jahresumsatz|revenue|turnover|promet|prihod)\b/i
+  ].some((pattern) => pattern.test(text));
+}
+
+function isFollowUpQuestion(text = '') {
+  return [
+    /\b(und|oder|auch|dazu|davon|welche|wie viel|wieviel|was ist mit|gibt es|pdf|datenblatt|link|preis|kosten)\b/i,
+    /\b(kannst du|mozes li|možeš li|bitte|please|zeige|pokazi|pošalji|senden)\b/i
+  ].some((pattern) => pattern.test(text));
+}
+
+function buildOffTopicReply(message = '') {
+  const text = normalizeAnalyticsText(message);
+
+  if (/\b(lektira|lektiru|lektire|sastav|esej|domaci|zadaca|zadacu)\b/i.test(text)) {
+    return 'Razumijem pitanje, ali ovaj chatbot nije namijenjen za lektire, skolske zadatke ili opste pisanje tekstova. Ja sam SL Rack asistent i mogu pomoci oko PV montaznih sistema, Dachhaken, Flachdach/Freiflaeche rjesenja, dokumentacije, statike, planiranja i kontakta sa SL Rack timom. Postavite mi konkretno pitanje vezano za SL Rack ili PV projekat.';
+  }
+
+  if (/\b(essay|book report|homework|poem|story|recipe|code|program|script|translate)\b/i.test(text)) {
+    return 'I can only help with SL Rack and photovoltaic mounting topics. I cannot process general homework, writing, coding, recipes or unrelated requests here. Please ask a concrete question about SL Rack products, mounting systems, documentation, planning or technical sales support.';
+  }
+
+  if (/\b(aufsatz|hausaufgabe|rezept|gedicht|geschichte|programm|code|uebersetze|übersetze)\b/i.test(text)) {
+    return 'Ich kann hier nur bei SL Rack und PV-Montagesystemen helfen. Allgemeine Aufgaben wie Aufsaetze, Hausaufgaben, Rezepte, Programmierung oder Uebersetzungen bearbeite ich in diesem Chat nicht. Bitte stellen Sie eine konkrete Frage zu SL Rack Produkten, Montage, Dokumentation, Planung oder technischem Vertrieb.';
+  }
+
+  return 'Ovaj chatbot je ogranicen na SL Rack i PV montazne sisteme. Ne obradjujem opste teme izvan toga. Rado mogu pomoci ako pitate za SL Rack proizvode, montazu, dokumentaciju, planiranje, statiku, Flachdach, Freiflaeche, Dachhaken, RAIL ili kontakt sa Vertrieb timom.';
 }
 
 function postProcessSalesReplySafe(reply, userMessage = '') {
