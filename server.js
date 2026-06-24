@@ -230,6 +230,7 @@ app.post('/api/chat', async (req, res) => {
   }
 
   const messages = validation.messages;
+  const requestStartedAt = Date.now();
   const profile = req.body?.profile || {};
   const attachment = sanitizeAttachment(req.body?.attachment);
   if (attachment) recordAnalyticsEvent('attachment_received', { kind: attachment.kind }, sessionId);
@@ -238,7 +239,6 @@ app.post('/api/chat', async (req, res) => {
   const requestId = normalizeRequestId(req.body?.requestId) || crypto.randomUUID();
   recordAnalyticsEvent('chat_submitted', { messageLength: latestUserMessage.length, requestId, source: 'chat_api' }, sessionId);
   recordAnalyticsEvent('question_asked', { question: latestUserMessage, requestId, source: 'chat_api' }, sessionId);
-  await persistAnalytics();
   const knowledgeResults = buildKnowledgeContext(latestUserMessage, profile, 6);
   const publicCompanySources = buildPublicCompanySources(latestUserMessage);
   const documentSources = publicCompanySources.length
@@ -254,7 +254,7 @@ app.post('/api/chat', async (req, res) => {
   if (isRevenueQuestion(latestUserMessage)) {
     const reply = buildPublicRevenueReply(latestUserMessage);
     const quality = analyzeReplyQuality(reply, 'public_company_info');
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, mode: 'public_company_info', requestId, ...quality }, sessionId);
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, mode: 'public_company_info', requestId, durationMs: Date.now() - requestStartedAt, ...quality }, sessionId);
     await persistAnalytics();
     return res.json({
       mode: 'public_company_info',
@@ -268,7 +268,7 @@ app.post('/api/chat', async (req, res) => {
   if (!client) {
     const reply = postProcessSalesReplySafe(buildFallbackReply(profile, recommendations), latestUserMessage);
     const quality = analyzeReplyQuality(reply, 'fallback');
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), mode: 'fallback', requestId, ...quality }, sessionId);
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), mode: 'fallback', requestId, durationMs: Date.now() - requestStartedAt, ...quality }, sessionId);
     await persistAnalytics();
     return res.json({
       mode: 'fallback',
@@ -301,7 +301,7 @@ app.post('/api/chat', async (req, res) => {
     const reply = postProcessSalesReplySafe(response.output_text, latestUserMessage);
     const quality = analyzeReplyQuality(reply, 'ai');
 
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), requestId, ...quality }, sessionId);
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), requestId, durationMs: Date.now() - requestStartedAt, ...quality }, sessionId);
     await persistAnalytics();
     res.json({
       mode: 'ai',
@@ -312,7 +312,7 @@ app.post('/api/chat', async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    recordAnalyticsEvent('chat_error', { status: error?.status, code: error?.code, requestId }, sessionId);
+    recordAnalyticsEvent('chat_error', { status: error?.status, code: error?.code, requestId, durationMs: Date.now() - requestStartedAt }, sessionId);
     const quotaError = error?.code === 'insufficient_quota' || error?.status === 429;
     await persistAnalytics();
     res.status(quotaError ? 200 : 500).json({
