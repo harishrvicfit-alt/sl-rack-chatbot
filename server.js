@@ -47,6 +47,7 @@ const ACTIVE_SESSION_MS = Number(process.env.ACTIVE_SESSION_MS || 30 * 60 * 1000
 const ADMIN_EVENT_WINDOW_MS = 5 * 60 * 60 * 1000;
 const ADMIN_EVENT_PREVIEW_LIMIT = 10;
 const ANALYTICS_WRITE_RETRIES = 8;
+const ANALYTICS_BLOB_MIGRATION_VERSION = 2;
 const ANALYTICS_TIME_ZONE = 'Europe/Berlin';
 const CLIENT_ANALYTICS_EVENTS = new Set([
   'session_started',
@@ -601,7 +602,7 @@ async function ensureAnalyticsLoaded() {
   if (hasAnalyticsDatabase()) {
     try {
       const databaseSnapshot = await loadAnalyticsDatabaseSnapshot();
-      if (Number(databaseSnapshot?.blobMigrationVersion || 0) >= 1) {
+      if (Number(databaseSnapshot?.blobMigrationVersion || 0) >= ANALYTICS_BLOB_MIGRATION_VERSION) {
         analyticsBlobMigrationComplete = true;
         hydrateAnalytics(databaseSnapshot);
         return;
@@ -612,7 +613,7 @@ async function ensureAnalyticsLoaded() {
         hydrateAnalytics(mergeAnalyticsSnapshots(databaseSnapshot, blobSnapshot.snapshot));
         await insertAnalyticsEvents(analytics.eventLog, {
           ...buildAnalyticsMetaSnapshot(),
-          blobMigrationVersion: 1,
+          blobMigrationVersion: ANALYTICS_BLOB_MIGRATION_VERSION,
           blobMigratedAt: new Date().toISOString()
         });
         analyticsBlobMigrationComplete = true;
@@ -746,7 +747,7 @@ function serializeAnalytics() {
     topTopics: [...analytics.topTopics.entries()],
     sessions: [...analytics.sessions.entries()],
     savedAt: new Date().toISOString(),
-    ...(analyticsBlobMigrationComplete ? { blobMigrationVersion: 1 } : {})
+    ...(analyticsBlobMigrationComplete ? { blobMigrationVersion: ANALYTICS_BLOB_MIGRATION_VERSION } : {})
   };
 }
 function scheduleAnalyticsPersistence() {
@@ -761,7 +762,7 @@ function buildAnalyticsMetaSnapshot() {
     legacyTotals: analytics.legacyTotals,
     startedAt: analytics.startedAt,
     savedAt: new Date().toISOString(),
-    ...(analyticsBlobMigrationComplete ? { blobMigrationVersion: 1 } : {})
+    ...(analyticsBlobMigrationComplete ? { blobMigrationVersion: ANALYTICS_BLOB_MIGRATION_VERSION } : {})
   };
 }
 
