@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless';
+import crypto from 'node:crypto';
 
 let sqlClient;
 let schemaPromise;
@@ -39,7 +40,7 @@ export async function insertAnalyticsEvents(events = [], snapshotMeta = {}) {
   if (!sql) return false;
 
   const rows = events.map((event) => ({
-    id: event.id,
+    id: normalizeEventId(event),
     type: event.type,
     at: event.at,
     sessionId: event.sessionId || null,
@@ -75,6 +76,17 @@ export async function insertAnalyticsEvents(events = [], snapshotMeta = {}) {
     [JSON.stringify(snapshotMeta)]
   );
   return true;
+}
+
+function normalizeEventId(event) {
+  if (event?.id) return String(event.id);
+  const fingerprint = JSON.stringify({
+    type: event?.type || 'unknown',
+    at: event?.at || '',
+    sessionId: event?.sessionId || '',
+    payload: event?.payload || {}
+  });
+  return `legacy-${crypto.createHash('sha256').update(fingerprint).digest('hex').slice(0, 48)}`;
 }
 
 export async function checkAnalyticsDatabase() {

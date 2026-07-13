@@ -64,6 +64,7 @@ let pendingAnalyticsEvents = [];
 let lastAiSuccessAt = null;
 let lastAiErrorAt = null;
 let lastAiErrorCode = null;
+let analyticsBlobMigrationComplete = false;
 const analytics = {
   schemaVersion: 2,
   legacyTotals: { questions: 0, sessions: 0 },
@@ -600,17 +601,27 @@ async function ensureAnalyticsLoaded() {
   if (hasAnalyticsDatabase()) {
     try {
       const databaseSnapshot = await loadAnalyticsDatabaseSnapshot();
-      if (databaseSnapshot?.eventLog?.length) {
+      if (Number(databaseSnapshot?.blobMigrationVersion || 0) >= 1) {
+        analyticsBlobMigrationComplete = true;
         hydrateAnalytics(databaseSnapshot);
         return;
       }
 
       const blobSnapshot = await readStoredAnalyticsSnapshot();
       if (blobSnapshot?.snapshot) {
-        hydrateAnalytics(blobSnapshot.snapshot);
-        await insertAnalyticsEvents(analytics.eventLog, buildAnalyticsMetaSnapshot());
+        hydrateAnalytics(mergeAnalyticsSnapshots(databaseSnapshot, blobSnapshot.snapshot));
+        await insertAnalyticsEvents(analytics.eventLog, {
+          ...buildAnalyticsMetaSnapshot(),
+          blobMigrationVersion: 1,
+          blobMigratedAt: new Date().toISOString()
+        });
+        analyticsBlobMigrationComplete = true;
         return;
       }
+
+      if (databaseSnapshot?.eventLog?.length) hydrateAnalytics(databaseSnapshot);
+      analyticsBlobMigrationComplete = true;
+      return;
     } catch (error) {
       console.warn('Analytics database load failed, using Blob fallback:', error?.message || error);
     }
@@ -734,7 +745,8 @@ function serializeAnalytics() {
     topProducts: [...analytics.topProducts.entries()],
     topTopics: [...analytics.topTopics.entries()],
     sessions: [...analytics.sessions.entries()],
-    savedAt: new Date().toISOString()
+    savedAt: new Date().toISOString(),
+    ...(analyticsBlobMigrationComplete ? { blobMigrationVersion: 1 } : {})
   };
 }
 function scheduleAnalyticsPersistence() {
@@ -748,7 +760,8 @@ function buildAnalyticsMetaSnapshot() {
     schemaVersion: analytics.schemaVersion,
     legacyTotals: analytics.legacyTotals,
     startedAt: analytics.startedAt,
-    savedAt: new Date().toISOString()
+    savedAt: new Date().toISOString(),
+    ...(analyticsBlobMigrationComplete ? { blobMigrationVersion: 1 } : {})
   };
 }
 
