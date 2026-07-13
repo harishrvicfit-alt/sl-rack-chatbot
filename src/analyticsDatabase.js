@@ -12,12 +12,12 @@ export async function loadAnalyticsDatabaseSnapshot() {
   if (!sql) return null;
 
   const [events, metaRows] = await Promise.all([
-    sql(`
+    sql.query(`
       SELECT id, type, occurred_at, session_id, payload
       FROM chatbot_events
       ORDER BY occurred_at DESC, created_at DESC
     `),
-    sql(`SELECT key, value FROM chatbot_analytics_meta`)
+    sql.query(`SELECT key, value FROM chatbot_analytics_meta`)
   ]);
 
   const meta = Object.fromEntries(metaRows.map((row) => [row.key, row.value]));
@@ -48,7 +48,7 @@ export async function insertAnalyticsEvents(events = [], snapshotMeta = {}) {
     payload: event.payload || {}
   }));
 
-  await sql(
+  await sql.query(
     `
       INSERT INTO chatbot_events (id, type, occurred_at, session_id, request_id, question, payload)
       SELECT item.id, item.type, item.at::timestamptz, item."sessionId", item."requestId", item.question, item.payload
@@ -66,7 +66,7 @@ export async function insertAnalyticsEvents(events = [], snapshotMeta = {}) {
     [JSON.stringify(rows)]
   );
 
-  await sql(
+  await sql.query(
     `
       INSERT INTO chatbot_analytics_meta (key, value, updated_at)
       VALUES ('snapshot', $1::jsonb, NOW())
@@ -80,7 +80,7 @@ export async function insertAnalyticsEvents(events = [], snapshotMeta = {}) {
 export async function checkAnalyticsDatabase() {
   const sql = await getSql();
   if (!sql) return { configured: false, ok: false };
-  await sql('SELECT 1 AS ok');
+  await sql.query('SELECT 1 AS ok');
   return { configured: true, ok: true };
 }
 
@@ -94,7 +94,7 @@ async function getSql() {
 }
 
 async function ensureSchema(sql) {
-  await sql(`
+  await sql.query(`
     CREATE TABLE IF NOT EXISTS chatbot_events (
       id text PRIMARY KEY,
       type varchar(80) NOT NULL,
@@ -106,10 +106,10 @@ async function ensureSchema(sql) {
       created_at timestamptz NOT NULL DEFAULT NOW()
     )
   `);
-  await sql(`CREATE INDEX IF NOT EXISTS chatbot_events_type_at_idx ON chatbot_events (type, occurred_at DESC)`);
-  await sql(`CREATE INDEX IF NOT EXISTS chatbot_events_session_at_idx ON chatbot_events (session_id, occurred_at DESC)`);
-  await sql(`CREATE INDEX IF NOT EXISTS chatbot_events_request_idx ON chatbot_events (request_id) WHERE request_id IS NOT NULL`);
-  await sql(`
+  await sql.query(`CREATE INDEX IF NOT EXISTS chatbot_events_type_at_idx ON chatbot_events (type, occurred_at DESC)`);
+  await sql.query(`CREATE INDEX IF NOT EXISTS chatbot_events_session_at_idx ON chatbot_events (session_id, occurred_at DESC)`);
+  await sql.query(`CREATE INDEX IF NOT EXISTS chatbot_events_request_idx ON chatbot_events (request_id) WHERE request_id IS NOT NULL`);
+  await sql.query(`
     CREATE TABLE IF NOT EXISTS chatbot_analytics_meta (
       key text PRIMARY KEY,
       value jsonb NOT NULL,
