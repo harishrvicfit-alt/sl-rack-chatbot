@@ -3,21 +3,27 @@ import crypto from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
-import cors from 'cors';
 import OpenAI from 'openai';
 import { BlobPreconditionFailedError, get as getBlob, put as putBlob } from '@vercel/blob';
+import { waitUntil as vercelWaitUntil } from '@vercel/functions';
 import { productCatalog, companyFacts, scoreProducts } from './src/slRackKnowledge.js';
 import { buildSystemPrompt } from './src/systemPrompt.js';
 import { getKnowledgeStatus, searchKnowledge } from './src/knowledgeSearch.js';
+import {
+  hasAnalyticsDatabase,
+  insertAnalyticsEvents,
+  loadAnalyticsDatabaseSnapshot
+} from './src/analyticsDatabase.js';
+import { enforceRateLimit, hasDistributedRateLimit, hashRateLimitIdentifier } from './src/rateLimit.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
+app.disable('x-powered-by');
 const port = Number(process.env.PORT || 3000);
 const model = process.env.OPENAI_MODEL || 'gpt-4.1-mini';
 const client = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
 const publicDir = path.join(__dirname, 'public');
-const requestBuckets = new Map();
 const MAX_MESSAGES = Number(process.env.CHAT_MAX_MESSAGES || 8);
 const MAX_MESSAGE_CHARS = Number(process.env.CHAT_MAX_MESSAGE_CHARS || 1500);
 const MAX_TOTAL_CHARS = Number(process.env.CHAT_MAX_TOTAL_CHARS || 5000);
@@ -26,9 +32,14 @@ const RATE_WINDOW_MS = Number(process.env.CHAT_RATE_WINDOW_MS || 60_000);
 const RATE_MAX_REQUESTS = Number(process.env.CHAT_RATE_MAX_REQUESTS || 12);
 const DAILY_MAX_REQUESTS = Number(process.env.CHAT_DAILY_MAX_REQUESTS || 120);
 const DAILY_MAX_INPUT_CHARS = Number(process.env.CHAT_DAILY_MAX_INPUT_CHARS || 120_000);
+const OPENAI_TIMEOUT_MS = Number(process.env.OPENAI_TIMEOUT_MS || 55_000);
+const ADMIN_LOGIN_MAX_ATTEMPTS = Number(process.env.ADMIN_LOGIN_MAX_ATTEMPTS || 5);
+const ADMIN_LOGIN_WINDOW_MS = Number(process.env.ADMIN_LOGIN_WINDOW_MS || 15 * 60 * 1000);
+const CLIENT_EVENT_MAX_REQUESTS = Number(process.env.CLIENT_EVENT_MAX_REQUESTS || 60);
 const ADMIN_PATH = process.env.ADMIN_PATH || '';
 const ADMIN_USER = process.env.ADMIN_USER || '';
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || '';
+const ADMIN_PASSWORD_SCRYPT = process.env.ADMIN_PASSWORD_SCRYPT || '';
 const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || process.env.OPENAI_API_KEY || crypto.randomBytes(32).toString('hex');
 const ADMIN_COOKIE = 'slrack_admin_session';
 const CHAT_SESSION_COOKIE = 'slrack_chat_session';
@@ -42,12 +53,17 @@ const CLIENT_ANALYTICS_EVENTS = new Set([
   'quick_action_clicked',
   'source_clicked',
   'contact_offered',
-  'contact_clicked'
+  'contact_clicked',
+  'client_error'
 ]);
 const ANALYTICS_BLOB_PATH = process.env.ANALYTICS_BLOB_PATH || 'analytics/live.json';
 const HAS_BLOB_STORAGE = Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 let analyticsLoaded = false;
 let analyticsSaveQueue = Promise.resolve();
+let pendingAnalyticsEvents = [];
+let lastAiSuccessAt = null;
+let lastAiErrorAt = null;
+let lastAiErrorCode = null;
 const analytics = {
   schemaVersion: 2,
   legacyTotals: { questions: 0, sessions: 0 },
@@ -55,6 +71,8 @@ const analytics = {
   events: 0,
   chats: 0,
   totalQuestions: 0,
+  totalSubmitted: 0,
+  rejectedQuestions: 0,
   totalSessions: 0,
   blocked: 0,
   errors: 0,
@@ -63,6 +81,11 @@ const analytics = {
   contactOffers: 0,
   sourceClicks: 0,
   quickActions: 0,
+  clientErrors: 0,
+  inputTokens: 0,
+  outputTokens: 0,
+  totalTokens: 0,
+  averageLatencyMs: 0,
   topEvents: new Map(),
   topQuestions: new Map(),
   topProducts: new Map(),
@@ -76,12 +99,21 @@ const productAnalyticsTerms = buildProductAnalyticsTerms();
 const topicAnalyticsTerms = buildTopicAnalyticsTerms();
 
 app.use(securityHeaders);
-app.use(cors({ origin: true, methods: ['GET', 'POST', 'OPTIONS'], allowedHeaders: ['Content-Type'] }));
+app.use(blockCrossOriginApiRequests);
+app.use('/api', (_req, res, next) => {
+  res.setHeader('Cache-Control', 'private, no-store');
+  next();
+});
 app.use(express.json({ limit: '80kb' }));
 app.use(express.static(publicDir));
 
 app.get('/api/health', (_req, res) => {
-  res.json({ ok: true });
+  res.json({
+    ok: true,
+    aiConfigured: Boolean(client),
+    analyticsStorage: hasAnalyticsDatabase() ? 'database' : HAS_BLOB_STORAGE ? 'blob' : 'memory',
+    distributedRateLimit: hasDistributedRateLimit()
+  });
 });
 
 app.get('/api/catalog', (_req, res) => {
@@ -101,6 +133,20 @@ app.get('/api/admin/session', (req, res) => {
 
 app.post('/api/admin/login', async (req, res) => {
   await ensureAnalyticsLoaded();
+  const loginIdentifier = buildRateLimitIdentifier(req, 'admin-login');
+  const loginLimit = await enforceRateLimit({
+    scope: 'admin-login',
+    identifier: loginIdentifier,
+    limit: ADMIN_LOGIN_MAX_ATTEMPTS,
+    windowMs: ADMIN_LOGIN_WINDOW_MS
+  });
+  setRateLimitHeaders(res, loginLimit);
+  if (!loginLimit.ok) {
+    recordAnalyticsEvent('admin_login_rate_limited');
+    await persistAnalytics();
+    return res.status(429).json({ error: 'too_many_attempts' });
+  }
+
   const username = String(req.body?.username || '');
   const password = String(req.body?.password || '');
 
@@ -193,9 +239,19 @@ app.get('/api/analytics/summary', async (req, res) => {
 
 app.post('/api/analytics', async (req, res) => {
   await ensureAnalyticsLoaded();
+  const eventLimit = await enforceRateLimit({
+    scope: 'client-events',
+    identifier: buildRateLimitIdentifier(req, 'client-events'),
+    limit: CLIENT_EVENT_MAX_REQUESTS,
+    windowMs: 60_000
+  });
+  setRateLimitHeaders(res, eventLimit);
+  if (!eventLimit.ok) return res.status(429).json({ error: 'rate_limited' });
+
   const eventType = String(req.body?.type || '');
   if (!CLIENT_ANALYTICS_EVENTS.has(eventType)) return res.status(204).end();
   const sessionId = getOrCreateChatSession(req, res);
+  if (eventType === 'session_started' && hasSessionEvent(sessionId, eventType)) return res.status(204).end();
   recordAnalyticsEvent(eventType, req.body?.payload, sessionId);
   await persistAnalytics();
   res.status(204).end();
@@ -214,10 +270,26 @@ app.post('/api/chat', async (req, res) => {
   await ensureAnalyticsLoaded();
   const sessionId = getOrCreateChatSession(req, res);
   const rawMessages = Array.isArray(req.body?.messages) ? req.body.messages : [];
-  const validation = validateChatRequest(req, rawMessages);
+  const rawLatestUserMessage = [...rawMessages]
+    .reverse()
+    .find((message) => message?.role !== 'assistant')?.content || '';
+  const requestId = normalizeRequestId(req.body?.requestId) || crypto.randomUUID();
+  const validation = await validateChatRequest(req, rawMessages);
 
   if (!validation.ok) {
-    recordAnalyticsEvent('chat_blocked', { error: validation.error }, sessionId);
+    if (String(rawLatestUserMessage).trim()) {
+      recordAnalyticsEvent(
+        'question_rejected',
+        {
+          question: String(rawLatestUserMessage),
+          requestId,
+          source: 'chat_api',
+          reason: validation.error
+        },
+        sessionId
+      );
+    }
+    recordAnalyticsEvent('chat_blocked', { error: validation.error, requestId }, sessionId);
     await persistAnalytics();
     return res.status(validation.status).json({
       mode: 'blocked',
@@ -232,14 +304,11 @@ app.post('/api/chat', async (req, res) => {
   const messages = validation.messages;
   const requestStartedAt = Date.now();
   const profile = req.body?.profile || {};
-  const attachment = sanitizeAttachment(req.body?.attachment);
-  if (attachment) recordAnalyticsEvent('attachment_received', { kind: attachment.kind }, sessionId);
   const recommendations = scoreProducts(profile).slice(0, 3);
   const latestUserMessage = [...messages].reverse().find((message) => message.role !== 'assistant')?.content || '';
-  const requestId = normalizeRequestId(req.body?.requestId) || crypto.randomUUID();
   recordAnalyticsEvent('chat_submitted', { messageLength: latestUserMessage.length, requestId, source: 'chat_api' }, sessionId);
   recordAnalyticsEvent('question_asked', { question: latestUserMessage, requestId, source: 'chat_api' }, sessionId);
-  const knowledgeResults = buildKnowledgeContext(latestUserMessage, profile, 6);
+  const knowledgeResults = buildKnowledgeContext(latestUserMessage, profile, 4);
   const publicCompanySources = buildPublicCompanySources(latestUserMessage);
   const documentSources = publicCompanySources.length
     ? publicCompanySources
@@ -255,7 +324,7 @@ app.post('/api/chat', async (req, res) => {
     const reply = buildPublicRevenueReply(latestUserMessage);
     const quality = analyzeReplyQuality(reply, 'public_company_info');
     recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, mode: 'public_company_info', requestId, durationMs: Date.now() - requestStartedAt, ...quality }, sessionId);
-    await persistAnalytics();
+    scheduleAnalyticsPersistence();
     return res.json({
       mode: 'public_company_info',
       reply,
@@ -268,8 +337,8 @@ app.post('/api/chat', async (req, res) => {
   if (!client) {
     const reply = postProcessSalesReplySafe(buildFallbackReply(profile, recommendations), latestUserMessage);
     const quality = analyzeReplyQuality(reply, 'fallback');
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), mode: 'fallback', requestId, durationMs: Date.now() - requestStartedAt, ...quality }, sessionId);
-    await persistAnalytics();
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, mode: 'fallback', requestId, durationMs: Date.now() - requestStartedAt, ...quality }, sessionId);
+    scheduleAnalyticsPersistence();
     return res.json({
       mode: 'fallback',
       reply,
@@ -280,29 +349,42 @@ app.post('/api/chat', async (req, res) => {
   }
 
   try {
-    const response = await client.responses.create({
-      model,
-      temperature: 0.35,
-      max_output_tokens: MAX_OUTPUT_TOKENS,
-      input: [
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), OPENAI_TIMEOUT_MS);
+    let response;
+    try {
+      response = await client.responses.create(
         {
-          role: 'system',
-          content: buildSystemPrompt({
-            companyFacts,
-            productCatalog,
-            recommendations,
-            knowledgeResults
-          })
+          model,
+          temperature: 0.35,
+          max_output_tokens: MAX_OUTPUT_TOKENS,
+          input: [
+            {
+              role: 'system',
+              content: buildSystemPrompt({
+                companyFacts,
+                recommendations,
+                knowledgeResults
+              })
+            },
+            ...messages
+          ]
         },
-        ...messages
-      ]
-    });
+        { signal: controller.signal }
+      );
+    } finally {
+      clearTimeout(timeout);
+    }
 
     const reply = postProcessSalesReplySafe(response.output_text, latestUserMessage);
     const quality = analyzeReplyQuality(reply, 'ai');
+    const usage = normalizeOpenAiUsage(response.usage);
+    lastAiSuccessAt = new Date().toISOString();
+    lastAiErrorAt = null;
+    lastAiErrorCode = null;
 
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, attachment: Boolean(attachment), requestId, durationMs: Date.now() - requestStartedAt, ...quality }, sessionId);
-    await persistAnalytics();
+    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, mode: 'ai', requestId, durationMs: Date.now() - requestStartedAt, ...usage, ...quality }, sessionId);
+    scheduleAnalyticsPersistence();
     res.json({
       mode: 'ai',
       reply,
@@ -312,20 +394,40 @@ app.post('/api/chat', async (req, res) => {
     });
   } catch (error) {
     console.error(error);
+    lastAiErrorAt = new Date().toISOString();
+    lastAiErrorCode = String(error?.code || error?.name || error?.status || 'unknown').slice(0, 80);
     recordAnalyticsEvent('chat_error', { status: error?.status, code: error?.code, requestId, durationMs: Date.now() - requestStartedAt }, sessionId);
-    const quotaError = error?.code === 'insufficient_quota' || error?.status === 429;
-    await persistAnalytics();
-    res.status(quotaError ? 200 : 500).json({
-      mode: quotaError ? 'quota_fallback' : 'error_fallback',
+    const quotaError = error?.code === 'insufficient_quota';
+    const rateLimitError = error?.status === 429 && !quotaError;
+    const timeoutError = error?.name === 'AbortError';
+    scheduleAnalyticsPersistence();
+    res.status(quotaError || rateLimitError || timeoutError ? 200 : 500).json({
+      mode: quotaError ? 'quota_fallback' : rateLimitError ? 'rate_limit_fallback' : timeoutError ? 'timeout_fallback' : 'error_fallback',
       error: quotaError
         ? 'OpenAI API key is valid, but the account has no available API quota. Please add billing or credits in the OpenAI platform.'
-        : 'AI response failed',
+        : rateLimitError
+          ? 'OpenAI is temporarily rate limited. Please try again shortly.'
+          : timeoutError
+            ? 'AI response timed out.'
+            : 'AI response failed',
       reply: postProcessSalesReplySafe(buildFallbackReply(profile, recommendations), latestUserMessage),
       recommendations,
       knowledgeResults,
       documentSources
     });
   }
+});
+
+app.use((error, req, res, _next) => {
+  console.error('Unhandled request error:', error?.message || error);
+  if (res.headersSent) return res.end();
+  const invalidJson = error instanceof SyntaxError && 'body' in error;
+  res.status(invalidJson ? 400 : 500).json({
+    error: invalidJson ? 'invalid_json' : 'internal_error',
+    reply: invalidJson
+      ? 'Die Anfrage konnte nicht gelesen werden. Bitte versuchen Sie es erneut.'
+      : 'Der Dienst ist voruebergehend nicht verfuegbar.'
+  });
 });
 
 if (process.env.VERCEL !== '1') {
@@ -488,12 +590,32 @@ function buildAdminPage() {
 }
 
 async function ensureAnalyticsLoaded() {
-  if (analyticsLoaded || !HAS_BLOB_STORAGE) {
+  if (analyticsLoaded) return;
+  if (!HAS_BLOB_STORAGE && !hasAnalyticsDatabase()) {
     analyticsLoaded = true;
     return;
   }
 
   analyticsLoaded = true;
+  if (hasAnalyticsDatabase()) {
+    try {
+      const databaseSnapshot = await loadAnalyticsDatabaseSnapshot();
+      if (databaseSnapshot?.eventLog?.length) {
+        hydrateAnalytics(databaseSnapshot);
+        return;
+      }
+
+      const blobSnapshot = await readStoredAnalyticsSnapshot();
+      if (blobSnapshot?.snapshot) {
+        hydrateAnalytics(blobSnapshot.snapshot);
+        await insertAnalyticsEvents(analytics.eventLog, buildAnalyticsMetaSnapshot());
+        return;
+      }
+    } catch (error) {
+      console.warn('Analytics database load failed, using Blob fallback:', error?.message || error);
+    }
+  }
+
   try {
     const result = await getBlob(ANALYTICS_BLOB_PATH, { access: 'private', useCache: false });
     if (!result?.stream) return;
@@ -508,10 +630,28 @@ async function ensureAnalyticsLoaded() {
 }
 
 async function persistAnalytics() {
-  if (!HAS_BLOB_STORAGE) return;
+  if (!HAS_BLOB_STORAGE && !hasAnalyticsDatabase()) return;
 
   analyticsSaveQueue = analyticsSaveQueue
     .then(async () => {
+      const pending = [...pendingAnalyticsEvents];
+      if (!pending.length) return;
+
+      if (hasAnalyticsDatabase()) {
+        try {
+          const saved = await insertAnalyticsEvents(pending, buildAnalyticsMetaSnapshot());
+          if (saved) {
+            const savedIds = new Set(pending.map((event) => event.id));
+            pendingAnalyticsEvents = pendingAnalyticsEvents.filter((event) => !savedIds.has(event.id));
+            return;
+          }
+        } catch (error) {
+          console.warn('Analytics database save failed, using Blob fallback:', error?.message || error);
+        }
+      }
+
+      if (!HAS_BLOB_STORAGE) throw new Error('No analytics persistence backend is available');
+
       for (let attempt = 0; attempt < ANALYTICS_WRITE_RETRIES; attempt += 1) {
         const current = serializeAnalytics();
         const storedResult = await readStoredAnalyticsSnapshot();
@@ -528,6 +668,8 @@ async function persistAnalytics() {
 
           // Preserve events accepted by this instance while the Blob write was in flight.
           hydrateAnalytics(mergeAnalyticsSnapshots(merged, serializeAnalytics()));
+          const savedIds = new Set(pending.map((event) => event.id));
+          pendingAnalyticsEvents = pendingAnalyticsEvents.filter((event) => !savedIds.has(event.id));
           return;
         } catch (error) {
           if (!(error instanceof BlobPreconditionFailedError) && error?.name !== 'BlobPreconditionFailedError') {
@@ -562,6 +704,17 @@ async function readStoredAnalyticsSnapshot() {
 
 async function refreshAnalyticsFromStorage() {
   await ensureAnalyticsLoaded();
+  if (hasAnalyticsDatabase()) {
+    try {
+      await analyticsSaveQueue;
+      const storedSnapshot = await loadAnalyticsDatabaseSnapshot();
+      if (storedSnapshot) hydrateAnalytics(mergeAnalyticsSnapshots(storedSnapshot, serializeAnalytics()));
+      return;
+    } catch (error) {
+      console.warn('Analytics database refresh failed, using Blob fallback:', error?.message || error);
+    }
+  }
+
   if (!HAS_BLOB_STORAGE) return;
   await analyticsSaveQueue;
   const firstRead = await readStoredAnalyticsSnapshot();
@@ -581,6 +734,20 @@ function serializeAnalytics() {
     topProducts: [...analytics.topProducts.entries()],
     topTopics: [...analytics.topTopics.entries()],
     sessions: [...analytics.sessions.entries()],
+    savedAt: new Date().toISOString()
+  };
+}
+function scheduleAnalyticsPersistence() {
+  const task = persistAnalytics();
+  if (process.env.VERCEL === '1') vercelWaitUntil(task);
+  return task;
+}
+
+function buildAnalyticsMetaSnapshot() {
+  return {
+    schemaVersion: analytics.schemaVersion,
+    legacyTotals: analytics.legacyTotals,
+    startedAt: analytics.startedAt,
     savedAt: new Date().toISOString()
   };
 }
@@ -619,13 +786,20 @@ function deriveAnalyticsSnapshot(snapshot) {
   const counters = {
     chats: 0,
     totalQuestions: 0,
+    rejectedQuestions: 0,
     blocked: 0,
     errors: 0,
     attachments: 0,
     contacts: 0,
     contactOffers: 0,
     sourceClicks: 0,
-    quickActions: 0
+    quickActions: 0,
+    clientErrors: 0,
+    inputTokens: 0,
+    outputTokens: 0,
+    totalTokens: 0,
+    totalLatencyMs: 0,
+    latencySamples: 0
   };
 
   for (const event of events) {
@@ -639,7 +813,7 @@ function deriveAnalyticsSnapshot(snapshot) {
     }
 
     if (type === 'question_asked') {
-      const questionKey = event?.payload?.requestId || event.id;
+      const questionKey = buildRequestEventKey(event);
       if (!seenQuestions.has(questionKey)) {
         seenQuestions.add(questionKey);
         const question = normalizeQuestion(event?.payload?.question);
@@ -656,11 +830,27 @@ function deriveAnalyticsSnapshot(snapshot) {
       }
     }
 
+    if (type === 'question_rejected') {
+      const questionKey = buildRequestEventKey(event);
+      if (!seenQuestions.has(questionKey)) {
+        seenQuestions.add(questionKey);
+        counters.rejectedQuestions += 1;
+      }
+    }
+
     if (type === 'chat_answered') {
-      const answerKey = event?.payload?.requestId || event.id;
+      const answerKey = buildRequestEventKey(event);
       if (!seenAnswers.has(answerKey)) {
         seenAnswers.add(answerKey);
         counters.chats += 1;
+        counters.inputTokens += Math.max(0, Number(event?.payload?.inputTokens || 0));
+        counters.outputTokens += Math.max(0, Number(event?.payload?.outputTokens || 0));
+        counters.totalTokens += Math.max(0, Number(event?.payload?.totalTokens || 0));
+        const durationMs = Number(event?.payload?.durationMs || 0);
+        if (durationMs > 0) {
+          counters.totalLatencyMs += durationMs;
+          counters.latencySamples += 1;
+        }
       }
     }
     if (type === 'chat_blocked') counters.blocked += 1;
@@ -670,6 +860,7 @@ function deriveAnalyticsSnapshot(snapshot) {
     if (type === 'contact_offered') counters.contactOffers += 1;
     if (type === 'source_clicked') counters.sourceClicks += 1;
     if (type === 'quick_action_clicked') counters.quickActions += 1;
+    if (type === 'client_error') counters.clientErrors += 1;
   }
 
   const migratedLegacyTotals = snapshot?.schemaVersion === 2 || snapshot?.legacyTotals
@@ -686,6 +877,10 @@ function deriveAnalyticsSnapshot(snapshot) {
     legacyTotals: migratedLegacyTotals,
     events: events.length,
     totalQuestions: counters.totalQuestions + migratedLegacyTotals.questions,
+    totalSubmitted: counters.totalQuestions + counters.rejectedQuestions + migratedLegacyTotals.questions,
+    averageLatencyMs: counters.latencySamples
+      ? Math.round(counters.totalLatencyMs / counters.latencySamples)
+      : 0,
     totalSessions: sessions.size + migratedLegacyTotals.sessions,
     topEvents: [...topEvents.entries()],
     topQuestions: [...topQuestions.entries()],
@@ -758,6 +953,8 @@ function hydrateAnalytics(stored) {
   analytics.events = Number(derived.events || 0);
   analytics.chats = Number(derived.chats || 0);
   analytics.totalQuestions = Number(derived.totalQuestions || 0);
+  analytics.totalSubmitted = Number(derived.totalSubmitted || derived.totalQuestions || 0);
+  analytics.rejectedQuestions = Number(derived.rejectedQuestions || 0);
   analytics.totalSessions = Number(derived.totalSessions || 0);
   analytics.blocked = Number(derived.blocked || 0);
   analytics.errors = Number(derived.errors || 0);
@@ -766,6 +963,11 @@ function hydrateAnalytics(stored) {
   analytics.contactOffers = Number(derived.contactOffers || 0);
   analytics.sourceClicks = Number(derived.sourceClicks || 0);
   analytics.quickActions = Number(derived.quickActions || 0);
+  analytics.clientErrors = Number(derived.clientErrors || 0);
+  analytics.inputTokens = Number(derived.inputTokens || 0);
+  analytics.outputTokens = Number(derived.outputTokens || 0);
+  analytics.totalTokens = Number(derived.totalTokens || 0);
+  analytics.averageLatencyMs = Number(derived.averageLatencyMs || 0);
   analytics.topEvents = new Map(derived.topEvents);
   analytics.topQuestions = new Map(derived.topQuestions);
   analytics.topProducts = new Map(derived.topProducts);
@@ -801,15 +1003,25 @@ function securityHeaders(_req, res, next) {
   next();
 }
 
-function sanitizeAttachment(value) {
-  if (!value || typeof value !== 'object') return null;
-  const name = String(value.name || '').slice(0, 160);
-  const type = String(value.type || '').slice(0, 80);
-  const size = Number(value.size || 0);
-  const kind = value.kind === 'pdf' ? 'pdf' : value.kind === 'image' ? 'image' : 'unknown';
+function blockCrossOriginApiRequests(req, res, next) {
+  if (!req.path.startsWith('/api/') || !['POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'].includes(req.method)) {
+    return next();
+  }
 
-  if (!name || !Number.isFinite(size) || size < 0 || size > 8 * 1024 * 1024) return null;
-  return { name, type, size, kind };
+  const origin = String(req.headers.origin || '').trim();
+  if (!origin) return next();
+
+  const forwardedProto = String(req.headers['x-forwarded-proto'] || req.protocol || 'https').split(',')[0].trim();
+  const forwardedHost = String(req.headers['x-forwarded-host'] || req.headers.host || '').split(',')[0].trim();
+  const sameOrigin = forwardedHost ? [forwardedProto, '://', forwardedHost].join('') : '';
+  const configuredOrigins = String(process.env.PUBLIC_APP_ORIGINS || '')
+    .split(',')
+    .map((value) => value.trim())
+    .filter(Boolean);
+  const allowedOrigins = new Set([sameOrigin, ...configuredOrigins].filter(Boolean));
+
+  if (allowedOrigins.has(origin)) return next();
+  return res.status(403).json({ error: 'cross_origin_forbidden' });
 }
 
 function getOrCreateChatSession(req, res) {
@@ -830,6 +1042,7 @@ function getOrCreateChatSession(req, res) {
   }
 
   analytics.sessions.set(sessionId, Date.now());
+  req.chatSessionId = sessionId;
   pruneChatSessions();
   return sessionId;
 }
@@ -838,7 +1051,7 @@ function normalizeQuestion(question) {
   return String(question || '')
     .replace(/\s+/g, ' ')
     .trim()
-    .slice(0, 220);
+    .slice(0, MAX_MESSAGE_CHARS);
 }
 
 function getProductInterestLabels(question) {
@@ -868,6 +1081,20 @@ function normalizeRequestId(value) {
   return /^[a-zA-Z0-9_-]{12,80}$/.test(id) ? id : '';
 }
 
+function buildRequestEventKey(event) {
+  const requestId = normalizeRequestId(event?.payload?.requestId);
+  if (!requestId) return String(event?.id || '');
+  const sessionId = /^[a-f0-9]{32}$/.test(event?.sessionId || '') ? event.sessionId : 'legacy';
+  return `${sessionId}:${requestId}`;
+}
+
+function normalizeOpenAiUsage(usage = {}) {
+  const inputTokens = Math.max(0, Number(usage.input_tokens || usage.prompt_tokens || 0));
+  const outputTokens = Math.max(0, Number(usage.output_tokens || usage.completion_tokens || 0));
+  const totalTokens = Math.max(0, Number(usage.total_tokens || inputTokens + outputTokens));
+  return { inputTokens, outputTokens, totalTokens };
+}
+
 function buildProductAnalyticsTerms() {
   const terms = new Map();
   const add = (label, aliases = []) => {
@@ -894,7 +1121,7 @@ function buildProductAnalyticsTerms() {
   add('3D SL Alu', ['3d sl alu', '3d alu', 'dachhaken 3d sl alu']);
   add('Alpha-Platte', ['alpha platte', 'alphaplatte']);
   add('Beta-Platte', ['beta platte', 'betaplatte']);
-  add('Delta-Platte', ['delta platte', 'deltaplatte']);
+  add('D-Platte / Delta-Platte', ['d platte', 'd-platte', 'delta platte', 'deltaplatte', 'erlus e58', 'erlus e58s']);
   add('SL Fast Flat', ['fast flat', 'flachdachsystem sl fast flat', 'sl fast flat de']);
   add('Flachdach Generation 2.0', ['flachdach generation', 'generation 2.0', 'flachdach 2.0']);
   add('RAIL', ['rail 40', 'rail 60', 'tragprofil', 'montageschiene', 'schiene']);
@@ -981,11 +1208,19 @@ function pruneChatSessions() {
 }
 
 function isValidAdminLogin(username, password) {
-  if (!ADMIN_USER || !ADMIN_PASSWORD_HASH) return false;
+  if (!ADMIN_USER || (!ADMIN_PASSWORD_SCRYPT && !ADMIN_PASSWORD_HASH)) return false;
   const userOk = timingSafeEqualString(username, ADMIN_USER);
-  const passwordHash = crypto.createHash('sha256').update(password).digest('hex');
-  const passwordOk = timingSafeEqualString(passwordHash, ADMIN_PASSWORD_HASH);
+  const passwordOk = ADMIN_PASSWORD_SCRYPT
+    ? verifyScryptPassword(password, ADMIN_PASSWORD_SCRYPT)
+    : timingSafeEqualString(crypto.createHash('sha256').update(password).digest('hex'), ADMIN_PASSWORD_HASH);
   return userOk && passwordOk;
+}
+
+function verifyScryptPassword(password, encoded) {
+  const [salt, expectedHex] = String(encoded || '').split(':');
+  if (!/^[a-f0-9]{32}$/i.test(salt || '') || !/^[a-f0-9]{128}$/i.test(expectedHex || '')) return false;
+  const actual = crypto.scryptSync(password, Buffer.from(salt, 'hex'), 64);
+  return crypto.timingSafeEqual(actual, Buffer.from(expectedHex, 'hex'));
 }
 
 function setAdminSessionCookie(res) {
@@ -1028,7 +1263,12 @@ function parseCookies(header) {
   for (const part of String(header || '').split(';')) {
     const [rawName, ...rawValue] = part.trim().split('=');
     if (!rawName) continue;
-    cookies[rawName] = decodeURIComponent(rawValue.join('=') || '');
+    const value = rawValue.join('=') || '';
+    try {
+      cookies[rawName] = decodeURIComponent(value);
+    } catch {
+      cookies[rawName] = value;
+    }
   }
   return cookies;
 }
@@ -1050,6 +1290,7 @@ function recordAnalyticsEvent(type = 'unknown', payload = {}, sessionId = '') {
     payload: sanitizeAnalyticsPayload(payload)
   };
   analytics.eventLog.unshift(event);
+  pendingAnalyticsEvents.push(event);
   analytics.lastEvents = analytics.eventLog.slice(0, 50);
   if (event.sessionId) analytics.sessions.set(event.sessionId, Date.now());
 }
@@ -1076,14 +1317,16 @@ function buildQuestionsCsv(events) {
       'Nr.',
       'Zeit (Europe/Berlin)',
       'Zeit (UTC)',
+      'Status',
       'Frage',
       'Session',
       'Request ID',
       'Quelle',
-      'Erkannte Produkte / Modelle'
+      'Erkannte Produkte / Modelle',
+      'Ablehnungsgrund'
     ]
   ];
-  const questions = getQuestionLogRows(events);
+  const questions = getQuestionLogRows(events, { includeRejected: true });
 
   questions.forEach((event, index) => {
     const question = normalizeQuestion(event.payload?.question);
@@ -1091,11 +1334,13 @@ function buildQuestionsCsv(events) {
       index + 1,
       formatBerlinDateTime(event.at),
       event.at || '',
+      event.type === 'question_rejected' ? 'Abgelehnt' : 'Akzeptiert',
       question,
       event.sessionId || '',
       event.payload?.requestId || '',
       event.payload?.source || '',
-      getProductInterestLabels(question).join(', ')
+      getProductInterestLabels(question).join(', '),
+      event.payload?.reason || ''
     ]);
   });
 
@@ -1152,12 +1397,16 @@ function buildUnresolvedQuestionsCsv(events) {
   return rows.map((row) => row.map(csvCell).join(';')).join('\r\n');
 }
 
-function getQuestionLogRows(events) {
+function getQuestionLogRows(events, { includeRejected = false } = {}) {
   const seen = new Set();
   return mergeEventLogs(events, [])
-    .filter((event) => event?.type === 'question_asked' && normalizeQuestion(event.payload?.question))
+    .filter(
+      (event) =>
+        (event?.type === 'question_asked' || (includeRejected && event?.type === 'question_rejected')) &&
+        normalizeQuestion(event.payload?.question)
+    )
     .filter((event) => {
-      const key = event.payload?.requestId || event.id;
+      const key = buildRequestEventKey(event);
       if (!key || seen.has(key)) return false;
       seen.add(key);
       return true;
@@ -1184,15 +1433,17 @@ function getUnresolvedQuestionRows(events) {
 
   for (const event of mergedEvents) {
     const requestId = event?.payload?.requestId || '';
+    const requestKey = buildRequestEventKey(event);
     if (event?.type === 'question_asked') {
       const question = normalizeQuestion(event.payload?.question);
-      if (question && requestId && !questionsByRequest.has(requestId)) {
-        questionsByRequest.set(requestId, event);
+      if (question && requestKey && !questionsByRequest.has(requestKey)) {
+        questionsByRequest.set(requestKey, event);
       }
     }
 
-    if (event?.type === 'chat_answered' && requestId && isUnresolvedPayload(event.payload)) {
-      unresolvedByRequest.set(requestId, {
+    if (event?.type === 'chat_answered' && requestKey && isUnresolvedPayload(event.payload)) {
+      unresolvedByRequest.set(requestKey, {
+        requestKey,
         at: event.at,
         sessionId: event.sessionId,
         requestId,
@@ -1201,8 +1452,9 @@ function getUnresolvedQuestionRows(events) {
       });
     }
 
-    if (event?.type === 'chat_error' && requestId) {
-      unresolvedByRequest.set(requestId, {
+    if (event?.type === 'chat_error' && requestKey) {
+      unresolvedByRequest.set(requestKey, {
+        requestKey,
         at: event.at,
         sessionId: event.sessionId,
         requestId,
@@ -1214,7 +1466,7 @@ function getUnresolvedQuestionRows(events) {
 
   return [...unresolvedByRequest.values()]
     .map((entry) => {
-      const questionEvent = questionsByRequest.get(entry.requestId);
+      const questionEvent = questionsByRequest.get(entry.requestKey);
       const question = normalizeQuestion(questionEvent?.payload?.question);
       if (!question) return null;
       return {
@@ -1244,7 +1496,7 @@ function sanitizeAnalyticsPayload(payload) {
   if (!payload || typeof payload !== 'object') return {};
   const clean = {};
   for (const [key, value] of Object.entries(payload).slice(0, 10)) {
-    if (typeof value === 'string') clean[key] = value.slice(0, key === 'question' ? 500 : 160);
+    if (typeof value === 'string') clean[key] = value.slice(0, key === 'question' ? MAX_MESSAGE_CHARS : 240);
     else if (typeof value === 'number' || typeof value === 'boolean') clean[key] = value;
   }
   return clean;
@@ -1282,6 +1534,8 @@ function getAnalyticsSummary() {
     events: analytics.events,
     chats: analytics.chats,
     totalQuestions: analytics.totalQuestions,
+    totalSubmitted: analytics.totalSubmitted,
+    rejectedQuestions: analytics.rejectedQuestions,
     totalSessions: analytics.totalSessions,
     activeSessions: getActiveSessionCount(),
     blocked: analytics.blocked,
@@ -1291,6 +1545,11 @@ function getAnalyticsSummary() {
     contactOffers: analytics.contactOffers,
     sourceClicks: analytics.sourceClicks,
     quickActions: analytics.quickActions,
+    clientErrors: analytics.clientErrors,
+    inputTokens: analytics.inputTokens,
+    outputTokens: analytics.outputTokens,
+    totalTokens: analytics.totalTokens,
+    averageLatencyMs: analytics.averageLatencyMs,
     topEvents: Object.fromEntries([...analytics.topEvents.entries()].sort((a, b) => b[1] - a[1]).slice(0, 20)),
     topQuestions: [...analytics.topQuestions.entries()]
       .sort((a, b) => b[1] - a[1])
@@ -1319,6 +1578,16 @@ function buildAdminSummary() {
     generatedAt: new Date().toISOString(),
     model: client ? model : 'fallback-recommender',
     aiEnabled: Boolean(client),
+    aiRuntime: {
+      configured: Boolean(client),
+      lastSuccessAt: lastAiSuccessAt,
+      lastErrorAt: lastAiErrorAt,
+      lastErrorCode: lastAiErrorCode
+    },
+    infrastructure: {
+      analyticsStorage: hasAnalyticsDatabase() ? 'postgres' : HAS_BLOB_STORAGE ? 'blob' : 'memory',
+      distributedRateLimit: hasDistributedRateLimit()
+    },
     knowledge: getKnowledgeStatus(),
     timeZone: ANALYTICS_TIME_ZONE,
     analytics: getAnalyticsSummary(),
@@ -1406,7 +1675,7 @@ function buildDocumentSources(knowledgeResults = []) {
   return [...seen.values()].slice(0, 4);
 }
 
-function buildKnowledgeContext(message = '', profile = {}, limit = 6) {
+function buildKnowledgeContext(message = '', profile = {}, limit = 4) {
   const guidanceResults = buildSalesGuidanceResults(message);
   const officialResults = searchKnowledge(message, profile, limit);
   return [...guidanceResults, ...officialResults].slice(0, limit + guidanceResults.length);
@@ -1440,10 +1709,10 @@ function buildSalesGuidanceResults(message = '') {
     },
     {
       id: 'official-delta-plate-erlus-models',
-      title: 'Delta-Platte',
+      title: 'D-Platte (Delta-Platte)',
       category: 'Datenblaetter',
       page: 9,
-      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Datenblaetter/Delta-Platte/SL_Rack_Delta-Platte_Produktblatt-DE.pdf',
+      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Datenblaetter/D-Platte/SL_Rack_D-Platte_Produktblatt-DE.pdf',
       score: 997,
       excerpt:
         'Die Delta-Platte ist als modellbezogene Dachersatzplatte dokumentiert. In der SL Rack Produktuebersicht sind Varianten unter anderem fuer Frankfurter Pfanne, Erlus Forma, Erlus E58/E58S, Erlus Reformpfanne XXL, Creaton MZ3 Neu und Biberschwanz aufgefuehrt. Das ist ein wichtiger Gegencheck, bevor nur ein Dachhaken empfohlen wird.'
@@ -1515,7 +1784,7 @@ function buildPublicRevenueReply(message = '') {
   ].join('\n\n');
 }
 
-function validateChatRequest(req, rawMessages) {
+async function validateChatRequest(req, rawMessages) {
   if (!rawMessages.length) {
     return {
       ok: false,
@@ -1573,7 +1842,7 @@ function validateChatRequest(req, rawMessages) {
     };
   }
 
-  const bucketResult = checkRateLimit(getClientIp(req), totalChars);
+  const bucketResult = await checkRateLimit(req, totalChars);
   if (!bucketResult.ok) {
     return {
       ok: false,
@@ -1591,29 +1860,53 @@ function getClientIp(req) {
   return forwardedFor || req.ip || req.socket?.remoteAddress || 'unknown';
 }
 
-function checkRateLimit(ip, inputChars) {
-  const now = Date.now();
-  const day = new Date(now).toISOString().slice(0, 10);
-  const bucket = requestBuckets.get(ip) || { windowStart: now, requests: 0, day, dailyRequests: 0, dailyChars: 0 };
+function buildRateLimitIdentifier(req, scope = 'request') {
+  const cookies = parseCookies(req.headers.cookie || '');
+  const sessionId = req.chatSessionId || cookies[CHAT_SESSION_COOKIE] || '';
+  const userAgent = String(req.headers['user-agent'] || '').slice(0, 120);
+  const rawIdentifier = [scope, sessionId, getClientIp(req), userAgent].join('|');
+  return hashRateLimitIdentifier(rawIdentifier, ADMIN_SESSION_SECRET);
+}
 
-  if (now - bucket.windowStart > RATE_WINDOW_MS) {
-    bucket.windowStart = now;
-    bucket.requests = 0;
+function setRateLimitHeaders(res, result = {}) {
+  if (!Number.isFinite(result.limit)) return;
+  res.setHeader('X-RateLimit-Limit', String(result.limit));
+  res.setHeader('X-RateLimit-Remaining', String(Math.max(0, result.remaining || 0)));
+  if (Number.isFinite(result.reset)) {
+    res.setHeader('X-RateLimit-Reset', String(Math.ceil(result.reset / 1000)));
   }
+}
 
-  if (bucket.day !== day) {
-    bucket.day = day;
-    bucket.dailyRequests = 0;
-    bucket.dailyChars = 0;
-  }
+function hasSessionEvent(sessionId, type) {
+  if (!sessionId) return false;
+  return analytics.eventLog.some((event) => event.sessionId === sessionId && event.type === type);
+}
 
-  bucket.requests += 1;
-  bucket.dailyRequests += 1;
-  bucket.dailyChars += inputChars;
-  requestBuckets.set(ip, bucket);
-  pruneRequestBuckets(now);
+async function checkRateLimit(req, inputChars) {
+  const identifier = buildRateLimitIdentifier(req, 'chat');
+  const [shortWindow, dailyRequests, dailyChars] = await Promise.all([
+    enforceRateLimit({
+      scope: 'chat-window',
+      identifier,
+      limit: RATE_MAX_REQUESTS,
+      windowMs: RATE_WINDOW_MS
+    }),
+    enforceRateLimit({
+      scope: 'chat-daily-requests',
+      identifier,
+      limit: DAILY_MAX_REQUESTS,
+      windowMs: 24 * 60 * 60 * 1000
+    }),
+    enforceRateLimit({
+      scope: 'chat-daily-input',
+      identifier,
+      limit: DAILY_MAX_INPUT_CHARS,
+      windowMs: 24 * 60 * 60 * 1000,
+      cost: inputChars
+    })
+  ]);
 
-  if (bucket.requests > RATE_MAX_REQUESTS) {
+  if (!shortWindow.ok) {
     return {
       ok: false,
       error: 'rate_limited',
@@ -1621,7 +1914,7 @@ function checkRateLimit(ip, inputChars) {
     };
   }
 
-  if (bucket.dailyRequests > DAILY_MAX_REQUESTS || bucket.dailyChars > DAILY_MAX_INPUT_CHARS) {
+  if (!dailyRequests.ok || !dailyChars.ok) {
     return {
       ok: false,
       error: 'daily_limit_reached',
@@ -1630,16 +1923,6 @@ function checkRateLimit(ip, inputChars) {
   }
 
   return { ok: true };
-}
-
-function pruneRequestBuckets(now) {
-  if (requestBuckets.size < 1000) return;
-
-  for (const [ip, bucket] of requestBuckets.entries()) {
-    if (now - bucket.windowStart > RATE_WINDOW_MS * 10) {
-      requestBuckets.delete(ip);
-    }
-  }
 }
 
 function looksLikeAbuse(text) {
@@ -1658,20 +1941,25 @@ function looksLikeAbuse(text) {
 function isOffTopicRequest(latestMessage = '', messages = []) {
   const latest = normalizeAnalyticsText(latestMessage);
   if (!latest) return false;
-  if (hasSlRackDomainSignal(latest)) return false;
-
-  const conversationText = normalizeAnalyticsText(messages.map((message) => message.content).join(' '));
-  if (hasSlRackDomainSignal(conversationText) && isFollowUpQuestion(latest)) return false;
 
   const offTopicPatterns = [
-    /\b(lektira|lektiru|lektire|prepricaj|prepricati|sastav|esej|seminarski|referat|maturski|domaci|zadaca|zadacu|school essay|book report)\b/i,
-    /\b(write|writ(e|ing)|napisi|napisati|sastavi|sastaviti|create|generate|generisi|generiraj|erstelle|schreib(e|en)?)\b.{0,80}\b(poem|pjesm|pesm|story|pric|roman|lektira|essay|aufsatz|bewerbung|cv|resume|code|program|script|rezept|recipe)\b/i,
+    /\b(lektira|lektiru|lektire|lektüre|lektuere|buchzusammenfassung|prepricaj|prepricati|sastav|esej|seminarski|referat|maturski|domaci|zadaca|zadacu|school essay|book report)\b/i,
+    /\b(write|writ(e|ing)|napisi|napisati|sastavi|sastaviti|create|generate|generisi|generiraj|erstelle|schreib(e|en)?)\b.{0,80}\b(poem|pjesm|pesm|story|pric|roman|buch|lektira|lektüre|lektuere|essay|aufsatz|bewerbung|cv|resume|code|program|script|rezept|recipe)\b/i,
     /\b(recept|recipe|kuhanje|cooking|fitness|trening|dijeta|diet|horoskop|astrolog|vic|joke|song|lyrics|pjesma|pesma|film|movie)\b/i,
     /\b(javascript|python|java|c\+\+|html|css|sql|programir|kod|code|skripta|script|app|website)\b/i,
     /\b(prevodi|translate|uebersetze|übersetze|gramatika|grammar)\b/i
   ];
 
   if (offTopicPatterns.some((pattern) => pattern.test(latest))) return true;
+
+  if (hasSlRackDomainSignal(latest)) return false;
+
+  const priorUserText = messages
+    .filter((message) => message.role === 'user' && message.content !== latestMessage)
+    .map((message) => message.content)
+    .join(' ');
+  const conversationText = normalizeAnalyticsText(priorUserText);
+  if (hasSlRackDomainSignal(conversationText) && isFollowUpQuestion(latest)) return false;
 
   const generalQuestion = /\b(ko je|sta je|šta je|kako se|objasni|explain|who is|what is|how to|hilfe bei|help me)\b/i.test(latest);
   return generalQuestion && !hasSlRackDomainSignal(conversationText);
@@ -1756,39 +2044,6 @@ function postProcessSalesReplySafe(reply, userMessage = '') {
       '',
       'Planungshinweis:',
       'F\u00fcr RAIL 40 ist aus dem Vertriebs-/Planungskontext eine maximale \u00dcberspannung von ca. 1,50 m als relevanter Planungswert bekannt. Die tats\u00e4chliche Anzahl der Dachhaken muss dennoch projektspezifisch mit Wind-/Schneelast, Randzonen, Modulbelegung und Statik gepr\u00fcft werden.'
-    ].join('\n');
-  }
-
-  return output;
-}
-
-function postProcessSalesReply(reply, userMessage = '') {
-  let output = String(reply || '');
-  const query = String(userMessage || '').toLowerCase();
-  const isTileRoofQuestion = /(ziegel|zieldach|dachhaken|erus|e58|tonziegel|betondachstein)/i.test(query);
-  const asksHookQuantity = /(wie viele|wieviele|anzahl|dachhaken.*ben[oö]tig|ben[oö]tige.*dachhaken)/i.test(query);
-
-  if (isTileRoofQuestion && (!/Alpha-Platte/i.test(output) || !/Delta-Platte/i.test(output))) {
-    output += [
-      '',
-      'Zusatzhinweis aus der SL Rack Vertriebslogik:',
-      'Bei Ziegeldächern bitte nicht nur Dachhaken betrachten. Je nach Ziegeltyp und Projekt können auch Alpha-Platte und Delta-Platte relevante SL Rack Optionen sein. Für eine belastbare Auswahl bitte den exakten Ziegeltyp, Tonziegel/Betondachstein, Dachneigung und Lattungsabstand prüfen.'
-    ].join('\n');
-  }
-
-  if (/dachhaken|edelstahl|sl a2/i.test(output) && /preiswert|günstig|guenstig|cheap|low-cost/i.test(output)) {
-    output += [
-      '',
-      'Hinweis zur Preisbewertung:',
-      'Eine pauschale Aussage wie preiswert oder günstig ist bei Edelstahl-Dachhaken nicht belastbar. Die wirtschaftlich passende Lösung hängt vom Dach, Material, Ziegeltyp, statischer Auslegung und den verfügbaren SL Rack Alternativen ab.'
-    ].join('\n');
-  }
-
-  if (asksHookQuantity && /rail 40/i.test(query) && !/1[,\\.]50|1,5|1\.5/i.test(output)) {
-    output += [
-      '',
-      'Planungshinweis:',
-      'Für RAIL 40 ist aus dem Vertriebs-/Planungskontext eine maximale Überspannung von ca. 1,50 m als relevanter Planungswert bekannt. Die tatsächliche Anzahl der Dachhaken muss dennoch projektspezifisch mit Wind-/Schneelast, Randzonen, Modulbelegung und Statik geprüft werden.'
     ].join('\n');
   }
 

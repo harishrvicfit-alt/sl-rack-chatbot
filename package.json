@@ -6,11 +6,19 @@
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "ingest:downloads": "node scripts/ingestDownloads.js"
+    "ingest:downloads": "node scripts/ingestDownloads.js",
+    "check": "node --check server.js && node --check public/app.js && node --check public/admin.js && node --check src/analyticsDatabase.js && node --check src/rateLimit.js",
+    "test": "node --test --test-concurrency=1",
+    "test:links": "node scripts/checkKnowledgeLinks.js",
+    "admin:hash": "node scripts/hashAdminPassword.js"
   },
   "dependencies": {
-    "@vercel/blob": "^2.4.0",
-    "cors": "^2.8.5",
+    "@neondatabase/serverless": "^1.1.0",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
+    "@vercel/blob": "^2.6.1",
+    "@vercel/functions": "^3.7.5",
+    "cheerio": "^1.2.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "openai": "^4.77.0"

@@ -3,6 +3,7 @@ import { createWriteStream } from 'node:fs';
 import path from 'node:path';
 import { pipeline } from 'node:stream/promises';
 import { spawnSync } from 'node:child_process';
+import * as cheerio from 'cheerio';
 
 const DOWNLOADS_URL = 'https://www.sl-rack.com/downloads';
 const SITE_ORIGIN = 'https://www.sl-rack.com';
@@ -11,9 +12,7 @@ const DATA_DIR = path.join(ROOT, 'data');
 const DOC_DIR = path.join(DATA_DIR, 'sl-rack-documents');
 const TEXT_DIR = path.join(DATA_DIR, 'sl-rack-text');
 const INDEX_FILE = path.join(DATA_DIR, 'knowledge-index.json');
-const PYTHON =
-  process.env.PYTHON_PATH ||
-  'C:\\Users\\haris.hrvic\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe';
+const PYTHON = process.env.PYTHON_PATH || process.env.PYTHON || 'python';
 
 await mkdir(DOC_DIR, { recursive: true });
 await mkdir(TEXT_DIR, { recursive: true });
@@ -70,31 +69,25 @@ console.log(`Knowledge index written to ${INDEX_FILE}`);
 console.log(`Documents: ${index.documentCount}, chunks: ${index.chunkCount}`);
 
 function extractDocuments(htmlText) {
-  const main = htmlText.slice(htmlText.indexOf('<h1'), htmlText.lastIndexOf('<footer'));
-  const tokenRegex = /<h2[^>]*>([\s\S]*?)<\/h2>|<a\b([^>]+)>([\s\S]*?)<\/a>/gi;
+  const $ = cheerio.load(htmlText);
   const result = [];
   let category = 'Downloads';
-  let match;
-
-  while ((match = tokenRegex.exec(main))) {
-    if (match[1]) {
-      category = decodeHtml(stripTags(match[1])).trim() || category;
-      continue;
+  $('h2, a[href]').each((_index, element) => {
+    if (element.tagName === 'h2') {
+      category = $(element).text().replace(/\s+/g, ' ').trim() || category;
+      return;
     }
 
-    const attrs = match[2] || '';
-    const hrefMatch = attrs.match(/href=["']([^"']+)["']/i);
-    if (!hrefMatch) continue;
-
-    const href = hrefMatch[1];
+    const href = $(element).attr('href');
+    if (!href) return;
     const url = new URL(href, SITE_ORIGIN).toString();
-    if (!url.toLowerCase().includes('/fileadmin/') || !url.toLowerCase().includes('.pdf')) continue;
+    if (!url.toLowerCase().includes('/fileadmin/') || !url.toLowerCase().includes('.pdf')) return;
 
-    const title = decodeHtml(stripTags(match[3] || '')).replace(/\s+/g, ' ').trim();
-    if (!title) continue;
+    const title = ($(element).attr('title') || $(element).text()).replace(/\s+/g, ' ').trim();
+    if (!title) return;
 
     result.push({ title, category: normalizeCategory(category), url });
-  }
+  });
 
   const unique = new Map();
   for (const doc of result) unique.set(doc.url, doc);
@@ -146,15 +139,36 @@ function chunkDocument({ id, title, category, sourceUrl, localPdf, pages }) {
 }
 
 async function fetchText(url) {
-  const response = await fetch(url, { headers: { 'user-agent': 'SL Rack chatbot knowledge indexer' } });
-  if (!response.ok) throw new Error(`Failed to fetch ${url}: ${response.status}`);
+  const response = await fetchWithRetry(url);
   return response.text();
 }
 
 async function downloadFile(url, outputPath) {
-  const response = await fetch(url, { headers: { 'user-agent': 'SL Rack chatbot knowledge indexer' } });
-  if (!response.ok || !response.body) throw new Error(`Failed to download ${url}: ${response.status}`);
+  const response = await fetchWithRetry(url);
+  if (!response.body) throw new Error(`Empty download response for ${url}`);
   await pipeline(response.body, createWriteStream(outputPath));
+}
+
+async function fetchWithRetry(url, attempts = 3) {
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30_000);
+    try {
+      const response = await fetch(url, {
+        headers: { 'user-agent': 'SL Rack chatbot knowledge indexer' },
+        signal: controller.signal
+      });
+      if (response.ok) return response;
+      lastError = new Error(`Failed to fetch ${url}: ${response.status}`);
+    } catch (error) {
+      lastError = error;
+    } finally {
+      clearTimeout(timeout);
+    }
+    if (attempt < attempts) await new Promise((resolve) => setTimeout(resolve, attempt * 750));
+  }
+  throw lastError;
 }
 
 function buildKeywords(text) {

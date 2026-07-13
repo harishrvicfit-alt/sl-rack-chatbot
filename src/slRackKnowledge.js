@@ -14,6 +14,7 @@ export const companyFacts = {
     revenue: {
       value: '85 Mio. bis 425 Mio. EUR',
       valueType: 'public third-party revenue range, not an audited exact figure published by SL Rack',
+      verifiedAt: '2026-07-13',
       sourceTitle: 'Indeed Unternehmensprofil: SL Rack GmbH',
       sourceUrl: 'https://de.indeed.com/cmp/Sl-Rack-Gmbh-1/about'
     },
@@ -21,6 +22,7 @@ export const companyFacts = {
       value: '53,2 Mio. EUR',
       date: '31.12.2024',
       note: 'Bilanzsumme, nicht Umsatz',
+      verifiedAt: '2026-06-18',
       sourceTitle: 'North Data: SL Rack GmbH, Haag, HRB 26984',
       sourceUrl: 'https://www.northdata.de/SL%20Rack%20GmbH,%20Haag/Amtsgericht%20Traunstein%20HRB%2026984'
     }

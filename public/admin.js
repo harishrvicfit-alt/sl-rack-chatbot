@@ -12,6 +12,12 @@ const metricTooltips = {
   'AI Status': 'Pokazuje da li chatbot trenutno koristi OpenAI API model ili fallback logiku bez AI odgovora.',
   Dokumente: 'Broj dokumenata i tekstualnih dijelova iz SL Rack baze znanja koje chatbot koristi za odgovore.',
   'Ukupno upita': 'Ukupan broj jedinstvenih korisnickih pitanja koja je chat API prihvatio i evidentirao.',
+  'Poslano ukupno': 'Svi evidentirani pokusaji pitanja: prihvaceni upiti i upiti odbijeni sigurnosnim pravilima.',
+  'Odbijeni upiti': 'Upiti koji nisu poslani AI modelu jer su bili van SL Rack teme, predugi ili ograniceni zastitom.',
+  'Zavrseni odgovori': 'Broj zahtjeva za koje je chatbot uspjesno vratio AI ili kontrolisani fallback odgovor.',
+  'Prosjecno vrijeme': 'Prosjecno vrijeme obrade zavrsenih odgovora za koje je mjerenje dostupno.',
+  'AI tokeni': 'Ukupan broj ulaznih i izlaznih OpenAI tokena evidentiranih od aktiviranja mjerenja.',
+  'Client Fehler': 'Greske evidentirane u korisnickom pregledniku, odvojeno od server/API gresaka.',
   'Aktivne sesije': 'Broj korisnickih sesija koje su bile aktivne u zadnjih 30 minuta.',
   'Sesije ukupno': 'Ukupan broj jedinstvenih chat sesija koje su evidentirane od pocetka mjerenja.',
   Blockiert: 'Broj zahtjeva koje je sistem blokirao zbog rate limita, predugog unosa ili sigurnosnih pravila.',
@@ -101,7 +107,10 @@ function renderSummary(data) {
   metrics.innerHTML = [
     metricCard('AI Status', data.aiEnabled ? 'Aktiv' : 'Fallback', data.model, data.aiEnabled ? 'ok' : 'warn'),
     metricCard('Dokumente', knowledge.documentCount ?? '-', `${knowledge.chunkCount ?? '-'} Chunks`),
-    metricCard('Ukupno upita', analytics.totalQuestions ?? analytics.chats ?? 0, 'Korisnicka pitanja'),
+    metricCard('Poslano ukupno', analytics.totalSubmitted ?? analytics.totalQuestions ?? 0, 'Prihvaceno + odbijeno'),
+    metricCard('Ukupno upita', analytics.totalQuestions ?? analytics.chats ?? 0, 'Prihvacena pitanja'),
+    metricCard('Odbijeni upiti', analytics.rejectedQuestions ?? 0, 'Nije poslano AI modelu'),
+    metricCard('Zavrseni odgovori', analytics.chats ?? 0, 'AI + kontrolisani fallback'),
     metricCard('Aktivne sesije', analytics.activeSessions ?? 0, 'Zadnjih 30 min'),
     metricCard('Sesije ukupno', analytics.totalSessions ?? 0, 'Od pocetka mjerenja'),
     metricCard('Blockiert', analytics.blocked ?? 0, 'Rate/Security'),
@@ -110,6 +119,9 @@ function renderSummary(data) {
     metricCard('Kontakt angeboten', analytics.contactOffers ?? 0, 'CTA angezeigt'),
     metricCard('Weiterleitung Vertrieb', analytics.contacts ?? 0, 'Klick auf Mail CTA'),
     metricCard('Fehler', analytics.errors ?? 0, 'Runtime/API'),
+    metricCard('Client Fehler', analytics.clientErrors ?? 0, 'Browser/UI'),
+    metricCard('Prosjecno vrijeme', formatDuration(analytics.averageLatencyMs), 'Od prijema do odgovora'),
+    metricCard('AI tokeni', analytics.totalTokens ?? 0, `${analytics.inputTokens ?? 0} in / ${analytics.outputTokens ?? 0} out`),
     productStatsCard(
       'Top Produkte / Modelle',
       ['Produkt / Modell', 'Broj'],
@@ -146,6 +158,12 @@ function metricCard(label, value, hint = '', tone = '') {
       <span class="muted">${escapeHtml(hint)}</span>
     </article>
   `;
+}
+
+function formatDuration(milliseconds) {
+  const value = Number(milliseconds || 0);
+  if (!value) return '-';
+  return value < 1000 ? `${Math.round(value)} ms` : `${(value / 1000).toFixed(1)} s`;
 }
 
 function tableCard(title, headers, rows) {

@@ -323,8 +323,24 @@ h2 {
   align-items: end;
   gap: 12px;
   padding: 18px;
+  background: #ffffff;
+}
+
+.composer-wrap {
   border-top: 1px solid var(--line);
   background: #ffffff;
+}
+
+.privacy-note {
+  margin: -9px 18px 10px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.privacy-note a {
+  color: var(--brand);
+  font-weight: 700;
 }
 
 textarea,
@@ -515,6 +531,47 @@ label {
   background: linear-gradient(90deg, var(--brand), var(--accent));
 }
 
+@media (min-width: 921px) and (max-height: 800px) {
+  .brand-header {
+    min-height: 64px;
+    padding: 10px 24px;
+  }
+
+  .brand-logo img {
+    width: 136px;
+  }
+
+  .app-shell {
+    height: calc(100vh - 64px);
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .topbar {
+    gap: 16px;
+    padding: 17px 22px;
+  }
+
+  .topbar h1 {
+    font-size: 2rem;
+    line-height: 1.04;
+  }
+
+  .intro {
+    margin-top: 9px;
+    font-size: 0.9rem;
+  }
+
+  .hero-card {
+    min-height: 118px;
+    padding: 14px;
+  }
+
+  .composer {
+    padding: 12px 16px;
+  }
+}
+
 @media (max-width: 920px) {
   html,
   body {
@@ -613,9 +670,22 @@ label {
     min-width: 0;
     gap: 10px;
     padding: 12px;
-    padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    padding-bottom: 8px;
     box-shadow: 0 -12px 30px rgba(0, 69, 40, 0.08);
     touch-action: manipulation;
+  }
+
+  .composer-wrap {
+    position: relative;
+    z-index: 15;
+    min-width: 0;
+    padding-bottom: max(5px, env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -12px 30px rgba(0, 69, 40, 0.08);
+  }
+
+  .privacy-note {
+    margin: -3px 12px 4px;
+    font-size: 0.62rem;
   }
 
   textarea {
@@ -634,6 +704,12 @@ label {
   .decision-panel {
     display: none;
   }
+}
+
+button:disabled,
+textarea:disabled {
+  cursor: wait;
+  opacity: 0.62;
 }
 
 @media (max-width: 560px) {
@@ -681,7 +757,7 @@ label {
   .composer {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: end;
-    padding: 10px 12px max(10px, env(safe-area-inset-bottom, 0px));
+    padding: 10px 12px 7px;
   }
 
   .composer > button {

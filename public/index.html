@@ -38,25 +38,32 @@
 
         <div id="chatLog" class="chat-log" aria-live="polite"></div>
 
-        <form id="chatForm" class="composer">
-          <textarea
-            id="messageInput"
-            rows="2"
-            placeholder="Ihre Frage zu Dach, Modul oder System..."
-            required
-          ></textarea>
-          <button type="submit" aria-label="Send message">
-            <span>Send</span>
-          </button>
-        </form>
+        <div class="composer-wrap">
+          <form id="chatForm" class="composer">
+            <textarea
+              id="messageInput"
+              rows="2"
+              placeholder="Ihre Frage zu Dach, Modul oder System..."
+              maxlength="1500"
+              required
+            ></textarea>
+            <button type="submit" aria-label="Nachricht senden">
+              <span>Senden</span>
+            </button>
+          </form>
+          <p class="privacy-note">
+            Eingaben werden zur Qualit&auml;ts- und Supportauswertung gespeichert. Bitte keine personenbezogenen Daten eingeben.
+            <a href="https://www.sl-rack.com/datenschutz" target="_blank" rel="noreferrer">Datenschutz</a>
+          </p>
+        </div>
       </section>
 
       <aside class="decision-panel">
         <div class="brand-block">
           <img src="/assets/logo_sl-rack.svg" alt="SL Rack" />
           <div>
-            <strong>System selector</strong>
-            <span>Fast pre-qualification for PV projects</span>
+            <strong>Systemauswahl</strong>
+            <span>Schnelle Vorqualifizierung f&uuml;r PV-Projekte</span>
           </div>
         </div>
 
@@ -65,47 +72,47 @@
         </div>
 
         <label>
-          Project type
+          Projekttyp
           <select id="projectType">
-            <option value="">Not sure yet</option>
-            <option value="pitched-roof">Pitched or sheet-metal roof</option>
-            <option value="flat-roof">Flat roof</option>
-            <option value="ground-mount">Ground-mounted solar park</option>
-            <option value="facade">Facade / SL Energy Wall</option>
-            <option value="carport">PV carport</option>
+            <option value="">Noch nicht sicher</option>
+            <option value="pitched-roof">Schr&auml;g- oder Blechdach</option>
+            <option value="flat-roof">Flachdach</option>
+            <option value="ground-mount">Freifl&auml;chenanlage</option>
+            <option value="facade">Fassade / SL Energy Wall</option>
+            <option value="carport">PV-Carport</option>
             <option value="agri-pv">Agri-PV</option>
           </select>
         </label>
 
         <label>
-          Surface or structure
-          <input id="surface" placeholder="Tile roof, flat membrane, soil, facade..." />
+          Untergrund oder Konstruktion
+          <input id="surface" placeholder="Ziegeldach, Dachbahn, Boden, Fassade..." />
         </label>
 
         <label>
-          Main priority
+          Hauptpriorit&auml;t
           <select id="priority">
-            <option value="">Choose priority</option>
-            <option>Fast installation</option>
-            <option>Minimal roof load</option>
-            <option>Maximum energy yield</option>
-            <option>Aesthetic integration</option>
-            <option>Dual land use</option>
-            <option>Rain protection for parking</option>
+            <option value="">Priorit&auml;t w&auml;hlen</option>
+            <option>Schnelle Montage</option>
+            <option>Minimale Dachlast</option>
+            <option>Maximaler Energieertrag</option>
+            <option>&Auml;sthetische Integration</option>
+            <option>Doppelte Fl&auml;chennutzung</option>
+            <option>Regenschutz f&uuml;r Stellpl&auml;tze</option>
           </select>
         </label>
 
         <label>
-          Orientation
-          <input id="orientation" placeholder="South, east-west, vertical, tracking..." />
+          Ausrichtung
+          <input id="orientation" placeholder="S&uuml;d, Ost-West, vertikal, Tracker..." />
         </label>
 
-        <button id="recommendButton" class="secondary-button" type="button">Recommend product</button>
+        <button id="recommendButton" class="secondary-button" type="button">Produkt empfehlen</button>
 
         <section class="recommendations">
           <div class="section-heading">
-            <h2>Best fit</h2>
-            <span>Live ranking</span>
+            <h2>Beste Auswahl</h2>
+            <span>Live-Bewertung</span>
           </div>
           <div id="recommendationList"></div>
         </section>

@@ -4,6 +4,8 @@ const messageInput = document.querySelector('#messageInput');
 const statusBadge = document.querySelector('#statusBadge');
 const recommendButton = document.querySelector('#recommendButton');
 const recommendationList = document.querySelector('#recommendationList');
+const submitButton = chatForm.querySelector('button[type="submit"]');
+let isSending = false;
 
 const fields = {
   projectType: document.querySelector('#projectType'),
@@ -84,20 +86,28 @@ window.visualViewport?.addEventListener('resize', syncViewportHeight);
 
 chatForm.addEventListener('submit', async (event) => {
   event.preventDefault();
+  if (isSending) return;
   const content = messageInput.value.trim();
   if (!content) return;
+
+  isSending = true;
+  submitButton.disabled = true;
+  messageInput.disabled = true;
 
   messages.push({ role: 'user', content });
   const requestId = createRequestId();
   messageInput.value = '';
   renderMessages();
 
-  const typing = addMessage('assistant', 'Thinking through the project details...');
+  const typing = addMessage('assistant', 'SL Rack prüft Ihre Angaben...');
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 65_000);
 
   try {
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal,
       body: JSON.stringify({
         messages: buildOutgoingMessages(content),
         profile: getProfile(content),
@@ -106,6 +116,7 @@ chatForm.addEventListener('submit', async (event) => {
     });
 
     const data = await response.json();
+    if (!response.ok && !data.reply) throw new Error(data.error || `HTTP ${response.status}`);
     typing.remove();
 
     const reply = data.reply || 'I could not generate a response. Please try again with more project details.';
@@ -126,11 +137,19 @@ chatForm.addEventListener('submit', async (event) => {
     typing.remove();
     messages.push({
       role: 'assistant',
-      content: 'Die Antwort konnte gerade nicht geladen werden. Bitte versuchen Sie es erneut oder kontaktieren Sie SL Rack direkt.',
+      content: error.name === 'AbortError'
+        ? 'Die Antwort hat zu lange gedauert. Bitte versuchen Sie es mit einer kürzeren, konkreteren Frage erneut.'
+        : 'Die Antwort konnte gerade nicht geladen werden. Bitte versuchen Sie es erneut oder kontaktieren Sie SL Rack direkt.',
       contact: true
     });
     renderMessages({ focusLatestAssistant: true });
-    trackEvent('chat_failed');
+    trackEvent('client_error', { code: error.name || 'request_failed' });
+  } finally {
+    clearTimeout(timeout);
+    isSending = false;
+    submitButton.disabled = false;
+    messageInput.disabled = false;
+    messageInput.focus();
   }
 });
 

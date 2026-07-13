@@ -15,7 +15,7 @@ export function getKnowledgeStatus() {
   };
 }
 
-export function searchKnowledge(query, profile = {}, limit = 6) {
+export function searchKnowledge(query, profile = {}, limit = 4) {
   const index = loadIndex();
   if (!index?.chunks?.length) return [];
 
@@ -34,12 +34,22 @@ export function searchKnowledge(query, profile = {}, limit = 6) {
   const terms = tokenize(queryText);
   if (!terms.length) return [];
 
-  return index.chunks
-    .map((chunk) => ({ chunk, score: scoreChunk(chunk, terms) }))
+  const ranked = index.chunks
+    .map((chunk) => ({ chunk, score: scoreChunk(chunk, terms, query) }))
     .filter((entry) => entry.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
-    .map(({ chunk, score }) => ({
+    .sort((a, b) => b.score - a.score);
+
+  const selected = [];
+  const seenDocuments = new Set();
+  for (const entry of ranked) {
+    const documentKey = entry.chunk.documentId || entry.chunk.sourceUrl;
+    if (seenDocuments.has(documentKey)) continue;
+    seenDocuments.add(documentKey);
+    selected.push(entry);
+    if (selected.length >= limit) break;
+  }
+
+  return selected.map(({ chunk, score }) => ({
       id: chunk.id,
       title: chunk.title,
       category: chunk.category,
@@ -57,15 +67,21 @@ function loadIndex() {
   return cachedIndex;
 }
 
-function scoreChunk(chunk, terms) {
+function scoreChunk(chunk, terms, rawQuery = '') {
   const content = String(chunk.content || '').toLowerCase();
   const title = String(chunk.title || '').toLowerCase();
   const category = String(chunk.category || '').toLowerCase();
   const keywords = new Set(chunk.keywords || []);
   let score = 0;
+  const normalizedQuery = normalizeSearchText(rawQuery);
+  const normalizedTitle = normalizeSearchText(title);
+
+  if (normalizedQuery && normalizedTitle && normalizedQuery.includes(normalizedTitle)) score += 35;
+  if (/delta[- ]?platte/i.test(rawQuery) && /^d platte$/i.test(normalizedTitle)) score += 140;
+  if (/\b(pdf|datenblatt|produktblatt|montageanleitung|anleitung|dokument)/i.test(rawQuery)) score += 4;
 
   for (const term of terms) {
-    if (title.includes(term)) score += 8;
+    if (title.includes(term)) score += 12;
     if (category.includes(term)) score += 4;
     if (keywords.has(term)) score += 5;
     const matches = content.match(new RegExp(escapeRegExp(term), 'g'));
@@ -82,7 +98,15 @@ function excerpt(content, terms) {
     .filter((position) => position >= 0)
     .sort((a, b) => a - b)[0];
   const start = Math.max(0, (hit || 0) - 260);
-  return content.slice(start, start + 900).trim();
+  return content.slice(start, start + 600).trim();
+}
+
+function normalizeSearchText(value) {
+  return String(value || '')
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
 }
 
 function tokenize(value) {
@@ -97,7 +121,7 @@ function tokenize(value) {
     'ein',
     'eine',
     'mit',
-    'fÃ¼r',
+    'für',
     'von',
     'auf',
     'zur',
@@ -111,7 +135,7 @@ function tokenize(value) {
     'brauchen'
   ]);
 
-  return [...new Set(String(value || '').toLowerCase().match(/[a-zÃ¤Ã¶Ã¼ÃŸ0-9-]{3,}/gi) || [])].filter(
+  return [...new Set(String(value || '').toLowerCase().match(/[\p{L}\p{N}-]{3,}/gu) || [])].filter(
     (term) => !stopWords.has(term)
   );
 }
