@@ -782,6 +782,8 @@ function deriveAnalyticsSnapshot(snapshot) {
   const topTopics = new Map();
   const sessions = new Map(mergeSessionEntries(snapshot?.sessions, []));
   const seenQuestions = new Set();
+  const seenAcceptedRequests = new Set();
+  const seenRejectedRequests = new Set();
   const seenAnswers = new Set();
   const counters = {
     chats: 0,
@@ -814,11 +816,11 @@ function deriveAnalyticsSnapshot(snapshot) {
 
     if (type === 'question_asked') {
       const questionKey = buildRequestEventKey(event);
+      if (questionKey) seenAcceptedRequests.add(questionKey);
       if (!seenQuestions.has(questionKey)) {
         seenQuestions.add(questionKey);
         const question = normalizeQuestion(event?.payload?.question);
         if (question) {
-          counters.totalQuestions += 1;
           topQuestions.set(question, (topQuestions.get(question) || 0) + 1);
           for (const label of getProductInterestLabels(question)) {
             topProducts.set(label, (topProducts.get(label) || 0) + 1);
@@ -832,14 +834,20 @@ function deriveAnalyticsSnapshot(snapshot) {
 
     if (type === 'question_rejected') {
       const questionKey = buildRequestEventKey(event);
-      if (!seenQuestions.has(questionKey)) {
-        seenQuestions.add(questionKey);
+      if (!seenRejectedRequests.has(questionKey)) {
+        seenRejectedRequests.add(questionKey);
         counters.rejectedQuestions += 1;
       }
     }
 
+    if (type === 'chat_submitted') {
+      const submissionKey = buildRequestEventKey(event);
+      if (submissionKey) seenAcceptedRequests.add(submissionKey);
+    }
+
     if (type === 'chat_answered') {
       const answerKey = buildRequestEventKey(event);
+      if (answerKey) seenAcceptedRequests.add(answerKey);
       if (!seenAnswers.has(answerKey)) {
         seenAnswers.add(answerKey);
         counters.chats += 1;
@@ -862,6 +870,8 @@ function deriveAnalyticsSnapshot(snapshot) {
     if (type === 'quick_action_clicked') counters.quickActions += 1;
     if (type === 'client_error') counters.clientErrors += 1;
   }
+
+  counters.totalQuestions = seenAcceptedRequests.size;
 
   const migratedLegacyTotals = snapshot?.schemaVersion === 2 || snapshot?.legacyTotals
     ? normalizeLegacyTotals(snapshot?.legacyTotals)
