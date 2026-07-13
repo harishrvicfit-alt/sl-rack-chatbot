@@ -617,6 +617,8 @@ async function ensureAnalyticsLoaded() {
           blobMigratedAt: new Date().toISOString()
         });
         analyticsBlobMigrationComplete = true;
+        const migratedSnapshot = await loadAnalyticsDatabaseSnapshot();
+        if (migratedSnapshot) hydrateAnalytics(migratedSnapshot);
         return;
       }
 
