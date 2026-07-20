@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      - run: pip install "pypdf[crypto]"
+      - run: pip install -r requirements-knowledge.txt
       - run: npm ci
       - run: npm run ingest:downloads
         env:
