@@ -9,30 +9,30 @@ const statusText = document.querySelector('#statusText');
 let adminTimeZone = 'Europe/Berlin';
 
 const metricTooltips = {
-  'AI Status': 'Pokazuje da li chatbot trenutno koristi OpenAI API model ili fallback logiku bez AI odgovora.',
-  Dokumente: 'Broj dokumenata i tekstualnih dijelova iz SL Rack baze znanja koje chatbot koristi za odgovore.',
-  'Ukupno upita': 'Ukupan broj jedinstvenih korisnickih pitanja koja je chat API prihvatio i evidentirao.',
-  'Poslano ukupno': 'Svi evidentirani pokusaji pitanja: prihvaceni upiti i upiti odbijeni sigurnosnim pravilima.',
-  'Odbijeni upiti': 'Upiti koji nisu poslani AI modelu jer su bili van SL Rack teme, predugi ili ograniceni zastitom.',
-  'Zavrseni odgovori': 'Broj zahtjeva za koje je chatbot uspjesno vratio AI ili kontrolisani fallback odgovor.',
-  'Prosjecno vrijeme': 'Prosjecno vrijeme obrade zavrsenih odgovora za koje je mjerenje dostupno.',
-  'AI tokeni': 'Ukupan broj ulaznih i izlaznih OpenAI tokena evidentiranih od aktiviranja mjerenja.',
-  'Client Fehler': 'Greske evidentirane u korisnickom pregledniku, odvojeno od server/API gresaka.',
-  'Aktivne sesije': 'Broj korisnickih sesija koje su bile aktivne u zadnjih 30 minuta.',
-  'Sesije ukupno': 'Ukupan broj jedinstvenih chat sesija koje su evidentirane od pocetka mjerenja.',
-  Blockiert: 'Broj zahtjeva koje je sistem blokirao zbog rate limita, predugog unosa ili sigurnosnih pravila.',
-  'Quick Actions': 'Koliko puta su korisnici kliknuli na pocetne ili dodatne brze prijedloge u chatbotu.',
-  'PDF Klicks': 'Koliko puta su korisnici kliknuli na izvor, dokumentaciju ili PDF karticu koju je chatbot ponudio.',
-  'Kontakt angeboten': 'Koliko puta je chatbot u odgovoru korisniku ponudio kontakt sa SL Rack timom ili Vertriebom.',
-  'Weiterleitung Vertrieb': 'Koliko puta je korisnik kliknuo na kontakt/Email CTA i bio preusmjeren prema SL Rack Vertrieb timu.',
-  Fehler: 'Broj tehnickih gresaka u radu chatbota, API pozivima ili runtime obradi.',
-  'Top Produkte / Modelle': 'Lista proizvoda i tacnih modela za koje su se korisnici najvise raspitivali.',
-  'Top Themen / Kategorien': 'Najcesce teme iz svih korisnickih pitanja, npr. Dachhaken, Flachdach, Dokumentation, Preise, Statik ili Kontakt.',
-  'Najtrazenija pitanja': 'Najcesce ponovljena ili slicna korisnicka pitanja.',
-  'Upiti bez dobrog odgovora': 'Pitanja kod kojih je chatbot dao nesiguran odgovor, trazio dodatne podatke, prebacio na tehnicku provjeru ili imao tehnicki fallback.',
-  'Top Events': 'Najcesci sistemski dogadjaji, npr. login, poslano pitanje, ponudjen kontakt ili klik na izvor.',
-  'Letzte Events': 'Dogadjaji iz posljednjih 5 sati, maksimalno 10 redova. Kompletan event log dostupan je kao CSV.',
-  'Aktive Limits': 'Trenutno podesena sigurnosna i potrosacka ogranicenja za chatbot.'
+  'AI Status': 'Shows whether the chatbot is currently using the OpenAI API model or controlled fallback logic.',
+  Documents: 'Number of documents and text chunks in the SL Rack knowledge base used to generate answers.',
+  'Total submitted': 'All recorded question attempts, including accepted and security-rejected requests.',
+  'Accepted questions': 'Total number of unique user questions accepted and recorded by the chat API.',
+  'Rejected questions': 'Requests not sent to the AI model because they were off-topic, too long, or blocked by security controls.',
+  'Completed answers': 'Number of requests for which the chatbot returned an AI or controlled fallback answer.',
+  'Average response time': 'Average processing time for completed answers where latency data is available.',
+  'AI tokens': 'Total OpenAI input and output tokens recorded since token tracking was enabled.',
+  'Client errors': 'Errors recorded in the user browser, separate from server and API errors.',
+  'Active sessions': 'Number of user sessions active within the last 30 minutes.',
+  'Total sessions': 'Total number of unique chat sessions recorded since analytics tracking began.',
+  Blocked: 'Number of requests blocked by rate limits, input length limits, or security rules.',
+  'Quick Actions': 'Number of times users selected initial or follow-up suggestion buttons in the chatbot.',
+  'PDF clicks': 'Number of clicks on sources, documentation, or PDF cards offered by the chatbot.',
+  'Contact offered': 'Number of times the chatbot offered contact with the SL Rack team or Sales department.',
+  'Sales referrals': 'Number of times users clicked the contact or email call-to-action for the SL Rack Sales team.',
+  Errors: 'Number of technical chatbot, API, or runtime errors.',
+  'Top products / models': 'Products and exact models users asked about most frequently.',
+  'Top topics / categories': 'Most common topics across all user questions, such as roof hooks, flat roofs, documentation, pricing, structural design, or contact.',
+  'Most asked questions': 'Most frequently repeated or similar user questions.',
+  'Answers requiring review': 'Questions where the chatbot gave an uncertain answer, requested more information, referred the user for technical review, or used a technical fallback.',
+  'Top events': 'Most frequent system events, such as login, submitted question, contact offer, or source click.',
+  'Recent events': 'Events from the last 5 hours, limited to 10 rows. The complete event log is available as CSV.',
+  'Active limits': 'Current security and usage limits configured for the chatbot.'
 };
 
 init();
@@ -62,7 +62,7 @@ loginForm.addEventListener('submit', async (event) => {
   });
 
   if (!response.ok) {
-    loginError.textContent = 'Login nicht korrekt.';
+    loginError.textContent = 'Invalid username or password.';
     return;
   }
 
@@ -80,7 +80,7 @@ logoutButton.addEventListener('click', async () => {
 });
 
 async function loadSummary() {
-  statusText.textContent = 'Lade Daten...';
+  statusText.textContent = 'Loading data...';
   const data = await requestJson('/api/admin/summary');
 
   if (!data?.ok) {
@@ -89,7 +89,7 @@ async function loadSummary() {
   }
 
   adminTimeZone = data.timeZone || 'Europe/Berlin';
-  statusText.textContent = `Aktualisiert: ${formatAdminDateTime(data.generatedAt)} (${adminTimeZone})`;
+  statusText.textContent = `Updated: ${formatAdminDateTime(data.generatedAt)} (${adminTimeZone})`;
   renderSummary(data);
 }
 
@@ -105,47 +105,47 @@ function renderSummary(data) {
   const lastEvents = analytics.lastEvents || [];
 
   metrics.innerHTML = [
-    metricCard('AI Status', data.aiEnabled ? 'Aktiv' : 'Fallback', data.model, data.aiEnabled ? 'ok' : 'warn'),
-    metricCard('Dokumente', knowledge.documentCount ?? '-', `${knowledge.chunkCount ?? '-'} Chunks`),
-    metricCard('Poslano ukupno', analytics.totalSubmitted ?? analytics.totalQuestions ?? 0, 'Prihvaceno + odbijeno'),
-    metricCard('Ukupno upita', analytics.totalQuestions ?? analytics.chats ?? 0, 'Prihvacena pitanja'),
-    metricCard('Odbijeni upiti', analytics.rejectedQuestions ?? 0, 'Nije poslano AI modelu'),
-    metricCard('Zavrseni odgovori', analytics.chats ?? 0, 'AI + kontrolisani fallback'),
-    metricCard('Aktivne sesije', analytics.activeSessions ?? 0, 'Zadnjih 30 min'),
-    metricCard('Sesije ukupno', analytics.totalSessions ?? 0, 'Od pocetka mjerenja'),
-    metricCard('Blockiert', analytics.blocked ?? 0, 'Rate/Security'),
-    metricCard('Quick Actions', analytics.quickActions ?? 0, 'Start- und Folgechips'),
-    metricCard('PDF Klicks', analytics.sourceClicks ?? 0, 'Source cards'),
-    metricCard('Kontakt angeboten', analytics.contactOffers ?? 0, 'CTA angezeigt'),
-    metricCard('Weiterleitung Vertrieb', analytics.contacts ?? 0, 'Klick auf Mail CTA'),
-    metricCard('Fehler', analytics.errors ?? 0, 'Runtime/API'),
-    metricCard('Client Fehler', analytics.clientErrors ?? 0, 'Browser/UI'),
-    metricCard('Prosjecno vrijeme', formatDuration(analytics.averageLatencyMs), 'Od prijema do odgovora'),
-    metricCard('AI tokeni', analytics.totalTokens ?? 0, `${analytics.inputTokens ?? 0} in / ${analytics.outputTokens ?? 0} out`),
+    metricCard('AI Status', data.aiEnabled ? 'Active' : 'Fallback', data.model, data.aiEnabled ? 'ok' : 'warn'),
+    metricCard('Documents', knowledge.documentCount ?? '-', `${knowledge.chunkCount ?? '-'} chunks`),
+    metricCard('Total submitted', analytics.totalSubmitted ?? analytics.totalQuestions ?? 0, 'Accepted + rejected'),
+    metricCard('Accepted questions', analytics.totalQuestions ?? analytics.chats ?? 0, 'Accepted by the chat API'),
+    metricCard('Rejected questions', analytics.rejectedQuestions ?? 0, 'Not sent to the AI model'),
+    metricCard('Completed answers', analytics.chats ?? 0, 'AI + controlled fallback'),
+    metricCard('Active sessions', analytics.activeSessions ?? 0, 'Last 30 minutes'),
+    metricCard('Total sessions', analytics.totalSessions ?? 0, 'Since tracking began'),
+    metricCard('Blocked', analytics.blocked ?? 0, 'Rate / security'),
+    metricCard('Quick Actions', analytics.quickActions ?? 0, 'Initial and follow-up suggestions'),
+    metricCard('PDF clicks', analytics.sourceClicks ?? 0, 'Source cards'),
+    metricCard('Contact offered', analytics.contactOffers ?? 0, 'Contact CTA displayed'),
+    metricCard('Sales referrals', analytics.contacts ?? 0, 'Email CTA clicks'),
+    metricCard('Errors', analytics.errors ?? 0, 'Runtime / API'),
+    metricCard('Client errors', analytics.clientErrors ?? 0, 'Browser / UI'),
+    metricCard('Average response time', formatDuration(analytics.averageLatencyMs), 'Request to response'),
+    metricCard('AI tokens', analytics.totalTokens ?? 0, `${analytics.inputTokens ?? 0} input / ${analytics.outputTokens ?? 0} output`),
     productStatsCard(
-      'Top Produkte / Modelle',
-      ['Produkt / Modell', 'Broj'],
+      'Top products / models',
+      ['Product / model', 'Count'],
       topProducts.map((item) => [item.product, item.count])
     ),
     topicStatsCard(
-      'Top Themen / Kategorien',
-      ['Thema / Kategorie', 'Broj'],
+      'Top topics / categories',
+      ['Topic / category', 'Count'],
       topTopics.map((item) => [item.topic, item.count])
     ),
     unresolvedQuestionsCard(
-      'Upiti bez dobrog odgovora',
-      ['Zeit', 'Pitanje', 'Grund'],
+      'Answers requiring review',
+      ['Time', 'Question', 'Reason'],
       unresolvedQuestions.map((item) => [formatAdminDateTime(item.at), item.question, item.reason]),
       analytics.unresolvedQuestionCount || 0
     ),
     questionsTableCard(
-      'Najtrazenija pitanja',
-      ['Pitanje', 'Broj'],
+      'Most asked questions',
+      ['Question', 'Count'],
       topQuestions.map((item) => [item.question, item.count])
     ),
-    tableCard('Top Events', ['Event', 'Anzahl'], topEvents.map(([event, count]) => [event, count])),
+    tableCard('Top events', ['Event', 'Count'], topEvents.map(([event, count]) => [event, count])),
     eventLogCard(lastEvents, analytics.eventPreviewHours, analytics.eventPreviewLimit, analytics.eventLogCount),
-    tableCard('Aktive Limits', ['Limit', 'Wert'], Object.entries(limits))
+    tableCard('Active limits', ['Limit', 'Value'], Object.entries(limits))
   ].join('');
 }
 
@@ -170,7 +170,7 @@ function tableCard(title, headers, rows) {
   const tooltip = metricTooltips[title] || '';
   const body = rows.length
     ? rows.map((row) => `<tr>${row.map((cell, index) => `<td data-label="${escapeHtml(headers[index] || '')}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
-    : `<tr><td colspan="${headers.length}" class="muted">Keine Daten</td></tr>`;
+    : `<tr><td colspan="${headers.length}" class="muted">No data available</td></tr>`;
 
   return `
     <article class="card wide" ${tooltipAttr(tooltip)}>
@@ -203,24 +203,24 @@ function productStatsCard(title, headers, rows) {
           </div>
         `;
       }).join('')
-    : '<p class="muted">Noch keine Produktdaten vorhanden.</p>';
+    : '<p class="muted">No product data available yet.</p>';
   const tableBody = rows.length
     ? rows.map((row) => `<tr>${row.map((cell, index) => `<td data-label="${escapeHtml(headers[index] || '')}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
-    : `<tr><td colspan="${headers.length}" class="muted">Keine Daten</td></tr>`;
+    : `<tr><td colspan="${headers.length}" class="muted">No data available</td></tr>`;
 
   return `
     <article class="card wide" ${tooltipAttr(tooltip)}>
       <div class="card-heading">
         <div>
           <h2>${escapeHtml(title)}</h2>
-          <span class="muted">Grafische Auswertung der am haeufigsten genannten Produkte und Modelle.</span>
+          <span class="muted">Visual analysis of the most frequently mentioned products and models.</span>
         </div>
-        <div class="chart-summary" aria-label="Zusammenfassung Top Produkte">
-          <span><strong>${escapeHtml(totalMentions)}</strong> Erwaehnungen</span>
-          <span><strong>${escapeHtml(topShare)}%</strong> Top-Anteil</span>
+        <div class="chart-summary" aria-label="Top product summary">
+          <span><strong>${escapeHtml(totalMentions)}</strong> mentions</span>
+          <span><strong>${escapeHtml(topShare)}%</strong> top share</span>
         </div>
       </div>
-      <div class="product-chart" aria-label="Grafik Top Produkte und Modelle">
+      <div class="product-chart" aria-label="Top products and models chart">
         ${chart}
       </div>
       <table>
@@ -250,26 +250,26 @@ function topicStatsCard(title, headers, rows) {
           </div>
         `;
       }).join('')
-    : '<p class="muted">Noch keine Themendaten vorhanden.</p>';
+    : '<p class="muted">No topic data available yet.</p>';
   const tableBody = rows.length
     ? rows.map((row) => `<tr>${row.map((cell, index) => `<td data-label="${escapeHtml(headers[index] || '')}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
-    : `<tr><td colspan="${headers.length}" class="muted">Keine Daten</td></tr>`;
+    : `<tr><td colspan="${headers.length}" class="muted">No data available</td></tr>`;
 
   return `
     <article class="card wide" ${tooltipAttr(tooltip)}>
       <div class="card-heading">
         <div>
           <h2>${escapeHtml(title)}</h2>
-          <span class="muted">Automatisch aus allen gespeicherten Nutzerfragen kategorisiert.</span>
+          <span class="muted">Automatically categorized from all stored user questions.</span>
         </div>
         <div class="card-actions">
-          <div class="chart-summary" aria-label="Zusammenfassung Top Themen">
-            <span><strong>${escapeHtml(totalMentions)}</strong> Zuordnungen</span>
+          <div class="chart-summary" aria-label="Top topic summary">
+            <span><strong>${escapeHtml(totalMentions)}</strong> assignments</span>
           </div>
-          <a class="download-link" href="/api/admin/topics.csv" download>Themen CSV</a>
+          <a class="download-link" href="/api/admin/topics.csv" download>Topics</a>
         </div>
       </div>
-      <div class="product-chart" aria-label="Grafik Top Themen und Kategorien">
+      <div class="product-chart" aria-label="Top topics and categories chart">
         ${chart}
       </div>
       <table>
@@ -284,16 +284,16 @@ function unresolvedQuestionsCard(title, headers, rows, totalCount = 0) {
   const tooltip = metricTooltips[title] || '';
   const body = rows.length
     ? rows.map((row) => `<tr>${row.map((cell, index) => `<td data-label="${escapeHtml(headers[index] || '')}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
-    : `<tr><td colspan="${headers.length}" class="muted">Keine review-pflichtigen Antworten seit Aktivierung der Bewertung</td></tr>`;
+    : `<tr><td colspan="${headers.length}" class="muted">No answers have required review since answer evaluation was enabled</td></tr>`;
 
   return `
     <article class="card wide" ${tooltipAttr(tooltip)}>
       <div class="card-heading">
         <div>
           <h2>${escapeHtml(title)}</h2>
-          <span class="muted">${escapeHtml(totalCount)} gesamt seit Aktivierung der Antwortbewertung · letzte ${escapeHtml(rows.length)} im Panel</span>
+          <span class="muted">${escapeHtml(totalCount)} total since answer evaluation was enabled · latest ${escapeHtml(rows.length)} shown</span>
         </div>
-        <a class="download-link" href="/api/admin/unresolved-questions.csv" download>Review CSV</a>
+        <a class="download-link" href="/api/admin/unresolved-questions.csv" download>Review data</a>
       </div>
       <table>
         <thead><tr>${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join('')}</tr></thead>
@@ -307,16 +307,16 @@ function questionsTableCard(title, headers, rows) {
   const tooltip = metricTooltips[title] || '';
   const body = rows.length
     ? rows.map((row) => `<tr>${row.map((cell, index) => `<td data-label="${escapeHtml(headers[index] || '')}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
-    : `<tr><td colspan="${headers.length}" class="muted">Keine Daten</td></tr>`;
+    : `<tr><td colspan="${headers.length}" class="muted">No data available</td></tr>`;
 
   return `
     <article class="card wide" ${tooltipAttr(tooltip)}>
       <div class="card-heading">
         <div>
           <h2>${escapeHtml(title)}</h2>
-          <span class="muted">Top-Liste im Panel, kompletter Fragenverlauf als CSV.</span>
+          <span class="muted">Top questions in the panel, with the complete question history available as CSV.</span>
         </div>
-        <a class="download-link" href="/api/admin/questions.csv" download>Alle Fragen CSV</a>
+        <a class="download-link" href="/api/admin/questions.csv" download>All questions</a>
       </div>
       <table>
         <thead><tr>${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join('')}</tr></thead>
@@ -327,7 +327,7 @@ function questionsTableCard(title, headers, rows) {
 }
 
 function eventLogCard(events, previewHours = 5, previewLimit = 10, totalCount = 0) {
-  const tooltip = metricTooltips['Letzte Events'] || '';
+  const tooltip = metricTooltips['Recent events'] || '';
   const rows = events.map((event) => [
     formatAdminDateTime(event.at),
     event.type,
@@ -336,20 +336,20 @@ function eventLogCard(events, previewHours = 5, previewLimit = 10, totalCount = 
       .join(', ') || '-'
   ]);
   const body = rows.length
-    ? rows.map((row) => `<tr>${row.map((cell, index) => `<td data-label="${escapeHtml(['Zeit', 'Event', 'Details'][index])}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
-    : '<tr><td colspan="3" class="muted">Keine Events in diesem Zeitraum</td></tr>';
+    ? rows.map((row) => `<tr>${row.map((cell, index) => `<td data-label="${escapeHtml(['Time', 'Event', 'Details'][index])}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')
+    : '<tr><td colspan="3" class="muted">No events in this period</td></tr>';
 
   return `
     <article class="card wide" ${tooltipAttr(tooltip)}>
       <div class="card-heading">
         <div>
-          <h2>Letzte Events</h2>
-          <span class="muted">Letzte ${escapeHtml(previewHours)} Stunden · max. ${escapeHtml(previewLimit)} Events · ${escapeHtml(totalCount)} gesamt</span>
+          <h2>Recent events</h2>
+          <span class="muted">Last ${escapeHtml(previewHours)} hours · max. ${escapeHtml(previewLimit)} events · ${escapeHtml(totalCount)} total</span>
         </div>
-        <a class="download-link" href="/api/admin/events.csv" download>Event-Log herunterladen</a>
+        <a class="download-link" href="/api/admin/events.csv" download>Download event log</a>
       </div>
       <table>
-        <thead><tr><th>Zeit</th><th>Event</th><th>Details</th></tr></thead>
+        <thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
         <tbody>${body}</tbody>
       </table>
     </article>
@@ -394,7 +394,7 @@ function tooltipAttr(value) {
 function formatAdminDateTime(value) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return '-';
-  return new Intl.DateTimeFormat('de-DE', {
+  return new Intl.DateTimeFormat('en-GB', {
     timeZone: adminTimeZone,
     year: 'numeric',
     month: '2-digit',

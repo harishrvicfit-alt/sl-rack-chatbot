@@ -212,7 +212,7 @@ app.get('/api/admin/topics.csv', async (req, res) => {
   await refreshAnalyticsFromStorage();
   const date = new Date().toISOString().slice(0, 10);
   res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-  res.setHeader('Content-Disposition', `attachment; filename="sl-rack-chatbot-top-themen-${date}.csv"`);
+  res.setHeader('Content-Disposition', `attachment; filename="sl-rack-chatbot-top-topics-${date}.csv"`);
   res.setHeader('Cache-Control', 'private, no-store');
   res.send(`\uFEFF${buildTopicsCsv(analytics.eventLog)}`);
 });
@@ -225,7 +225,7 @@ app.get('/api/admin/unresolved-questions.csv', async (req, res) => {
   await refreshAnalyticsFromStorage();
   const date = new Date().toISOString().slice(0, 10);
   res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-  res.setHeader('Content-Disposition', `attachment; filename="sl-rack-chatbot-upiti-bez-dobrog-odgovora-${date}.csv"`);
+  res.setHeader('Content-Disposition', `attachment; filename="sl-rack-chatbot-answers-requiring-review-${date}.csv"`);
   res.setHeader('Cache-Control', 'private, no-store');
   res.send(`\uFEFF${buildUnresolvedQuestionsCsv(analytics.eventLog)}`);
 });
@@ -442,7 +442,7 @@ export default app;
 
 function buildAdminPage() {
   return `<!doctype html>
-<html lang="de">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -559,14 +559,14 @@ function buildAdminPage() {
           <div class="login-hero">
             <img src="/assets/logo_sl-rack.svg" alt="SL Rack" />
             <h1>Chatbot Admin</h1>
-            <p>Geschuetzter Bereich fuer interne Auswertung.</p>
+            <p>Protected area for internal analytics.</p>
           </div>
           <div class="login-body">
             <form id="loginForm">
-              <label>Benutzername <input id="adminUser" autocomplete="username" required /></label>
-              <label>Passwort <input id="adminPass" type="password" autocomplete="current-password" required /></label>
+              <label>Username <input id="adminUser" autocomplete="username" required /></label>
+              <label>Password <input id="adminPass" type="password" autocomplete="current-password" required /></label>
               <p id="loginError" class="error"></p>
-              <button type="submit">Anmelden</button>
+              <button type="submit">Sign in</button>
             </form>
           </div>
         </section>
@@ -574,12 +574,12 @@ function buildAdminPage() {
           <div class="toolbar">
             <div>
               <h1>SL Rack Chatbot Admin</h1>
-              <p id="statusText" class="muted">Lade Daten...</p>
-              <p class="muted">Persistente Statistik der aktuellen Produktionsinstanz.</p>
+              <p id="statusText" class="muted">Loading data...</p>
+              <p class="muted">Persistent analytics for the current production instance.</p>
             </div>
             <div class="toolbar-actions">
-              <button id="refreshButton" type="button">Aktualisieren</button>
-              <button id="logoutButton" class="secondary" type="button">Abmelden</button>
+              <button id="refreshButton" type="button">Refresh</button>
+              <button id="logoutButton" class="secondary" type="button">Sign out</button>
             </div>
           </div>
           <div id="metrics" class="grid"></div>
@@ -1180,22 +1180,22 @@ function buildTopicAnalyticsTerms() {
     terms.set(normalizedLabel, existing);
   };
 
-  add('Dachhaken', ['dachhaken', 'dach haken', 'roof hook', 'haken', 'edelstahlhaken', 'sl a2', '3d sl alu', 'multi hook']);
-  add('Schraeg-/Ziegeldach', ['schraeg dach', 'schraegdach', 'schragdach', 'ziegeldach', 'ziegel', 'tonziegel', 'betondachstein', 'erlus', 'e58', 'favorit', 'topwinner']);
-  add('Flachdach', ['flachdach', 'flat roof', 'fast flat', 'ballast', 'ost west', 'sued', 'sud', 'suedausrichtung', 'sudausrichtung', 'dachlast']);
-  add('Freiflaeche', ['freiflaeche', 'freiflache', 'freifl che', 'freiflachensystem', 'ground mount', 'solarpark', 'rammprofil', 'pfettensystem', 'sparrensystem']);
-  add('Dokumentation / PDF', ['dokumentation', 'dokument', 'pdf', 'datenblatt', 'produktdatenblatt', 'montageanleitung', 'prospekt', 'checkliste', 'zertifikat', 'garantie']);
-  add('Preise / Kosten', ['preis', 'preise', 'kosten', 'kostet', 'guenstig', 'gunstig', 'gunstige', 'guenstige', 'g nstig', 'g nstige', 'günstig', 'günstige', 'preiswert', 'angebot', 'rabatt', 'budget']);
-  add('Statik / Planung', ['statik', 'planung', 'auslegung', 'windlast', 'schneelast', 'last', 'ueberspannung', 'uberspannung', 'rail 40', 'solar.pro.tool', 'sl planner']);
-  add('Kontakt / Vertrieb', ['kontakt', 'vertrieb', 'sales', 'angebot anfordern', 'mail', 'email', 'telefon', 'ansprechpartner', 'beratung']);
-  add('Montage', ['montage', 'montieren', 'installation', 'installieren', 'befestigung', 'drehmoment', 'werkzeug', 'schraube']);
-  add('RAIL / Schienen', ['rail', 'schiene', 'tragschiene', 'montageschiene', 'rail 40', 'rail 60', 'rail inlay']);
-  add('Modulklemmen', ['modulklemme', 'mittelklemme', 'endklemme', 'klemme', 'klemmen']);
-  add('Blechdach / Falz', ['blechdach', 'falz', 'falzklemme', 'stehfalz', 'trapez', 'trapezblech', 'zambelli', 'dfalzcu', 'kupferfalzdach']);
-  add('Fassade', ['fassade', 'fassadensystem', 'energy wall', 'wall']);
+  add('Roof hooks', ['dachhaken', 'dach haken', 'roof hook', 'haken', 'edelstahlhaken', 'sl a2', '3d sl alu', 'multi hook']);
+  add('Pitched / tile roofs', ['schraeg dach', 'schraegdach', 'schragdach', 'ziegeldach', 'ziegel', 'tonziegel', 'betondachstein', 'erlus', 'e58', 'favorit', 'topwinner']);
+  add('Flat roofs', ['flachdach', 'flat roof', 'fast flat', 'ballast', 'ost west', 'sued', 'sud', 'suedausrichtung', 'sudausrichtung', 'dachlast']);
+  add('Ground-mounted systems', ['freiflaeche', 'freiflache', 'freifl che', 'freiflachensystem', 'ground mount', 'solarpark', 'rammprofil', 'pfettensystem', 'sparrensystem']);
+  add('Documentation / PDF', ['dokumentation', 'dokument', 'pdf', 'datenblatt', 'produktdatenblatt', 'montageanleitung', 'prospekt', 'checkliste', 'zertifikat', 'garantie']);
+  add('Pricing / costs', ['preis', 'preise', 'kosten', 'kostet', 'guenstig', 'gunstig', 'gunstige', 'guenstige', 'g nstig', 'g nstige', 'günstig', 'günstige', 'preiswert', 'angebot', 'rabatt', 'budget']);
+  add('Structural design / planning', ['statik', 'planung', 'auslegung', 'windlast', 'schneelast', 'last', 'ueberspannung', 'uberspannung', 'rail 40', 'solar.pro.tool', 'sl planner']);
+  add('Contact / sales', ['kontakt', 'vertrieb', 'sales', 'angebot anfordern', 'mail', 'email', 'telefon', 'ansprechpartner', 'beratung']);
+  add('Installation', ['montage', 'montieren', 'installation', 'installieren', 'befestigung', 'drehmoment', 'werkzeug', 'schraube']);
+  add('RAIL / mounting rails', ['rail', 'schiene', 'tragschiene', 'montageschiene', 'rail 40', 'rail 60', 'rail inlay']);
+  add('Module clamps', ['modulklemme', 'mittelklemme', 'endklemme', 'klemme', 'klemmen']);
+  add('Metal / standing seam roofs', ['blechdach', 'falz', 'falzklemme', 'stehfalz', 'trapez', 'trapezblech', 'zambelli', 'dfalzcu', 'kupferfalzdach']);
+  add('Facades', ['fassade', 'fassadensystem', 'energy wall', 'wall']);
   add('Carport', ['carport', 'parkplatz', 'stellplatz']);
   add('Agri-PV / Tracker', ['agri', 'agri pv', 'tracker', 'tracking', 'landwirtschaft']);
-  add('Unternehmen', ['sl rack', 'firma', 'unternehmen', 'umsatz', 'revenue', 'promet', 'prihod']);
+  add('Company', ['sl rack', 'firma', 'unternehmen', 'umsatz', 'revenue', 'promet', 'prihod']);
 
   return [...terms.entries()].map(([label, aliases]) => ({ label, aliases: [...aliases] }));
 }
@@ -1322,7 +1322,7 @@ function recordAnalyticsEvent(type = 'unknown', payload = {}, sessionId = '') {
 }
 
 function buildEventLogCsv(events) {
-  const rows = [['Zeit (Europe/Berlin)', 'Zeit (UTC)', 'Event', 'Session', 'Details']];
+  const rows = [['Time (Europe/Berlin)', 'Time (UTC)', 'Event', 'Session', 'Details']];
   for (const event of mergeEventLogs(events, [])) {
     rows.push([
       formatBerlinDateTime(event.at),
@@ -1340,16 +1340,16 @@ function buildEventLogCsv(events) {
 function buildQuestionsCsv(events) {
   const rows = [
     [
-      'Nr.',
-      'Zeit (Europe/Berlin)',
-      'Zeit (UTC)',
+      'No.',
+      'Time (Europe/Berlin)',
+      'Time (UTC)',
       'Status',
-      'Frage',
+      'Question',
       'Session',
       'Request ID',
-      'Quelle',
-      'Erkannte Produkte / Modelle',
-      'Ablehnungsgrund'
+      'Source',
+      'Detected products / models',
+      'Rejection reason'
     ]
   ];
   const questions = getQuestionLogRows(events, { includeRejected: true });
@@ -1360,7 +1360,7 @@ function buildQuestionsCsv(events) {
       index + 1,
       formatBerlinDateTime(event.at),
       event.at || '',
-      event.type === 'question_rejected' ? 'Abgelehnt' : 'Akzeptiert',
+      event.type === 'question_rejected' ? 'Rejected' : 'Accepted',
       question,
       event.sessionId || '',
       event.payload?.requestId || '',
@@ -1376,7 +1376,7 @@ function buildQuestionsCsv(events) {
 function buildTopicsCsv(events) {
   const topicCounts = getTopicCountRows(events);
   const total = topicCounts.reduce((sum, item) => sum + item.count, 0);
-  const rows = [['Thema / Kategorie', 'Anzahl', 'Anteil %']];
+  const rows = [['Topic / category', 'Count', 'Share %']];
 
   for (const item of topicCounts) {
     rows.push([
@@ -1392,16 +1392,16 @@ function buildTopicsCsv(events) {
 function buildUnresolvedQuestionsCsv(events) {
   const rows = [
     [
-      'Nr.',
-      'Zeit (Europe/Berlin)',
-      'Zeit (UTC)',
-      'Frage',
-      'Grund',
-      'Antwortmodus',
+      'No.',
+      'Time (Europe/Berlin)',
+      'Time (UTC)',
+      'Question',
+      'Reason',
+      'Answer mode',
       'Session',
       'Request ID',
-      'Themen',
-      'Erkannte Produkte / Modelle'
+      'Topics',
+      'Detected products / models'
     ]
   ];
 
@@ -1474,7 +1474,7 @@ function getUnresolvedQuestionRows(events) {
         sessionId: event.sessionId,
         requestId,
         mode: event.payload?.mode || 'ai',
-        reason: event.payload?.unresolvedReason || 'Antwort als unsicher markiert'
+        reason: translateAdminReviewReason(event.payload?.unresolvedReason || 'Answer marked as uncertain')
       });
     }
 
@@ -1485,7 +1485,7 @@ function getUnresolvedQuestionRows(events) {
         sessionId: event.sessionId,
         requestId,
         mode: 'error',
-        reason: 'Technischer Fehler oder API-Fehler'
+        reason: 'Technical or API error'
       });
     }
   }
@@ -1510,6 +1510,23 @@ function getUnresolvedQuestionRows(events) {
 
 function isUnresolvedPayload(payload = {}) {
   return payload?.quality === 'needs_review' || payload?.unresolved === true || Boolean(payload?.unresolvedReason);
+}
+
+function translateAdminReviewReason(value = '') {
+  const translations = new Map([
+    ['Fallback-Antwort statt vollstaendiger AI-Antwort', 'Fallback answer returned instead of a complete AI answer'],
+    ['Antwort enthaelt Unsicherheit oder keinen belastbaren Beleg', 'Answer contains uncertainty or lacks reliable evidence'],
+    ['Antwort benoetigt weitere Kundendaten', 'Answer requires additional customer information'],
+    ['Antwort verweist auf Vertrieb oder technische Pruefung', 'Answer refers the user to Sales or technical review'],
+    ['Information fehlt oder ist in den Unterlagen nicht dokumentiert', 'Information is missing or not documented in the available sources'],
+    ['Antwort als unsicher markiert', 'Answer marked as uncertain'],
+    ['Technischer Fehler oder API-Fehler', 'Technical or API error']
+  ]);
+
+  return String(value || '')
+    .split(' | ')
+    .map((reason) => translations.get(reason) || reason)
+    .join(' | ');
 }
 
 function csvCell(value) {
@@ -1646,19 +1663,19 @@ function analyzeReplyQuality(reply = '', mode = 'ai') {
   const reasons = [];
 
   if (mode === 'fallback' || mode === 'quota_fallback' || mode === 'error_fallback') {
-    reasons.push('Fallback-Antwort statt vollstaendiger AI-Antwort');
+    reasons.push('Fallback answer returned instead of a complete AI answer');
   }
   if (/(keinen belastbaren beleg|nicht belastbar|nicht pauschal|keine verbindliche aussage|unsicher|uncertain)/i.test(text)) {
-    reasons.push('Antwort enthaelt Unsicherheit oder keinen belastbaren Beleg');
+    reasons.push('Answer contains uncertainty or lacks reliable evidence');
   }
   if (/(nicht genug|nicht ausreichend|zu wenig|fehlende angaben|brauche.*angaben|benoetige.*angaben|benotige.*angaben|mehr daten|weitere daten)/i.test(text)) {
-    reasons.push('Antwort benoetigt weitere Kundendaten');
+    reasons.push('Answer requires additional customer information');
   }
   if (/(kontaktieren sie|vertrieb|technical sales|technische.*pruefung|technische.*prufung|technisch.*pruefen|technisch.*prufen|sl rack.*pruefen|sl rack.*prufen|technical review)/i.test(text)) {
-    reasons.push('Antwort verweist auf Vertrieb oder technische Pruefung');
+    reasons.push('Answer refers the user to Sales or technical review');
   }
   if (/(keine information|nicht verfuegbar|nicht in den unterlagen|sehe ich nicht|nicht dokumentiert)/i.test(text)) {
-    reasons.push('Information fehlt oder ist in den Unterlagen nicht dokumentiert');
+    reasons.push('Information is missing or not documented in the available sources');
   }
 
   const unresolvedReason = reasons.filter(Boolean).join(' | ');
