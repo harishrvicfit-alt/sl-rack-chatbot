@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 import { getKnowledgeStatus, searchKnowledge } from '../src/knowledgeSearch.js';
 
@@ -6,6 +7,13 @@ test('knowledge index is populated', () => {
   const status = getKnowledgeStatus();
   assert.ok(status.documentCount >= 70);
   assert.ok(status.chunkCount >= 100);
+});
+
+test('every indexed PDF has a verified source fingerprint', async () => {
+  const index = JSON.parse(await readFile(new URL('../data/knowledge-index.json', import.meta.url), 'utf8'));
+  assert.equal(index.documents.length, index.documentCount);
+  assert.ok(index.documents.every((document) => Number.isInteger(document.sourceBytes) && document.sourceBytes > 0));
+  assert.ok(index.documents.every((document) => /^[a-f0-9]{64}$/.test(document.sourceSha256)));
 });
 
 test('Delta/D-Platte query ranks the matching document', () => {

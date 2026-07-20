@@ -9,6 +9,7 @@
     "ingest:downloads": "node scripts/ingestDownloads.js",
     "check": "node --check server.js && node --check public/app.js && node --check public/admin.js && node --check src/analyticsDatabase.js && node --check src/rateLimit.js",
     "test": "node --test --test-concurrency=1",
+    "check:knowledge": "node scripts/checkKnowledgeFreshness.js",
     "test:links": "node scripts/checkKnowledgeLinks.js",
     "admin:hash": "node scripts/hashAdminPassword.js"
   },

@@ -2,15 +2,20 @@ name: Refresh SL Rack knowledge
 
 on:
   schedule:
-    - cron: '20 4 * * 1'
+    - cron: '20 4 * * *'
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: knowledge-refresh
+  cancel-in-progress: false
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -25,6 +30,7 @@ jobs:
       - run: npm run ingest:downloads
         env:
           PYTHON: python
+      - run: npm run check:knowledge
       - run: npm run test:links
       - run: npm test
       - name: Commit refreshed index

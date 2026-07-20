@@ -1,12 +1,10 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createWriteStream } from 'node:fs';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { pipeline } from 'node:stream/promises';
 import { spawnSync } from 'node:child_process';
-import * as cheerio from 'cheerio';
-
-const DOWNLOADS_URL = 'https://www.sl-rack.com/downloads';
-const SITE_ORIGIN = 'https://www.sl-rack.com';
+import { DOWNLOADS_URL, extractDocuments, fetchText, fetchWithRetry } from './knowledgeDownloads.js';
 const ROOT = process.cwd();
 const DATA_DIR = path.join(ROOT, 'data');
 const DOC_DIR = path.join(DATA_DIR, 'sl-rack-documents');
@@ -19,22 +17,31 @@ await mkdir(TEXT_DIR, { recursive: true });
 
 const html = await fetchText(DOWNLOADS_URL);
 const documents = extractDocuments(html);
+const previousIndex = await readJson(INDEX_FILE);
+const previousDocuments = new Map((previousIndex?.documents || []).map((document) => [document.sourceUrl, document]));
+let nextDocumentNumber = Math.max(0, ...(previousIndex?.documents || []).map((document) => idNumber(document.id)));
 const chunks = [];
 const indexedDocuments = [];
 
 for (const [position, document] of documents.entries()) {
-  const filename = `${String(position + 1).padStart(3, '0')}-${safeFilename(document.title)}.pdf`;
+  const previousDocument = previousDocuments.get(document.url);
+  const id = previousDocument?.id || `doc-${++nextDocumentNumber}`;
+  const filename = previousDocument?.localPdf
+    ? path.basename(previousDocument.localPdf)
+    : `${String(idNumber(id)).padStart(3, '0')}-${safeFilename(document.title)}.pdf`;
   const pdfPath = path.join(DOC_DIR, filename);
   const textPath = path.join(TEXT_DIR, filename.replace(/\.pdf$/i, '.json'));
 
   console.log(`Downloading ${position + 1}/${documents.length}: ${document.title}`);
   await downloadFile(document.url, pdfPath);
+  const pdf = await readFile(pdfPath);
+  const sourceSha256 = createHash('sha256').update(pdf).digest('hex');
 
   const extracted = extractPdf(pdfPath);
   await writeFile(textPath, JSON.stringify(extracted, null, 2), 'utf8');
 
   const documentChunks = chunkDocument({
-    id: `doc-${position + 1}`,
+    id,
     title: document.title,
     category: document.category,
     sourceUrl: document.url,
@@ -44,14 +51,16 @@ for (const [position, document] of documents.entries()) {
 
   chunks.push(...documentChunks);
   indexedDocuments.push({
-    id: `doc-${position + 1}`,
+    id,
     title: document.title,
     category: document.category,
     sourceUrl: document.url,
     localPdf: relativePath(pdfPath),
     localText: relativePath(textPath),
     pageCount: extracted.pageCount,
-    chunkCount: documentChunks.length
+    chunkCount: documentChunks.length,
+    sourceBytes: pdf.byteLength,
+    sourceSha256
   });
 }
 
@@ -64,35 +73,15 @@ const index = {
   chunks
 };
 
-await writeFile(INDEX_FILE, JSON.stringify(index, null, 2), 'utf8');
-console.log(`Knowledge index written to ${INDEX_FILE}`);
-console.log(`Documents: ${index.documentCount}, chunks: ${index.chunkCount}`);
-
-function extractDocuments(htmlText) {
-  const $ = cheerio.load(htmlText);
-  const result = [];
-  let category = 'Downloads';
-  $('h2, a[href]').each((_index, element) => {
-    if (element.tagName === 'h2') {
-      category = $(element).text().replace(/\s+/g, ' ').trim() || category;
-      return;
-    }
-
-    const href = $(element).attr('href');
-    if (!href) return;
-    const url = new URL(href, SITE_ORIGIN).toString();
-    if (!url.toLowerCase().includes('/fileadmin/') || !url.toLowerCase().includes('.pdf')) return;
-
-    const title = ($(element).attr('title') || $(element).text()).replace(/\s+/g, ' ').trim();
-    if (!title) return;
-
-    result.push({ title, category: normalizeCategory(category), url });
-  });
-
-  const unique = new Map();
-  for (const doc of result) unique.set(doc.url, doc);
-  return [...unique.values()];
+const changes = summarizeChanges(previousIndex, index);
+if (sameIndex(previousIndex, index)) {
+  console.log('Knowledge index is already current; no file changes written.');
+} else {
+  await writeFile(INDEX_FILE, JSON.stringify(index, null, 2), 'utf8');
+  console.log(`Knowledge index written to ${INDEX_FILE}`);
 }
+console.log(`Changes: ${changes.added} added, ${changes.removed} removed, ${changes.updated} updated.`);
+console.log(`Documents: ${index.documentCount}, chunks: ${index.chunkCount}`);
 
 function extractPdf(pdfPath) {
   const script = path.join(ROOT, 'scripts', 'extractPdfText.py');
@@ -138,37 +127,10 @@ function chunkDocument({ id, title, category, sourceUrl, localPdf, pages }) {
   return chunks;
 }
 
-async function fetchText(url) {
-  const response = await fetchWithRetry(url);
-  return response.text();
-}
-
 async function downloadFile(url, outputPath) {
   const response = await fetchWithRetry(url);
   if (!response.body) throw new Error(`Empty download response for ${url}`);
   await pipeline(response.body, createWriteStream(outputPath));
-}
-
-async function fetchWithRetry(url, attempts = 3) {
-  let lastError;
-  for (let attempt = 1; attempt <= attempts; attempt += 1) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 30_000);
-    try {
-      const response = await fetch(url, {
-        headers: { 'user-agent': 'SL Rack chatbot knowledge indexer' },
-        signal: controller.signal
-      });
-      if (response.ok) return response;
-      lastError = new Error(`Failed to fetch ${url}: ${response.status}`);
-    } catch (error) {
-      lastError = error;
-    } finally {
-      clearTimeout(timeout);
-    }
-    if (attempt < attempts) await new Promise((resolve) => setTimeout(resolve, attempt * 750));
-  }
-  throw lastError;
 }
 
 function buildKeywords(text) {
@@ -210,10 +172,6 @@ function normalizeText(value) {
   return String(value || '').replace(/\s+/g, ' ').trim();
 }
 
-function normalizeCategory(value) {
-  return value.replace(/\s+/g, ' ').trim();
-}
-
 function stripTags(value) {
   return String(value).replace(/<[^>]*>/g, ' ');
 }
@@ -244,4 +202,45 @@ function safeFilename(value) {
 
 function relativePath(value) {
   return path.relative(ROOT, value).replace(/\\/g, '/');
+}
+
+async function readJson(filename) {
+  try {
+    return JSON.parse(await readFile(filename, 'utf8'));
+  } catch (error) {
+    if (error.code === 'ENOENT') return null;
+    throw error;
+  }
+}
+
+function idNumber(id) {
+  const match = String(id || '').match(/^doc-(\d+)$/);
+  return match ? Number(match[1]) : 0;
+}
+
+function sameIndex(previous, current) {
+  if (!previous) return false;
+  return JSON.stringify(withoutGeneratedAt(previous)) === JSON.stringify(withoutGeneratedAt(current));
+}
+
+function withoutGeneratedAt(index) {
+  const { generatedAt: _generatedAt, ...rest } = index;
+  return rest;
+}
+
+function summarizeChanges(previous, current) {
+  const oldDocuments = new Map((previous?.documents || []).map((document) => [document.sourceUrl, document]));
+  const newDocuments = new Map(current.documents.map((document) => [document.sourceUrl, document]));
+  let updated = 0;
+
+  for (const [url, document] of newDocuments) {
+    const oldDocument = oldDocuments.get(url);
+    if (oldDocument && oldDocument.sourceSha256 && oldDocument.sourceSha256 !== document.sourceSha256) updated += 1;
+  }
+
+  return {
+    added: [...newDocuments.keys()].filter((url) => !oldDocuments.has(url)).length,
+    removed: [...oldDocuments.keys()].filter((url) => !newDocuments.has(url)).length,
+    updated
+  };
 }
