@@ -324,10 +324,11 @@ app.post('/api/chat', async (req, res) => {
   const profile = req.body?.profile || {};
   const recommendations = scoreProducts(profile).slice(0, 3);
   const latestUserMessage = [...messages].reverse().find((message) => message.role !== 'assistant')?.content || '';
+  const knowledgeQuery = buildConversationKnowledgeQuery(messages);
   recordAnalyticsEvent('chat_submitted', { messageLength: latestUserMessage.length, requestId, source: 'chat_api' }, sessionId);
   recordAnalyticsEvent('question_asked', { question: redactAnalyticsText(latestUserMessage), requestId, source: 'chat_api' }, sessionId);
-  const knowledgeResults = buildKnowledgeContext(latestUserMessage, profile, 4);
-  const publicCompanySources = buildPublicCompanySources(latestUserMessage);
+  const knowledgeResults = buildKnowledgeContext(knowledgeQuery, profile, 4);
+  const publicCompanySources = buildPublicCompanySources(knowledgeQuery);
   const documentSources = publicCompanySources.length
     ? publicCompanySources
     : buildDocumentSources(knowledgeResults);
@@ -1909,12 +1910,51 @@ function buildKnowledgeContext(message = '', profile = {}, limit = 4) {
   return [...guidanceResults, ...officialResults].slice(0, limit + guidanceResults.length);
 }
 
+function buildConversationKnowledgeQuery(messages = []) {
+  const userMessages = (Array.isArray(messages) ? messages : [])
+    .filter((message) => message?.role !== 'assistant' && String(message?.content || '').trim())
+    .map((message) => String(message.content).trim())
+    .slice(-3)
+    .reverse();
+  return userMessages.join('\n').slice(0, MAX_TOTAL_CHARS);
+}
+
 function buildSalesGuidanceResults(message = '') {
   const text = String(message || '');
   const isTileRoofQuestion = /(ziegel|zieldach|dachhaken|erlus|erus|e58|favorit|topwinner|top winner|tonziegel|betondachstein)/i.test(text);
-  if (!isTileRoofQuestion) return [];
+  const isCopperStandingSeamQuestion = /(kupfer|kupferfalz|kupferfalzdach|dfalzcu)/i.test(text);
+  const isRail40Question = /(rail\s*40|ueberspannung|überspannung).{0,120}(rail|dachhaken|schiene)|(rail|dachhaken|schiene).{0,120}(ueberspannung|überspannung)/i.test(text);
+  const results = [];
 
-  return [
+  if (isCopperStandingSeamQuestion) {
+    results.push({
+      id: 'official-copper-standing-seam-dfalzcu',
+      title: 'Falzklemmen 2.0 – DFalzCU für Kupferfalzdächer',
+      category: 'Datenblaetter',
+      page: 4,
+      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Datenblaetter/Falzklemmen/SL_Rack_Blechfalzklemmen_Produktblatt_DE.pdf',
+      score: 999,
+      excerpt:
+        'Die Stehfalzklemme 2.0 – DFalzCU (Art.-Nr. 11402-03) ist im offiziellen Produktblatt passend für Kupferfalzdächer bzw. Kupferdoppelfalzdächer dokumentiert. Die Klemme wird auf den Falz gesetzt und mit 25 Nm geklemmt. Zambelli-Varianten sind separat für die jeweils genannten RIB-Roof-Profile dokumentiert und dürfen nicht pauschal für Kupferfalzdächer empfohlen werden.'
+    });
+  }
+
+  if (isRail40Question) {
+    results.push({
+      id: 'sales-guidance-rail-40-span',
+      title: 'SL Rack Planungshinweis: RAIL 40',
+      category: 'Interne Antwortlogik',
+      page: 1,
+      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Datenblaetter/Tragschienen_RAIL/SL_Rack_RAILs_Produktblatt_DE.pdf',
+      score: 998,
+      excerpt:
+        'Für RAIL 40 ist aus dem Vertriebs- und Planungskontext eine maximale Überspannung von ca. 1,50 m als relevanter Vorplanungswert bekannt. Die tatsächliche Schienen- und Dachhakenauslegung muss dennoch projektspezifisch mit Dachaufbau, Sparrenlage, Modulbelegung, Randzonen sowie Wind- und Schneelasten geprüft werden.'
+    });
+  }
+
+  if (!isTileRoofQuestion) return results;
+
+  results.push(
     {
       id: 'sales-guidance-tile-roof-options',
       title: 'SL Rack Vertriebsleitlinie: Ziegeldach-Vorqualifikation',
@@ -1955,7 +1995,8 @@ function buildSalesGuidanceResults(message = '') {
       excerpt:
         'Dachhaken 3D SL Alu ist als SL Rack Option fuer Ziegeldach-Anbindungen dokumentiert, mit Varianten K, L, 36 L und XL. Er darf als zu pruefende Alternative genannt werden, aber nicht als exakte Loesung fuer ein konkretes Ziegelmodell ohne Beleg und Projektpruefung.'
     }
-  ];
+  );
+  return results;
 }
 
 function isRevenueQuestion(message = '') {

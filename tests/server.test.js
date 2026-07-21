@@ -102,6 +102,24 @@ test('valid SL Rack question works with malformed cookie input', async () => {
   assert.ok(body.reply);
 });
 
+test('follow-up questions retain product context and verified documentation sources', async () => {
+  const response = await fetch(`${baseUrl}/api/chat`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      requestId: 'request_copper_followup_12345',
+      messages: [
+        { role: 'user', content: 'Welche SL Rack Klemme ist für ein Kupfer-Stehfalzdach vorgesehen?' },
+        { role: 'assistant', content: 'Für Kupferfalzdächer ist die DFalzCU relevant.' },
+        { role: 'user', content: 'Welches Anzugsdrehmoment ist dafür dokumentiert und wo finde ich das Produktblatt?' }
+      ]
+    })
+  });
+  const body = await response.json();
+  assert.equal(response.status, 200);
+  assert.ok(body.documentSources.some((source) => source.url === 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Datenblaetter/Falzklemmen/SL_Rack_Blechfalzklemmen_Produktblatt_DE.pdf'));
+});
+
 test('invalid JSON returns a controlled response', async () => {
   const response = await fetch(`${baseUrl}/api/chat`, {
     method: 'POST',
