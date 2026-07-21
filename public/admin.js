@@ -30,6 +30,7 @@ const metricTooltips = {
   'Top topics / categories': 'Most common topics across all user questions, such as roof hooks, flat roofs, documentation, pricing, structural design, or contact.',
   'Most asked questions': 'Most frequently repeated or similar user questions.',
   'Answers requiring review': 'Questions where the chatbot gave an uncertain answer, requested more information, referred the user for technical review, or used a technical fallback.',
+  'Conversation Review': 'Latest stored question-and-answer pairs for quality review. Email addresses and phone numbers are masked before storage.',
   'Top events': 'Most frequent system events, such as login, submitted question, contact offer, or source click.',
   'Recent events': 'Events from the last 5 hours, limited to 10 rows. The complete event log is available as CSV.',
   'Active limits': 'Current security and usage limits configured for the chatbot.'
@@ -102,6 +103,7 @@ function renderSummary(data) {
   const topProducts = analytics.topProducts || [];
   const topTopics = analytics.topTopics || [];
   const unresolvedQuestions = analytics.unresolvedQuestions || [];
+  const conversations = analytics.conversations || [];
   const lastEvents = analytics.lastEvents || [];
 
   metrics.innerHTML = [
@@ -137,6 +139,11 @@ function renderSummary(data) {
       ['Time', 'Question', 'Reason'],
       unresolvedQuestions.map((item) => [formatAdminDateTime(item.at), item.question, item.reason]),
       analytics.unresolvedQuestionCount || 0
+    ),
+    conversationReviewCard(
+      conversations,
+      analytics.conversationCount || 0,
+      analytics.conversationPreviewLimit || 20
     ),
     questionsTableCard(
       'Most asked questions',
@@ -326,12 +333,70 @@ function questionsTableCard(title, headers, rows) {
   `;
 }
 
+function conversationReviewCard(conversations, totalCount = 0, previewLimit = 20) {
+  const tooltip = metricTooltips['Conversation Review'] || '';
+  const items = conversations.length
+    ? conversations.map((conversation) => {
+        const sources = Array.isArray(conversation.sources) ? conversation.sources : [];
+        const sourceLinks = sources.length
+          ? sources.map((source) => {
+              const title = escapeHtml(source.title || 'SL Rack source');
+              const url = safeExternalUrl(source.url);
+              return url
+                ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${title}</a>`
+                : `<span>${title}</span>`;
+            }).join('')
+          : '<span class="muted">No sources recorded</span>';
+        const quality = conversation.quality === 'good' ? 'good' : 'review';
+        const qualityLabel = quality === 'good' ? 'Good' : 'Review';
+
+        return `
+          <details class="conversation-item ${quality}">
+            <summary>
+              <span class="conversation-time">${escapeHtml(formatAdminDateTime(conversation.at))}</span>
+              <strong>${escapeHtml(conversation.question)}</strong>
+              <span class="quality-badge">${escapeHtml(qualityLabel)}</span>
+            </summary>
+            <div class="conversation-body">
+              <div class="conversation-meta">
+                <span>Mode: <strong>${escapeHtml(conversation.mode || 'unknown')}</strong></span>
+                ${conversation.reason ? `<span>Review reason: ${escapeHtml(conversation.reason)}</span>` : ''}
+              </div>
+              <div class="conversation-answer">
+                <span class="conversation-label">Chatbot answer</span>
+                <p>${escapeHtml(conversation.answer)}</p>
+              </div>
+              <div class="conversation-sources">
+                <span class="conversation-label">Sources</span>
+                <div>${sourceLinks}</div>
+              </div>
+            </div>
+          </details>
+        `;
+      }).join('')
+    : '<p class="muted">No complete conversations have been recorded yet. New question-and-answer pairs will appear here.</p>';
+
+  return `
+    <article class="card wide" ${tooltipAttr(tooltip)}>
+      <div class="card-heading">
+        <div>
+          <h2>Conversation Review</h2>
+          <span class="muted">${escapeHtml(totalCount)} stored conversations · latest ${escapeHtml(Math.min(previewLimit, conversations.length))} shown · personal contact details are masked</span>
+        </div>
+        <a class="download-link" href="/api/admin/conversations.csv" download>All conversations</a>
+      </div>
+      <div class="conversation-list">${items}</div>
+    </article>
+  `;
+}
+
 function eventLogCard(events, previewHours = 5, previewLimit = 10, totalCount = 0) {
   const tooltip = metricTooltips['Recent events'] || '';
   const rows = events.map((event) => [
     formatAdminDateTime(event.at),
     event.type,
     Object.entries(event.payload || {})
+      .filter(([key]) => !['question', 'answer', 'sourcesJson'].includes(key))
       .map(([key, value]) => `${key}: ${value}`)
       .join(', ') || '-'
   ]);
@@ -383,6 +448,11 @@ function escapeHtml(value) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
+}
+
+function safeExternalUrl(value) {
+  const url = String(value || '');
+  return /^https:\/\//i.test(url) ? url : '';
 }
 
 function tooltipAttr(value) {

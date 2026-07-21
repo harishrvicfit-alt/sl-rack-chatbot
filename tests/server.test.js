@@ -93,7 +93,7 @@ test('valid SL Rack question works with malformed cookie input', async () => {
     headers: { 'content-type': 'application/json', cookie: 'slrack_chat_session=%E0%A4%A' },
     body: JSON.stringify({
       requestId: 'request_valid_12345',
-      messages: [{ role: 'user', content: 'Welche SL Rack Lösung passt für ein Ziegeldach?' }]
+      messages: [{ role: 'user', content: 'Meine E-Mail ist kunde@example.com und Telefon +49 8072 123456. Welche SL Rack Lösung passt für ein Ziegeldach?' }]
     })
   });
   const body = await response.json();
@@ -127,12 +127,27 @@ test('admin summary and CSV retain accepted and rejected questions across login'
   assert.ok(summary.analytics.totalSubmitted >= 2);
   assert.ok(summary.analytics.totalQuestions >= 1);
   assert.ok(summary.analytics.rejectedQuestions >= 1);
+  assert.ok(summary.analytics.conversationCount >= 1);
+  const storedConversation = summary.analytics.conversations.find((item) => item.requestId === 'request_valid_12345');
+  assert.ok(storedConversation);
+  assert.match(storedConversation.question, /\[email redacted\]/);
+  assert.match(storedConversation.question, /\[phone redacted\]/);
+  assert.doesNotMatch(storedConversation.question, /kunde@example\.com/);
+  assert.ok(storedConversation.answer);
 
   const csvResponse = await fetch(`${baseUrl}/api/admin/questions.csv`, { headers: { cookie } });
   const csv = await csvResponse.text();
   assert.equal(csvResponse.status, 200);
   assert.match(csv, /SL Rack: napiši mi lektiru/);
   assert.match(csv, /Welche SL Rack Lösung passt/);
+
+  const conversationCsvResponse = await fetch(`${baseUrl}/api/admin/conversations.csv`, { headers: { cookie } });
+  const conversationCsv = await conversationCsvResponse.text();
+  assert.equal(conversationCsvResponse.status, 200);
+  assert.match(conversationCsv, /Chatbot answer/);
+  assert.match(conversationCsv, /\[email redacted\]/);
+  assert.match(conversationCsv, /\[phone redacted\]/);
+  assert.doesNotMatch(conversationCsv, /kunde@example\.com/);
 
   await fetch(`${baseUrl}/api/admin/logout`, { method: 'POST', headers: { cookie } });
   const secondLogin = await fetch(`${baseUrl}/api/admin/login`, {
@@ -158,4 +173,5 @@ test('admin login is rate limited and CSV stays private', async () => {
   }
   assert.equal(status, 429);
   assert.equal((await fetch(`${baseUrl}/api/admin/questions.csv`)).status, 404);
+  assert.equal((await fetch(`${baseUrl}/api/admin/conversations.csv`)).status, 404);
 });

@@ -46,6 +46,9 @@ const CHAT_SESSION_COOKIE = 'slrack_chat_session';
 const ACTIVE_SESSION_MS = Number(process.env.ACTIVE_SESSION_MS || 30 * 60 * 1000);
 const ADMIN_EVENT_WINDOW_MS = 5 * 60 * 60 * 1000;
 const ADMIN_EVENT_PREVIEW_LIMIT = 10;
+const ADMIN_CONVERSATION_PREVIEW_LIMIT = 20;
+const MAX_ANALYTICS_ANSWER_CHARS = 6000;
+const MAX_ANALYTICS_SOURCES_CHARS = 5000;
 const ANALYTICS_WRITE_RETRIES = 8;
 const ANALYTICS_BLOB_MIGRATION_VERSION = 2;
 const ANALYTICS_TIME_ZONE = 'Europe/Berlin';
@@ -230,6 +233,19 @@ app.get('/api/admin/unresolved-questions.csv', async (req, res) => {
   res.send(`\uFEFF${buildUnresolvedQuestionsCsv(analytics.eventLog)}`);
 });
 
+app.get('/api/admin/conversations.csv', async (req, res) => {
+  if (!isAdminRequest(req)) {
+    return res.status(404).json({ error: 'not_found' });
+  }
+
+  await refreshAnalyticsFromStorage();
+  const date = new Date().toISOString().slice(0, 10);
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="sl-rack-chatbot-conversations-${date}.csv"`);
+  res.setHeader('Cache-Control', 'private, no-store');
+  res.send(`\uFEFF${buildConversationsCsv(analytics.eventLog)}`);
+});
+
 app.get('/api/analytics/summary', async (req, res) => {
   if (!canReadAnalytics(req)) {
     return res.status(404).json({ error: 'not_found' });
@@ -283,7 +299,7 @@ app.post('/api/chat', async (req, res) => {
       recordAnalyticsEvent(
         'question_rejected',
         {
-          question: String(rawLatestUserMessage),
+          question: redactAnalyticsText(String(rawLatestUserMessage)),
           requestId,
           source: 'chat_api',
           reason: validation.error
@@ -309,7 +325,7 @@ app.post('/api/chat', async (req, res) => {
   const recommendations = scoreProducts(profile).slice(0, 3);
   const latestUserMessage = [...messages].reverse().find((message) => message.role !== 'assistant')?.content || '';
   recordAnalyticsEvent('chat_submitted', { messageLength: latestUserMessage.length, requestId, source: 'chat_api' }, sessionId);
-  recordAnalyticsEvent('question_asked', { question: latestUserMessage, requestId, source: 'chat_api' }, sessionId);
+  recordAnalyticsEvent('question_asked', { question: redactAnalyticsText(latestUserMessage), requestId, source: 'chat_api' }, sessionId);
   const knowledgeResults = buildKnowledgeContext(latestUserMessage, profile, 4);
   const publicCompanySources = buildPublicCompanySources(latestUserMessage);
   const documentSources = publicCompanySources.length
@@ -325,7 +341,14 @@ app.post('/api/chat', async (req, res) => {
   if (isRevenueQuestion(latestUserMessage)) {
     const reply = buildPublicRevenueReply(latestUserMessage);
     const quality = analyzeReplyQuality(reply, 'public_company_info');
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, mode: 'public_company_info', requestId, durationMs: Date.now() - requestStartedAt, ...quality }, sessionId);
+    recordAnalyticsEvent('chat_answered', {
+      ...buildConversationAnalyticsFields(latestUserMessage, reply, documentSources),
+      sourceCount: documentSources.length,
+      mode: 'public_company_info',
+      requestId,
+      durationMs: Date.now() - requestStartedAt,
+      ...quality
+    }, sessionId);
     scheduleAnalyticsPersistence();
     return res.json({
       mode: 'public_company_info',
@@ -339,7 +362,14 @@ app.post('/api/chat', async (req, res) => {
   if (!client) {
     const reply = postProcessSalesReplySafe(buildFallbackReply(profile, recommendations), latestUserMessage);
     const quality = analyzeReplyQuality(reply, 'fallback');
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, mode: 'fallback', requestId, durationMs: Date.now() - requestStartedAt, ...quality }, sessionId);
+    recordAnalyticsEvent('chat_answered', {
+      ...buildConversationAnalyticsFields(latestUserMessage, reply, documentSources),
+      sourceCount: documentSources.length,
+      mode: 'fallback',
+      requestId,
+      durationMs: Date.now() - requestStartedAt,
+      ...quality
+    }, sessionId);
     scheduleAnalyticsPersistence();
     return res.json({
       mode: 'fallback',
@@ -385,7 +415,15 @@ app.post('/api/chat', async (req, res) => {
     lastAiErrorAt = null;
     lastAiErrorCode = null;
 
-    recordAnalyticsEvent('chat_answered', { sourceCount: documentSources.length, mode: 'ai', requestId, durationMs: Date.now() - requestStartedAt, ...usage, ...quality }, sessionId);
+    recordAnalyticsEvent('chat_answered', {
+      ...buildConversationAnalyticsFields(latestUserMessage, reply, documentSources),
+      sourceCount: documentSources.length,
+      mode: 'ai',
+      requestId,
+      durationMs: Date.now() - requestStartedAt,
+      ...usage,
+      ...quality
+    }, sessionId);
     scheduleAnalyticsPersistence();
     res.json({
       mode: 'ai',
@@ -402,9 +440,20 @@ app.post('/api/chat', async (req, res) => {
     const quotaError = error?.code === 'insufficient_quota';
     const rateLimitError = error?.status === 429 && !quotaError;
     const timeoutError = error?.name === 'AbortError';
+    const fallbackMode = quotaError ? 'quota_fallback' : rateLimitError ? 'rate_limit_fallback' : timeoutError ? 'timeout_fallback' : 'error_fallback';
+    const fallbackReply = postProcessSalesReplySafe(buildFallbackReply(profile, recommendations), latestUserMessage);
+    const fallbackQuality = analyzeReplyQuality(fallbackReply, fallbackMode);
+    recordAnalyticsEvent('chat_answered', {
+      ...buildConversationAnalyticsFields(latestUserMessage, fallbackReply, documentSources),
+      sourceCount: documentSources.length,
+      mode: fallbackMode,
+      requestId,
+      durationMs: Date.now() - requestStartedAt,
+      ...fallbackQuality
+    }, sessionId);
     scheduleAnalyticsPersistence();
     res.status(quotaError || rateLimitError || timeoutError ? 200 : 500).json({
-      mode: quotaError ? 'quota_fallback' : rateLimitError ? 'rate_limit_fallback' : timeoutError ? 'timeout_fallback' : 'error_fallback',
+      mode: fallbackMode,
       error: quotaError
         ? 'OpenAI API key is valid, but the account has no available API quota. Please add billing or credits in the OpenAI platform.'
         : rateLimitError
@@ -412,7 +461,7 @@ app.post('/api/chat', async (req, res) => {
           : timeoutError
             ? 'AI response timed out.'
             : 'AI response failed',
-      reply: postProcessSalesReplySafe(buildFallbackReply(profile, recommendations), latestUserMessage),
+      reply: fallbackReply,
       recommendations,
       knowledgeResults,
       documentSources
@@ -507,6 +556,23 @@ function buildAdminPage() {
       .bar-track { position: relative; height: 16px; overflow: hidden; border-radius: 999px; background: linear-gradient(180deg, #e8f0eb, #edf5f0); box-shadow: inset 0 0 0 1px rgba(0,69,40,.08); }
       .bar-fill { display: block; width: var(--bar-width); height: 100%; min-width: 6px; border-radius: inherit; background: linear-gradient(90deg, #004528 0, #0b6a43 58%, #f7a600 100%); box-shadow: 0 10px 18px rgba(0,69,40,.2); }
       .bar-count { color: var(--brand); font-weight: 950; text-align: right; }
+      .conversation-list { border-top: 1px solid var(--line); }
+      .conversation-item { border-bottom: 1px solid var(--line); }
+      .conversation-item summary { display: grid; grid-template-columns: 24px 135px minmax(0, 1fr) auto; align-items: start; gap: 12px; padding: 15px 4px; cursor: pointer; list-style: none; }
+      .conversation-item summary::-webkit-details-marker { display: none; }
+      .conversation-item summary::before { display: inline-flex; align-items: center; justify-content: center; grid-column: 1; width: 24px; height: 24px; border-radius: 999px; background: #eef5f0; color: var(--brand); content: "+"; font-weight: 950; }
+      .conversation-item[open] summary::before { content: "−"; }
+      .conversation-time { grid-column: 2; color: var(--muted); font-size: .78rem; }
+      .conversation-item summary strong { grid-column: 3; grid-row: 1; min-width: 0; overflow-wrap: anywhere; }
+      .quality-badge { grid-column: 4; grid-row: 1; border-radius: 999px; padding: 5px 9px; background: #e8f6ee; color: #087043; font-size: .7rem; font-weight: 950; text-transform: uppercase; }
+      .conversation-item.review .quality-badge { background: #fff2d6; color: #8a5a00; }
+      .conversation-body { margin: 0 4px 16px 179px; padding: 16px; border-left: 3px solid var(--brand); background: #f7fbf8; }
+      .conversation-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 13px; color: var(--muted); font-size: .8rem; }
+      .conversation-label { display: block; margin-bottom: 6px; color: var(--brand); font-size: .72rem; font-weight: 950; text-transform: uppercase; }
+      .conversation-answer p { margin: 0; line-height: 1.55; overflow-wrap: anywhere; white-space: pre-wrap; }
+      .conversation-sources { margin-top: 15px; }
+      .conversation-sources div { display: flex; flex-wrap: wrap; gap: 7px; }
+      .conversation-sources a, .conversation-sources div > span:not(.muted) { border: 1px solid rgba(0,69,40,.12); border-radius: 999px; padding: 6px 9px; background: #fff; color: var(--brand); font-size: .76rem; font-weight: 800; text-decoration: none; }
       table { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; font-size: .92rem; }
       th, td { border-bottom: 1px solid var(--line); padding: 12px 10px; text-align: left; vertical-align: top; }
       th { background: #f7fbf8; color: #26362f; font-size: .74rem; letter-spacing: .02em; text-transform: uppercase; }
@@ -537,6 +603,12 @@ function buildAdminPage() {
         .bar-row { grid-template-columns: 28px minmax(0, 1fr) 42px; gap: 8px; }
         .bar-track { grid-column: 2 / 4; }
         .bar-label { white-space: normal; overflow: visible; text-overflow: clip; }
+        .conversation-item summary { grid-template-columns: minmax(0, 1fr) auto; gap: 7px 10px; }
+        .conversation-item summary::before { display: none; }
+        .conversation-time { grid-column: 1; grid-row: 1; margin-left: 0; }
+        .conversation-item summary strong { grid-column: 1 / -1; grid-row: 2; }
+        .quality-badge { grid-column: 2; grid-row: 1; }
+        .conversation-body { margin-left: 0; }
         table, tbody, tr, td { display: block; width: 100%; }
         table { table-layout: auto; }
         thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -1330,6 +1402,7 @@ function buildEventLogCsv(events) {
       event.type || 'unknown',
       event.sessionId || '',
       Object.entries(event.payload || {})
+        .filter(([key]) => !['question', 'answer', 'sourcesJson'].includes(key))
         .map(([key, value]) => `${key}: ${value}`)
         .join(', ')
     ]);
@@ -1423,6 +1496,42 @@ function buildUnresolvedQuestionsCsv(events) {
   return rows.map((row) => row.map(csvCell).join(';')).join('\r\n');
 }
 
+function buildConversationsCsv(events) {
+  const rows = [[
+    'No.',
+    'Time (Europe/Berlin)',
+    'Time (UTC)',
+    'Question',
+    'Chatbot answer',
+    'Answer mode',
+    'Quality',
+    'Review reason',
+    'Sources',
+    'Source URLs',
+    'Session',
+    'Request ID'
+  ]];
+
+  getConversationReviewRows(events).forEach((row, index) => {
+    rows.push([
+      index + 1,
+      formatBerlinDateTime(row.at),
+      row.at || '',
+      row.question,
+      row.answer,
+      row.mode,
+      row.quality,
+      row.reason,
+      row.sources.map((source) => source.title).join(' | '),
+      row.sources.map((source) => source.url).filter(Boolean).join(' | '),
+      row.sessionId || '',
+      row.requestId || ''
+    ]);
+  });
+
+  return rows.map((row) => row.map(csvCell).join(';')).join('\r\n');
+}
+
 function getQuestionLogRows(events, { includeRejected = false } = {}) {
   const seen = new Set();
   return mergeEventLogs(events, [])
@@ -1450,6 +1559,43 @@ function getTopicCountRows(events) {
   return [...topics.entries()]
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
     .map(([topic, count]) => ({ topic, count }));
+}
+
+function getConversationReviewRows(events) {
+  const seen = new Set();
+  return mergeEventLogs(events, [])
+    .filter((event) => event?.type === 'chat_answered' && event?.payload?.question && event?.payload?.answer)
+    .filter((event) => {
+      const key = buildRequestEventKey(event);
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .map((event) => ({
+      at: event.at,
+      sessionId: event.sessionId || '',
+      requestId: event.payload?.requestId || '',
+      question: String(event.payload?.question || ''),
+      answer: String(event.payload?.answer || ''),
+      mode: String(event.payload?.mode || 'unknown'),
+      quality: String(event.payload?.quality || 'unknown'),
+      reason: translateAdminReviewReason(event.payload?.unresolvedReason || ''),
+      sources: parseConversationSources(event.payload?.sourcesJson)
+    }))
+    .sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')));
+}
+
+function parseConversationSources(value = '') {
+  try {
+    const parsed = JSON.parse(String(value || '[]'));
+    if (!Array.isArray(parsed)) return [];
+    return parsed.slice(0, 6).map((source) => ({
+      title: String(source?.title || 'SL Rack source').slice(0, 240),
+      url: /^https:\/\//i.test(String(source?.url || '')) ? String(source.url).slice(0, 1200) : ''
+    }));
+  } catch {
+    return [];
+  }
 }
 
 function getUnresolvedQuestionRows(events) {
@@ -1535,11 +1681,46 @@ function csvCell(value) {
   return `"${safe.replaceAll('"', '""')}"`;
 }
 
+function buildConversationAnalyticsFields(question = '', answer = '', documentSources = []) {
+  const sources = (Array.isArray(documentSources) ? documentSources : [])
+    .slice(0, 6)
+    .map((source) => ({
+      title: String(source?.title || 'SL Rack source').slice(0, 240),
+      url: /^https:\/\//i.test(String(source?.url || '')) ? String(source.url).slice(0, 1200) : ''
+    }));
+
+  return {
+    question: redactAnalyticsText(question),
+    answer: redactAnalyticsText(answer),
+    sourcesJson: JSON.stringify(sources)
+  };
+}
+
+function redactAnalyticsText(value = '') {
+  return String(value || '')
+    .replace(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, '[email redacted]')
+    .replace(/(?:\+?\d[\d\s()./-]{7,}\d)/g, (candidate) => {
+      const digits = candidate.replace(/\D/g, '');
+      return digits.length >= 9 ? '[phone redacted]' : candidate;
+    });
+}
+
 function sanitizeAnalyticsPayload(payload) {
   if (!payload || typeof payload !== 'object') return {};
   const clean = {};
-  for (const [key, value] of Object.entries(payload).slice(0, 10)) {
-    if (typeof value === 'string') clean[key] = value.slice(0, key === 'question' ? MAX_MESSAGE_CHARS : 240);
+  for (const [key, value] of Object.entries(payload).slice(0, 16)) {
+    if (typeof value === 'string') {
+      const maxLength = key === 'question'
+        ? MAX_MESSAGE_CHARS
+        : key === 'answer'
+          ? MAX_ANALYTICS_ANSWER_CHARS
+          : key === 'sourcesJson'
+            ? MAX_ANALYTICS_SOURCES_CHARS
+            : key === 'unresolvedReason'
+              ? 1200
+              : 500;
+      clean[key] = value.slice(0, maxLength);
+    }
     else if (typeof value === 'number' || typeof value === 'boolean') clean[key] = value;
   }
   return clean;
@@ -1564,6 +1745,7 @@ function getAnalyticsSummary() {
   hydrateAnalytics(serializeAnalytics());
   const recentCutoff = Date.now() - ADMIN_EVENT_WINDOW_MS;
   const unresolvedQuestions = getUnresolvedQuestionRows(analytics.eventLog);
+  const conversations = getConversationReviewRows(analytics.eventLog);
   const recentEvents = analytics.eventLog
     .filter((event) => {
       const timestamp = Date.parse(event?.at || '');
@@ -1608,6 +1790,9 @@ function getAnalyticsSummary() {
       .map(([topic, count]) => ({ topic, count })),
     unresolvedQuestions: unresolvedQuestions.slice(0, 20),
     unresolvedQuestionCount: unresolvedQuestions.length,
+    conversations: conversations.slice(0, ADMIN_CONVERSATION_PREVIEW_LIMIT),
+    conversationCount: conversations.length,
+    conversationPreviewLimit: ADMIN_CONVERSATION_PREVIEW_LIMIT,
     lastEvents: recentEvents,
     eventPreviewHours: ADMIN_EVENT_WINDOW_MS / (60 * 60 * 1000),
     eventPreviewLimit: ADMIN_EVENT_PREVIEW_LIMIT,
