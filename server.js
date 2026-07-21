@@ -1932,7 +1932,7 @@ function buildSalesGuidanceResults(message = '') {
       title: 'Falzklemmen 2.0 – DFalzCU für Kupferfalzdächer',
       category: 'Datenblaetter',
       page: 4,
-      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Datenblaetter/Falzklemmen/SL_Rack_Blechfalzklemmen_Produktblatt_DE.pdf',
+      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Falzklemmen/SL_Rack_Blechfalzklemmen_Produktblatt_DE.pdf',
       score: 999,
       excerpt:
         'Die Stehfalzklemme 2.0 – DFalzCU (Art.-Nr. 11402-03) ist im offiziellen Produktblatt passend für Kupferfalzdächer bzw. Kupferdoppelfalzdächer dokumentiert. Die Klemme wird auf den Falz gesetzt und mit 25 Nm geklemmt. Zambelli-Varianten sind separat für die jeweils genannten RIB-Roof-Profile dokumentiert und dürfen nicht pauschal für Kupferfalzdächer empfohlen werden.'
@@ -1945,7 +1945,7 @@ function buildSalesGuidanceResults(message = '') {
       title: 'SL Rack Planungshinweis: RAIL 40',
       category: 'Interne Antwortlogik',
       page: 1,
-      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Datenblaetter/Tragschienen_RAIL/SL_Rack_RAILs_Produktblatt_DE.pdf',
+      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Tragschienen_RAIL/SL_Rack_RAILs_Produktblatt_DE.pdf',
       score: 998,
       excerpt:
         'Für RAIL 40 ist aus dem Vertriebs- und Planungskontext eine maximale Überspannung von ca. 1,50 m als relevanter Vorplanungswert bekannt. Die tatsächliche Schienen- und Dachhakenauslegung muss dennoch projektspezifisch mit Dachaufbau, Sparrenlage, Modulbelegung, Randzonen sowie Wind- und Schneelasten geprüft werden.'
@@ -1980,7 +1980,7 @@ function buildSalesGuidanceResults(message = '') {
       title: 'D-Platte (Delta-Platte)',
       category: 'Datenblaetter',
       page: 9,
-      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Datenblaetter/D-Platte/SL_Rack_D-Platte_Produktblatt-DE.pdf',
+      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/D-Platte/SL_Rack_D-Platte_Produktblatt-DE.pdf',
       score: 997,
       excerpt:
         'Die Delta-Platte ist als modellbezogene Dachersatzplatte dokumentiert. In der SL Rack Produktuebersicht sind Varianten unter anderem fuer Frankfurter Pfanne, Erlus Forma, Erlus E58/E58S, Erlus Reformpfanne XXL, Creaton MZ3 Neu und Biberschwanz aufgefuehrt. Das ist ein wichtiger Gegencheck, bevor nur ein Dachhaken empfohlen wird.'
@@ -1990,7 +1990,7 @@ function buildSalesGuidanceResults(message = '') {
       title: 'Dachhaken 3D SL Alu',
       category: 'Datenblaetter',
       page: 1,
-      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Datenblaetter/Dachhaken_3D_SL_Alu/SL_Rack_Dachhaken_3D_SL_Alu_Produktblatt_DE.pdf',
+      sourceUrl: 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Dachhaken_3D_SL_Alu/SL_Rack_Dachhaken_3D_SL_Alu_Produktblatt_DE.pdf',
       score: 996,
       excerpt:
         'Dachhaken 3D SL Alu ist als SL Rack Option fuer Ziegeldach-Anbindungen dokumentiert, mit Varianten K, L, 36 L und XL. Er darf als zu pruefende Alternative genannt werden, aber nicht als exakte Loesung fuer ein konkretes Ziegelmodell ohne Beleg und Projektpruefung.'

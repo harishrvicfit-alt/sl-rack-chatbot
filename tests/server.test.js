@@ -117,7 +117,7 @@ test('follow-up questions retain product context and verified documentation sour
   });
   const body = await response.json();
   assert.equal(response.status, 200);
-  assert.ok(body.documentSources.some((source) => source.url === 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Datenblaetter/Falzklemmen/SL_Rack_Blechfalzklemmen_Produktblatt_DE.pdf'));
+  assert.ok(body.documentSources.some((source) => source.url === 'https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Falzklemmen/SL_Rack_Blechfalzklemmen_Produktblatt_DE.pdf'));
 });
 
 test('invalid JSON returns a controlled response', async () => {
