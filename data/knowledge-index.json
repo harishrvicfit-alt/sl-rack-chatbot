@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-24T06:44:13.217Z",
+  "generatedAt": "2026-07-25T06:33:57.974Z",
   "sourceUrl": "https://www.sl-rack.com/downloads",
   "documentCount": 92,
   "chunkCount": 1287,
@@ -181,8 +181,8 @@
       "localText": "data/sl-rack-text/080-Metalldachplatte-SL-Alu.json",
       "pageCount": 8,
       "chunkCount": 8,
-      "sourceBytes": 886452,
-      "sourceSha256": "c310db3efb7390f2fe9f19dd58666c63cc8e372f9d1525dc2f69df22493f2eac"
+      "sourceBytes": 1065591,
+      "sourceSha256": "102fbbf5c8fb4d918242ca4e5c7b2e8410ff387bde4b846b19da2d647091f439"
     },
     {
       "id": "doc-81",
@@ -7783,7 +7783,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Metalldachplatte_SL_Alu/SL_Rack_Metalldachplatte-SL-Alu_DE.pdf",
       "localPdf": "data/sl-rack-documents/080-Metalldachplatte-SL-Alu.pdf",
       "page": 1,
-      "content": "SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Ihre Vorteile mit unserer Metalldachplatte SL Alu » Einfache und schnelle Montage ohne Dachdurchdringung. » Flexibilität durch drei Größenoptionen für unterschiedliche Ziegelformen. » Maximale Dichtigkeit durch Aluminiumschürze und Schaumstoffkeil. » Hohe Stabilität und Haltbarkeit durch Aluminium. » Kompatibel mit allen SL Rack Dachhaken für einfache Integration. *Es gelten unsere Garantiebedingungen. Diese sind auf unserer Webseite einsehbar unter www.sl-rack.de. SL Alu Beaverhook Art.-Nr. 11117-00 Art.-Nr. 11540 / 11541 / 11542 – 00 / 01 / 02 Metalldachplatte SL Alu S RAL 8004 Kupferbraun (Ziegelrot) Art.-Nr. 11542-00 Metalldachplatte SL Alu L RAL 7016 Anthrazit Art.-Nr. 11542-01 METALLDACHPLATTE SL ALU Haltbarkeits- 10 Jahre Garantie*",
+      "content": "SL Alu Beaverhook Art.-Nr. 11117-00 METALLDACHPLATTE SL ALU SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Haltbarkeits- 10 Jahre Garantie* Ihre Vorteile mit unserer Metalldachplatte SL Alu » Einfache und schnelle Montage ohne Dachdurchdringung. » Flexibilität durch drei Größenoptionen für unterschiedliche Ziegelformen. » Maximale Dichtigkeit durch Aluminiumschürze und Schaumstoffkeil. » Hohe Stabilität und Haltbarkeit durch Aluminium. » Kompatibel mit allen SL Rack Dachhaken für einfache Integration. *Es gelten unsere Garantiebedingungen. Diese sind auf unserer Webseite einsehbar unter www.sl-rack.de. Art.-Nr. 11540 / 11541 / 11542 – 00 / 01 / 02 Metalldachplatte SL Alu S RAL 8004 Kupferbraun (Ziegelrot) Art.-Nr. 11542-00 Metalldachplatte SL Alu L RAL 7016 Anthrazit Art.-Nr. 11542-01 PRODUKTBLATT",
       "keywords": [
         "alu",
         "metalldachplatte",
@@ -7797,12 +7797,12 @@
         "einfache",
         "ral",
         "produktblätter",
+        "beaverhook",
+        "11117-00",
         "gmbh",
         "83527",
         "haag",
-        "tel",
-        "8072",
-        "3767-0"
+        "tel"
       ]
     },
     {
@@ -7813,7 +7813,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Metalldachplatte_SL_Alu/SL_Rack_Metalldachplatte-SL-Alu_DE.pdf",
       "localPdf": "data/sl-rack-documents/080-Metalldachplatte-SL-Alu.pdf",
       "page": 2,
-      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de a b c d Metalldachplatte SL Alu S 160 440 260 50 Metalldachplatte SL Alu M 215 440 315 50 Metalldachplatte SL Alu L 265 440 365 50 Abmessungen METALLDACHPLATTE SL ALU Zubehör SL Alu 3D Dachhaken Art.-Nr. 13135-01 SL A2 Dachhaken Art.-Nr. 11100-01 Rail 40/60 Art.-Nr. 81140-2400",
+      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de METALLDACHPLATTE SL ALU a b c d Metalldachplatte SL Alu S 165 440 260 50 Metalldachplatte SL Alu M 215 440 315 50 Metalldachplatte SL Alu L 265 440 365 50 Abmessungen Zubehör SL Alu 3D Dachhaken Art.-Nr. 13135-01 SL A2 Dachhaken Art.-Nr. 11100-01 Rail 40/60 Art.-Nr. 81140-2400",
       "keywords": [
         "alu",
         "metalldachplatte",
@@ -7843,46 +7843,16 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Metalldachplatte_SL_Alu/SL_Rack_Metalldachplatte-SL-Alu_DE.pdf",
       "localPdf": "data/sl-rack-documents/080-Metalldachplatte-SL-Alu.pdf",
       "page": 3,
-      "content": "3SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Sicherheits- und Warnhinweise Verletzungsgefahr durch herabfallende Gegenstände. Im Gefahrenbereich vor Beginn der Montagearbeiten Absperrungen vornehmen und Personen, die sich in der Nähe aufhalten, warnen! Planung, Montage und Inbetriebnahhme dürfen nur von qualifiziertem Fachpersonal vorgenommen werden. Falsch ausgeführte Montage kann zu Beschädigungen am Dach und der gesamten PV- Anlage führen. Der Metalldachplatte SL Alu darf ab einer RDN von 22° verwendet werden. Den Vor- gaben des ZVDH ist Folge zu leisten. Die Metalldachplatte SL Alu dürfen nicht direkt übereinander montiert werden. Keine Montage im Dachfirstbereich. Absturzgefahr! Bei Arbeiten auf dem Dach sowie beim Auf- und Absteigen besteht Sturzgefahr. Unbedingt Unfallverhütungsvorschriften beachten und geeignete Absturz- sicherungen verwenden. PV-Montagesysteme sind nicht als Steighilfe oder Absturzsi- cherung geeignet. Die Trittfestigkeit des Daches muss gegeben sein. Für einen ordnungsgemäßen und sicheren Gebrauch diesen Anleitungen folgen. Für späteres Nachschlagen aufbewahren. Auffanggurt benutzen. Augenschutz benutzen. Handschuhe benutzen. METALLDACHPLATTE SL ALU",
-      "keywords": [
-        "metalldachplatte",
-        "alu",
-        "montage",
-        "werden",
-        "benutzen",
-        "sl-rack",
-        "dürfen",
-        "dach",
-        "des",
-        "nicht",
-        "produktblätter",
-        "3sl",
-        "rack",
-        "gmbh",
-        "münchener",
-        "straße",
-        "83527",
-        "haag"
-      ]
-    },
-    {
-      "id": "doc-80-p4-4",
-      "documentId": "doc-80",
-      "title": "Metalldachplatte SL Alu",
-      "category": "Produktblätter",
-      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Metalldachplatte_SL_Alu/SL_Rack_Metalldachplatte-SL-Alu_DE.pdf",
-      "localPdf": "data/sl-rack-documents/080-Metalldachplatte-SL-Alu.pdf",
-      "page": 4,
-      "content": "4 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Montageablauf 5 6 1 2 3 4 Decken Sie den gewünschten Dachziegel aus. Hängen Sie die Metalldachplatte SL Alu an den Haltenasen in der Dachlattung ein. Schneiden Sie den Schaumstoffkeil passend für den verwende- ten Dachhaken ein. Fertig!Drücken Sie die Aluminiumschürze an den Dachziegel an. Achtung: Die Aluminiumschürze darf nicht abstehen. Befestigen Sie den Schaumstoffkeil an der Oberkante der Metall- dachplatte SL Alu. METALLDACHPLATTE SL ALU",
+      "content": "3SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 5 6 1 2 3 4 Decken Sie den gewünschten Dachziegel aus. Klappen Sie die Blechschürze ... Hängen Sie die Metalldachplatte SL Alu mit den Halte- nasen in der Dachlattung ein. ... vollständig nach unten. Schneiden Sie den Schaumstoffkeil passend für den verwendeten Dachhaken L-förmig aus. Decken Sie den Ziegel rechts von der Metalldachplatte SL Alu wieder ein. METALLDACHPLATTE SL ALU Montageablauf",
       "keywords": [
         "sie",
-        "alu",
         "metalldachplatte",
+        "alu",
         "sl-rack",
-        "dachziegel",
-        "schaumstoffkeil",
-        "aluminiumschürze",
+        "decken",
+        "aus",
         "produktblätter",
+        "3sl",
         "rack",
         "gmbh",
         "münchener",
@@ -7896,6 +7866,36 @@
       ]
     },
     {
+      "id": "doc-80-p4-4",
+      "documentId": "doc-80",
+      "title": "Metalldachplatte SL Alu",
+      "category": "Produktblätter",
+      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Metalldachplatte_SL_Alu/SL_Rack_Metalldachplatte-SL-Alu_DE.pdf",
+      "localPdf": "data/sl-rack-documents/080-Metalldachplatte-SL-Alu.pdf",
+      "page": 4,
+      "content": "4 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 11 7 8 9 10 Befestigen Sie den gewünschten Dachhacken. Decken Sie den freigelegten Bereich wieder ein. Achtung: Die Aluminiumschürze darf nicht abstehen. Formen Sie von der Mitte aus die Metallschürze an die darunter liegenden Ziegel passgenau an. Fertig. METALLDACHPLATTE SL ALU",
+      "keywords": [
+        "sie",
+        "metalldachplatte",
+        "alu",
+        "sl-rack",
+        "produktblätter",
+        "rack",
+        "gmbh",
+        "münchener",
+        "straße",
+        "83527",
+        "haag",
+        "tel",
+        "8072",
+        "3767-0",
+        "sales",
+        "www",
+        "befestigen",
+        "gewünschten"
+      ]
+    },
+    {
       "id": "doc-80-p5-5",
       "documentId": "doc-80",
       "title": "Metalldachplatte SL Alu",
@@ -7903,7 +7903,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Metalldachplatte_SL_Alu/SL_Rack_Metalldachplatte-SL-Alu_DE.pdf",
       "localPdf": "data/sl-rack-documents/080-Metalldachplatte-SL-Alu.pdf",
       "page": 5,
-      "content": "5SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Dachziegel Deckbreite: 165 mm Deckbreite: 215 mm Deckbreite: 265 mm Metalldachplatte SL Alu S Metalldachplatte SL Alu M Metalldachplatte SL Alu L Braas Achat 14 Rubin 9V Adria 1/1 Granat 13V Aerlox Topas 13V Altdeutsche Pfanne Classic 1/1 Cobert Gredos Cobert Universal Dolomiti 1/1 Doppel-S Frankfurter Pfanne Harzer Pfanne Markant 1/1 Montero 1/2 Reviva 1/1 Monier Nobilee Römer Pfanne Taunus Pfanne Tegalith Creaton Domino Regius Göteborg Eleganz Kapstadt Falzzeigel Maxima Gratus Maxima Pro Herzziegel Verona KOMPATIBILITÄT",
+      "content": "5SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Dachziegel Deckbreite: 165 mm Deckbreite: 215 mm Deckbreite: 265 mm Metalldachplatte SL Alu S Metalldachplatte SL Alu M Metalldachplatte SL Alu L Braas Achat 14 Rubin 9V Adria 1/1 Granat 13V Aerlox Topas 13V Altdeutsche Pfanne Classic 1/1 Cobert Gredos Cobert Universal Dolomiti 1/1 Doppel-S Frankfurter Pfanne Harzer Pfanne Markant 1/1 Montero 1/2 Reviva 1/1 Monier Nobilee Römer Pfanne Taunus Pfanne Tegalith Creaton Domino Regius Göteborg Eleganz Kapstadt Falzziegel Maxima Gratus Maxima Pro Herzziegel Verona KOMPATIBILITÄT",
       "keywords": [
         "pfanne",
         "metalldachplatte",
@@ -7933,7 +7933,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Metalldachplatte_SL_Alu/SL_Rack_Metalldachplatte-SL-Alu_DE.pdf",
       "localPdf": "data/sl-rack-documents/080-Metalldachplatte-SL-Alu.pdf",
       "page": 6,
-      "content": "6 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de KOMPATIBILITÄT Dachziegel Deckbreite: 165 mm Deckbreite: 215 mm Deckbreite: 265 mm Metalldachplatte SL Alu S Metalldachplatte SL Alu M Metalldachplatte SL Alu L Creaton Megaton Magnum Megaton MZ5 Mikado Ratio Rustico Terra Optima Viva Erlus Großfalzzeigel Karat XXL E 58 Plus E58 Max Reformpfanne SL Jacobi Walther J 11 v J 12 J 13 v J 160 Tradition Walther Stylist Walther tegula Mühlacker Z16 Z1 Z18 Nelskamp Doppelmuldenfalz- Zeigel D13Ü Kombi-Ziegel R10 Finkenberger-Pfanne",
+      "content": "6 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de KOMPATIBILITÄT Dachziegel Deckbreite: 165 mm Deckbreite: 215 mm Deckbreite: 265 mm Metalldachplatte SL Alu S Metalldachplatte SL Alu M Metalldachplatte SL Alu L Creaton Megaton Magnum Megaton MZ5 Mikado Ratio Rustico Terra Optima Viva Erlus Großfalzziegel Karat XXL E 58 Plus E58 Max Reformpfanne SL Jacobi Walther J 11 v J 12 J 13 v J 160 Tradition Walther Stylist Walther Tegula Mühlacker Z16 Z1 Z18 Nelskamp Doppelmuldenfalz- Ziegel D13Ü Kombi-Ziegel R10 Finkenberger-Pfanne",
       "keywords": [
         "metalldachplatte",
         "alu",
@@ -7963,17 +7963,17 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Metalldachplatte_SL_Alu/SL_Rack_Metalldachplatte-SL-Alu_DE.pdf",
       "localPdf": "data/sl-rack-documents/080-Metalldachplatte-SL-Alu.pdf",
       "page": 7,
-      "content": "7SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de KOMPATIBILITÄT Dachziegel Deckbreite: 165 mm Deckbreite: 215 mm Deckbreite: 265 mm Metalldachplatte SL Alu S Metalldachplatte SL Alu M Metalldachplatte SL Alu L Flachdach-Ziegel F13 Kronen Pfanne Nelskamp Flachschiebeziegel R13S Planum Reform-Ziegel R13S Planum 2 S-Pfanne Sigma Pfanne Wienerberger Cosmo 12S Cosmo 13S Fidelio Figaro Delux Flachkremper K21 JPV2 Mulde Verschiebe- ziegel Universo 14 Ziegelei Rapperswil FS 03 Jura J72 M72 MS95 P72 Eternit Europa Dachstein Heidelberger Dach- stein Strangfalz Dachstein",
+      "content": "7SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de KOMPATIBILITÄT Dachziegel Deckbreite: 165 mm Deckbreite: 215 mm Deckbreite: 265 mm Metalldachplatte SL Alu S Metalldachplatte SL Alu M Metalldachplatte SL Alu L Flachdach-Ziegel F13 Kronen Pfanne Nelskamp Flachschiebeziegel R13S Planum Reform-Ziegel R13S Planum 2 S-Pfanne Sigma Pfanne Wienerberger Cosmo 12S Cosmo 13S Fidelio Figaro Delux Flachkremper K21 JPV2 Mulde Verschiebe- ziegel Universo 14 Ziegelei Rapperswil FS 03 Jura J72 M72 MS95 P72 Eternit Europa Dachstein Heidelberger Dachstein Strangfalz Dachstein",
       "keywords": [
         "metalldachplatte",
         "alu",
         "deckbreite",
+        "dachstein",
         "sl-rack",
         "pfanne",
         "r13s",
         "planum",
         "cosmo",
-        "dachstein",
         "produktblätter",
         "7sl",
         "rack",
@@ -7993,14 +7993,13 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Metalldachplatte_SL_Alu/SL_Rack_Metalldachplatte-SL-Alu_DE.pdf",
       "localPdf": "data/sl-rack-documents/080-Metalldachplatte-SL-Alu.pdf",
       "page": 8,
-      "content": "SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de – Die Demontage muss in umgekehrter Reihenfolge unter Berücksichtigung der geltenden Sicherheitsbestimmungen erfolgen. – Hinweise zur Entsorgung und Recycling finden Sie auf der Website unter www.sl-rack.de. – Hinweise zur Wartungsanweisung finden Sie auf der Website unter www.sl-rack.de. Technische Daten Sonstige Hinweise Technische Änderungen und Druckfehler vorbehalten. Stand 02/2026 V02 Kontaktieren Sie uns für Ihr persönliches Angebot: SL Rack GmbH Münchener Straße 1 83527 Haag i. OB E-Mail: sales@sl-rack.de Tel.: +49 8072 3767-0 www.sl-rack.de SL Rack Online- Bestellsystem SL Rack YouTube SL Rack Website Material Aluminium, Schaumstoff Planungshilfen SL-Rack-Konfigurator Solar.Pro.Tool Statik Die statische Berechnung erfolgt gemäß der aktuellen länderspeziefischen Normen (EN 1991, EC1 für Deutschland). Es kann je nach Schnee- oder Windlasten, bzw. bei großen Modulen, erforderlich sein, mehr als die üblichen 4 Befestigungspunkte einzusetzen. Bitte beachten Sie unbedingt die jeweiligen Hinweise des Modulherstellers in der Installationsaleitung. Die Tragfähigkeit des Daches wird nicht von uns geprüft. METALLDACHPLATTE SL ALU",
+      "content": "METALLDACHPLATTE SL ALU SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de – Die Demontage muss in umgekehrter Reihenfolge unter Berücksichtigung der geltenden Sicherheitsbestimmungen erfolgen. – Hinweise zur Entsorgung und Recycling finden Sie auf der Website www.sl-rack.de. – Hinweise zur Wartungsanweisung finden Sie auf der Website www.sl-rack.de. Technische Daten Sonstige Hinweise Technische Änderungen und Druckfehler vorbehalten. Stand 07/2026 V02 Kontaktieren Sie uns für Ihr persönliches Angebot: SL Rack GmbH Münchener Straße 1 83527 Haag i. OB E-Mail: sales@sl-rack.de Tel.: +49 8072 3767-0 www.sl-rack.de SL Rack Online- Bestellsystem SL Rack YouTube SL Rack Website Material Aluminium, Schaumstoff Planungshilfen SL-Rack-Konfigurator Solar.Pro.Tool Statik Die statische Berechnung erfolgt gemäß der aktuellen länderspeziefischen Normen (EN 1991, EC1 für Deutschland). Es kann je nach Schnee- oder Windlasten, bzw. bei großen Modulen, erforderlich sein, mehr als die üblichen 4 Befestigungspunkte einzusetzen. Bitte beachten Sie unbedingt die jeweiligen Hinweise des Modulherstellers in der Installationsaleitung. Die Tragfähigkeit des Daches wird nicht von uns geprüft.",
       "keywords": [
         "sl-rack",
         "rack",
         "www",
         "hinweise",
         "sie",
-        "unter",
         "website",
         "metalldachplatte",
         "alu",
@@ -8012,7 +8011,8 @@
         "3767-0",
         "sales",
         "finden",
-        "technische"
+        "technische",
+        "uns"
       ]
     },
     {
