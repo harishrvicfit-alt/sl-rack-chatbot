@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-31T07:20:33.651Z",
+  "generatedAt": "2026-08-05T06:47:36.691Z",
   "sourceUrl": "https://www.sl-rack.com/downloads",
   "documentCount": 91,
   "chunkCount": 1276,
@@ -109,8 +109,8 @@
       "localText": "data/sl-rack-text/074-Alpha-Platte-Betondachstein.json",
       "pageCount": 8,
       "chunkCount": 9,
-      "sourceBytes": 2179408,
-      "sourceSha256": "94ab685c068cdb375fdf7c34cf6e330a1e23052e295c2643ef0dfb95c7583eac"
+      "sourceBytes": 1916762,
+      "sourceSha256": "d823cba3225b04a4d04e39b12b2d9ac786e01b1240c3cffaa5198d1e1e3f3f5a"
     },
     {
       "id": "doc-75",
@@ -121,8 +121,8 @@
       "localText": "data/sl-rack-text/075-Alpha-Platte-Tonziegel.json",
       "pageCount": 8,
       "chunkCount": 9,
-      "sourceBytes": 2260264,
-      "sourceSha256": "d8b56ecc4930e0fecba8f8906000bfdb768db2a62cb1f1392391d5675bc1befd"
+      "sourceBytes": 1958120,
+      "sourceSha256": "88ee1ec50b85a8a2ff245439992e1cf3a0fa3c2f7f6a4766e97ac25f136906fa"
     },
     {
       "id": "doc-76",
@@ -133,8 +133,8 @@
       "localText": "data/sl-rack-text/076-Beta-Platte-Betondachstein.json",
       "pageCount": 8,
       "chunkCount": 8,
-      "sourceBytes": 1422839,
-      "sourceSha256": "151df222156b60b65d3d4ce35031664cafae99dc1397f758f02a9e019344aa1f"
+      "sourceBytes": 1419067,
+      "sourceSha256": "d95799e5e3f61c76febff4f0d35f0c08fa8aefb48f766abfcf6743631b9f5e1f"
     },
     {
       "id": "doc-77",
@@ -145,8 +145,8 @@
       "localText": "data/sl-rack-text/077-Beta-Platte-Tonziegel.json",
       "pageCount": 8,
       "chunkCount": 8,
-      "sourceBytes": 1366275,
-      "sourceSha256": "3111c2e0d091cd660c241480f5aea82502c11abf0c2c96ea5765a7075fb8c96b"
+      "sourceBytes": 1362709,
+      "sourceSha256": "e1db15fb42d76b31e5279ba61091ac7d96668c563f3e284b1efc133f48b620f1"
     },
     {
       "id": "doc-78",
@@ -6152,7 +6152,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Alpha-Platte/SL_Rack_Alpha-Platte-Produktblatt-Betonziegel-DE.pdf",
       "localPdf": "data/sl-rack-documents/074-Alpha-Platte-Betondachstein.pdf",
       "page": 1,
-      "content": "SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 1 ALPHA-PLATTE Ihre Vorteile mit unseren Produkten » Universelle Dachersatzplatte mit integrierter Konsole und Gummimanschette aus UV-beständigem EPDM; inkl. Schlauchschelle. » Integrierter Schnee- und Eisabweiser. » Einfache Formbarkeit der Platte zur Anpassung an nahezu jede Ziegelform. » Aufgekantete Plattenseite zum Schutz vor Schlagregen. » Korrosions- und UV-beständig. » Abmessungen Alpha-Platte: Länge 457 mm, Breite 586 mm, Höhe 82 mm » Abmessungen Konsole: Länge 150 mm, Breite 35 mm, Höhe 190 mm » Material: Aluminium » Farben: ziegelrot (ähnlich RAL 8004) und anthrazit (ähnlich RAL 7016) » Gesamtgewicht: 1,25 kg Art.-Nr. 11500-00 Farbe: Ziegelrot Art.-Nr. 11500-01 Farbe: Anthrazit EINZIGARTIG AM MARKT FÜR BETONDACHSTEIN * Es gelten unsere Garantiebedingungen. Diese sind jederzeit im Internet einsehbar unter www.sl-rack.de Haltbarkeits- 10 Jahre Garantie*",
+      "content": "SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 1 ALPHA-PLATTE Ihre Vorteile mit unseren Produkten » Universelle Dachersatzplatte mit integrierter Konsole und Gummimanschette aus UV-beständigem EPDM; inkl. Schlauchschelle. » Integrierter Schnee- und Eisabweiser. » Einfache Formbarkeit der Platte zur Anpassung an nahezu jede Ziegelform. » Aufgekantete Plattenseite zum Schutz vor Schlagregen. » Korrosions- und UV-beständig. » Abmessungen Alpha-Platte: Länge 457 mm, Breite 586 mm, Höhe 82 mm » Abmessungen Konsole: Länge 150 mm, Breite 35 mm, Höhe 190 mm » Material: Aluminium » Farben: ziegelrot (ähnlich RAL 8004) und anthrazit (ähnlich RAL 7016) » Gesamtgewicht: 1,25 kg Art.-Nr. 11500-00 Farbe: Ziegelrot Art.-Nr. 11500-01 Farbe: Anthrazit EINZIGARTIG AM MARKT FÜR BETONDACHSTEIN * Es gelten unsere Garantiebedingungen. Diese sind auf unserer Webseite einsehbar unter www.sl-rack.de Haltbarkeits- 10 Jahre Garantie*",
       "keywords": [
         "alpha-platte",
         "sl-rack",
@@ -6182,7 +6182,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Alpha-Platte/SL_Rack_Alpha-Platte-Produktblatt-Betonziegel-DE.pdf",
       "localPdf": "data/sl-rack-documents/074-Alpha-Platte-Betondachstein.pdf",
       "page": 2,
-      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de ALPHA-PLATTE » Mindestdachneigung 10° nach ZVDH; die Vorgaben des ZVDH bzgl. des Unterdaches sind zu beachten. » Um Dichtigkeit zu erlangen, müssen während der Installation die Dachziegel trocken und frei von Schmutz sein. » Lattungsabstand zwischen 300 mm und 380 mm. » Dachplatten mit Verriegelungspyramiden auf der Unterseite und extremen Sicken- unterschieden/Welligkeit sind nicht kompatibel. » Sackbildung mit Wasserstau ist zu umgehen: Nasen von aufliegenden Dachziegeln sind ggf. zu entfernen. » Eine Alphaplatte ersetzt einen Dachziegel. » Alpha-Platten dürfen nicht direkt übereinander eingebaut werden. » Die seitliche Überdeckung darf ca. 10 cm nicht unterschreiten. » Die Alpha-Platte ist kein Ersatz für einen Originalziegel; hier muss um einen Ziegel nach innen gerutscht werden, evtl. mit Hilfe des Sparrenüberspannungsprofiles. » Wird ein Dachziegel mit einer montierten Sturmklammer durch die Alpha-Platte ersetzt, so muss die Klammer am nächsten angrenzenden Ziegel montiert werden. » Sonderfreigaben nach Absprache. » Rückfragen zu Ziegeln unter sales@sl-rack.de Damit Ihre Dachanbindung perfekt gelingt: Vor Einbau bitte auf Montageeignung überprüfen!",
+      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de ALPHA-PLATTE » Mindestdachneigung 10° nach ZVDH; die Vorgaben des ZVDH bzgl. des Unterdaches sind zu beachten. » Um Dichtigkeit zu erlangen, müssen während der Installation die Dachziegel trocken und frei von Schmutz sein. » Lattungsabstand zwischen 300 mm und 380 mm. » Dachplatten mit Verriegelungspyramiden auf der Unterseite und extremen Sicken- unterschieden/Welligkeit sind nicht kompatibel. » Sackbildung mit Wasserstau ist zu umgehen: Nasen von aufliegenden Dachziegeln sind ggf. zu entfernen. » Eine Alphaplatte ersetzt einen Dachziegel. » Alpha-Platten dürfen nicht direkt übereinander eingebaut werden. » Die seitliche Überdeckung darf ca. 10 cm nicht unterschreiten. » Die Alpha-Platte ist kein Ersatz für einen Ortgangziegel; hier muss um einen Ziegel nach innen gerutscht werden, evtl. mit Hilfe des Sparrenüberspannungsprofiles. » Wird ein Dachziegel mit einer montierten Sturmklammer durch die Alpha-Platte ersetzt, so muss die Klammer am nächsten angrenzenden Ziegel montiert werden. » Sonderfreigaben nach Absprache. » Rückfragen zu Ziegeln unter sales@sl-rack.de Damit Ihre Dachanbindung perfekt gelingt: Vor Einbau bitte auf Montageeignung überprüfen!",
       "keywords": [
         "alpha-platte",
         "sl-rack",
@@ -6421,7 +6421,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Alpha-Platte/SL_Rack_Alpha-Platte-Produktblatt-Tonziegel-DE.pdf",
       "localPdf": "data/sl-rack-documents/075-Alpha-Platte-Tonziegel.pdf",
       "page": 1,
-      "content": "SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de ALPHA-PLATTE EINZIGARTIG AM MARKT Ihre Vorteile mit unseren Produkten » Universelle Dachersatzplatte mit integrierter Konsole und Gummimanschette aus UV-beständigem EPDM; inkl. Schlauchschelle. » Integrierter Schnee- und Eisabweiser. » Einfache Formbarkeit der Platte zur Anpassung an nahezu jede Ziegelform. » Aufgekantete Plattenseite zum Schutz vor Schlagregen. » Korrosions- und UV-beständig. » Abmessungen Alpha-Platte: Länge 457 mm, Breite 586 mm, Höhe 82 mm » Abmessungen Konsole: Länge 150 mm, Breite 35 mm, Höhe 190 mm » Material: Aluminium » Farben: ziegelrot (ähnlich RAL 8004) und anthrazit (ähnlich RAL 7016) » Gesamtgewicht: 1,25 kg FÜR TONZIEGEL Art.-Nr. 11500-00 Farbe: Ziegelrot Art.-Nr. 11500-01 Farbe: Anthrazit * Es gelten unsere Garantiebedingungen. Diese sind jederzeit im Internet einsehbar unter www.sl-rack.de Haltbarkeits- 10 Jahre Garantie*",
+      "content": "SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de ALPHA-PLATTE EINZIGARTIG AM MARKT Ihre Vorteile mit unseren Produkten » Universelle Dachersatzplatte mit integrierter Konsole und Gummimanschette aus UV-beständigem EPDM; inkl. Schlauchschelle. » Integrierter Schnee- und Eisabweiser. » Einfache Formbarkeit der Platte zur Anpassung an nahezu jede Ziegelform. » Aufgekantete Plattenseite zum Schutz vor Schlagregen. » Korrosions- und UV-beständig. » Abmessungen Alpha-Platte: Länge 457 mm, Breite 586 mm, Höhe 82 mm » Abmessungen Konsole: Länge 150 mm, Breite 35 mm, Höhe 190 mm » Material: Aluminium » Farben: ziegelrot (ähnlich RAL 8004) und anthrazit (ähnlich RAL 7016) » Gesamtgewicht: 1,25 kg FÜR TONZIEGEL Art.-Nr. 11500-00 Farbe: Ziegelrot Art.-Nr. 11500-01 Farbe: Anthrazit * Es gelten unsere Garantiebedingungen. Diese sind einsehbar auf unserer Webseite unter www.sl-rack.de PRODUKTBLATT Haltbarkeits- 10 Jahre Garantie*",
       "keywords": [
         "alpha-platte",
         "sl-rack",
@@ -6451,7 +6451,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Alpha-Platte/SL_Rack_Alpha-Platte-Produktblatt-Tonziegel-DE.pdf",
       "localPdf": "data/sl-rack-documents/075-Alpha-Platte-Tonziegel.pdf",
       "page": 2,
-      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de ALPHA-PLATTE » Mindestdachneigung 10° nach ZVDH; die Vorgaben des ZVDH bzgl. des Unterdaches sind zu beachten. » Um Dichtigkeit zu erlangen, müssen während der Installation die Dachziegel trocken und frei von Schmutz sein. » Lattungsabstand zwischen 300 mm und 380 mm. » Dachplatten mit Verriegelungspyramiden auf der Unterseite und extremen Sicken- unterschieden/Welligkeit sind nicht kompatibel. » Sackbildung mit Wasserstau ist zu umgehen: Nasen von aufliegenden Dachziegeln sind ggf. zu entfernen. » Eine Alphaplatte ersetzt einen Dachziegel. » Alpha-Platten dürfen nicht direkt übereinander eingebaut werden. » Die seitliche Überdeckung darf ca. 10 cm nicht unterschreiten. » Die Alpha-Platte ist kein Ersatz für einen Orginalziegel; hier muss um einen Ziegel nach innen gerutscht werden, evtl. mit Hilfe des Sparrenüberspannungsprofiles. » Wird ein Dachziegel mit einer montierten Sturmklammer durch die Alpha-Platte ersetzt, so muss die Klammer am nächsten angrenzenden Ziegel montiert werden. » Sonderfreigaben nach Absprache. » Rückfragen zu Ziegeln unter sales@sl-rack.de Damit Ihre Dachanbindung perfekt gelingt: Vor Einbau bitte auf Montageeignung überprüfen!",
+      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de ALPHA-PLATTE » Mindestdachneigung 10° nach ZVDH; die Vorgaben des ZVDH bzgl. des Unterdaches sind zu beachten. » Um Dichtigkeit zu erlangen, müssen während der Installation die Dachziegel trocken und frei von Schmutz sein. » Lattungsabstand zwischen 300 mm und 380 mm. » Dachplatten mit Verriegelungspyramiden auf der Unterseite und extremen Sicken- unterschieden/Welligkeit sind nicht kompatibel. » Sackbildung mit Wasserstau ist zu umgehen: Nasen von aufliegenden Dachziegeln sind ggf. zu entfernen. » Eine Alphaplatte ersetzt einen Dachziegel. » Alpha-Platten dürfen nicht direkt übereinander eingebaut werden. » Die seitliche Überdeckung darf ca. 10 cm nicht unterschreiten. » Die Alpha-Platte ist kein Ersatz für einen Ortgangziegel; hier muss um einen Ziegel nach innen gerutscht werden, evtl. mit Hilfe des Sparrenüberspannungsprofiles. » Wird ein Dachziegel mit einer montierten Sturmklammer durch die Alpha-Platte ersetzt, so muss die Klammer am nächsten angrenzenden Ziegel montiert werden. » Sonderfreigaben nach Absprache. » Rückfragen zu Ziegeln unter sales@sl-rack.de Damit Ihre Dachanbindung perfekt gelingt: Vor Einbau bitte auf Montageeignung überprüfen!",
       "keywords": [
         "alpha-platte",
         "sl-rack",
@@ -6631,7 +6631,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Alpha-Platte/SL_Rack_Alpha-Platte-Produktblatt-Tonziegel-DE.pdf",
       "localPdf": "data/sl-rack-documents/075-Alpha-Platte-Tonziegel.pdf",
       "page": 7,
-      "content": "7SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de ALPHA-PLATTE 25 Nm25 Nm Die Oberseite der Dichtmanschette mit Hilfe der Schlauchschelle (Artikel-Nr. 11502-00-06) zusätzlich sichern. Hierzu die Schlauchschelle in die Nut einpassen und festziehen. 23 Die Klemmkombination wieder auf die Konsole stecken, das Tragprofil auflegen, einhängen, dabei die Höhe durch die Klemmkombination an der Konsole an passen … 24 … und die Position durch Anziehen der Schraube (25 Nm) fixieren. Fertig! 25",
+      "content": "7SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de ALPHA-PLATTE 25 Nm25 Nm Die Oberseite der Dichtmanschette mit Hilfe der Schlauchschelle (Artikel-Nr. 11500-10) zusätzlich sichern. Hierzu die Schlauchschelle in die Nut einpassen und festziehen. 23 Die Klemmkombination wieder auf die Konsole stecken, das Tragprofil auflegen, einhängen, dabei die Höhe durch die Klemmkombination an der Konsole an passen … 24 … und die Position durch Anziehen der Schraube (25 Nm) fixieren. Fertig! 25",
       "keywords": [
         "alpha-platte",
         "sl-rack",
@@ -6721,7 +6721,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Beta-Platte/SL_Rack_Beta-Platte_Produktblatt_Montageanleitung_Betonziegel_DE.pdf",
       "localPdf": "data/sl-rack-documents/076-Beta-Platte-Betondachstein.pdf",
       "page": 2,
-      "content": "b c a d e f 2 SL Rack GmbH\u0007\u0007|\u0007\u0007Münchener\u0007Straße\u00071\u0007\u0007|\u0007\u000783527\u0007Haag\u0007i.\u0007OB\u0007\u0007|\u0007\u0007Tel:\u0007+49\u00078072\u00073767-0\u0007\u0007|\u0007\u0007sales@sl-rack.de | www.sl-rack.de BETA-PLATTE » Mindestdachneigung\u000710°\u0007nach\u0007ZVDH;\u0007die\u0007Vorgaben\u0007des\u0007ZVDH\u0007bzgl.\u0007des\u0007Unterdaches\u0007sind\u0007 zu\u0007beachten. » Um\u0007Dichtigkeit\u0007zu\u0007erlangen,\u0007müssen\u0007während\u0007der\u0007Installation\u0007die\u0007Dachziegel\u0007trocken\u0007und\u0007 frei\u0007von\u0007Schmutz\u0007sein. » Lattungsabstand zwischen 300 mm und 380 mm. » Dachplatten mit Verriegelungspyramiden auf der Unterseite und extremen Sicken- unterschieden/Welligkeit sind nicht kompatibel. » Sackbildung mit Wasserstau ist zu umgehen: Nasen von aufliegenden Dachziegeln sind ggf. zu entfernen. » Eine Beta-Platte ersetzt einen Dachziegel. » Beta-Platten\u0007dürfen\u0007nicht\u0007direkt übereinander\u0007eingebaut\u0007werden. » Die\u0007seitliche\u0007Überdeckung\u0007darf\u0007ca.\u000710 cm\u0007nicht\u0007unterschreiten. » Die\u0007Beta-Platte\u0007ist\u0007kein\u0007Ersatz\u0007für\u0007einen\u0007Originalziegel;\u0007hier\u0007muss\u0007um\u0007einen\u0007Ziegel\u0007nach\u0007 innen\u0007gerutscht\u0007werden,\u0007evtl.\u0007mit\u0007Hilfe\u0007des\u0007Sparrenüberspannungsprofiles. » Wird\u0007ein\u0007Dachziegel\u0007mit\u0007einer\u0007montierten\u0007Sturmklammer\u0007durch\u0007die\u0007Beta-Platte\u0007ersetzt,\u0007 so\u0007muss\u0007die\u0007Klammer\u0007am\u0007nächsten\u0007angrenzenden\u0007Ziegel\u0007montiert\u0007werden. » Sonderfreigaben\u0007nach\u0007Absprache. » Rückfragen\u0007zu\u0007Ziegeln\u0007unter\u0007sales@sl-rack.de Für eine perfekte Dachanbindung vor Einbau auf Montageeignung prüfen! Abmessungen a b c d e f Beta-Platte ca. 457 mm ca. 193 mm ca. 586 mm ca. 520 mm ca. 52 mm ca. 32 mm",
+      "content": "b c a d e f 2 SL Rack GmbH\u0007\u0007|\u0007\u0007Münchener\u0007Straße\u00071\u0007\u0007|\u0007\u000783527\u0007Haag\u0007i.\u0007OB\u0007\u0007|\u0007\u0007Tel:\u0007+49\u00078072\u00073767-0\u0007\u0007|\u0007\u0007sales@sl-rack.de | www.sl-rack.de BETA-PLATTE » Mindestdachneigung\u000710°\u0007nach\u0007ZVDH;\u0007die\u0007Vorgaben\u0007des\u0007ZVDH\u0007bzgl.\u0007des\u0007Unterdaches\u0007sind\u0007 zu\u0007beachten. » Um\u0007Dichtigkeit\u0007zu\u0007erlangen,\u0007müssen\u0007während\u0007der\u0007Installation\u0007die\u0007Dachziegel\u0007trocken\u0007und\u0007 frei\u0007von\u0007Schmutz\u0007sein. » Lattungsabstand zwischen 300 mm und 380 mm. » Dachplatten mit Verriegelungspyramiden auf der Unterseite und extremen Sicken- unterschieden/Welligkeit sind nicht kompatibel. » Sackbildung mit Wasserstau ist zu umgehen: Nasen von aufliegenden Dachziegeln sind ggf. zu entfernen. » Eine Beta-Platte ersetzt einen Dachziegel. » Beta-Platten\u0007dürfen\u0007nicht\u0007direkt übereinander\u0007eingebaut\u0007werden. » Die\u0007seitliche\u0007Überdeckung\u0007darf\u0007ca.\u000710 cm\u0007nicht\u0007unterschreiten. » Die\u0007Beta-Platte\u0007ist\u0007kein\u0007Ersatz\u0007für\u0007einen\u0007Ortgangziegel;\u0007hier\u0007muss\u0007um\u0007einen\u0007Ziegel\u0007nach\u0007 innen\u0007gerutscht\u0007werden,\u0007evtl.\u0007mit\u0007Hilfe\u0007des\u0007Sparrenüberspannungsprofiles. » Wird\u0007ein\u0007Dachziegel\u0007mit\u0007einer\u0007montierten\u0007Sturmklammer\u0007durch\u0007die\u0007Beta-Platte\u0007ersetzt,\u0007 so\u0007muss\u0007die\u0007Klammer\u0007am\u0007nächsten\u0007angrenzenden\u0007Ziegel\u0007montiert\u0007werden. » Sonderfreigaben\u0007nach\u0007Absprache. » Rückfragen\u0007zu\u0007Ziegeln\u0007unter\u0007sales@sl-rack.de Für eine perfekte Dachanbindung vor Einbau auf Montageeignung prüfen! Abmessungen a b c d e f Beta-Platte ca.457 mm ca.\u0007193 mm ca.\u0007586 mm ca.\u0007520 mm ca.\u000752 mm ca.\u000732 mm",
       "keywords": [
         "beta-platte",
         "sl-rack",
@@ -6751,7 +6751,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Beta-Platte/SL_Rack_Beta-Platte_Produktblatt_Montageanleitung_Betonziegel_DE.pdf",
       "localPdf": "data/sl-rack-documents/076-Beta-Platte-Betondachstein.pdf",
       "page": 3,
-      "content": "3 SL Rack GmbH\u0007\u0007|\u0007\u0007Münchener\u0007Straße\u00071\u0007\u0007|\u0007\u000783527\u0007Haag\u0007i.\u0007OB\u0007\u0007|\u0007\u0007Tel:\u0007+49\u00078072\u00073767-0\u0007\u0007|\u0007\u0007sales@sl-rack.de | www.sl-rack.de BETA-PLATTE Zubehör Art.-Nr. 11145-01 EAN 4262355112555 Dachhaken\u00073D\u0007SL\u0007Alu\u0007K 10\u0007Stück\u0007pro\u0007VPE Art.-Nr. 11100-01 EAN 4262355112562 Dachhaken\u00073D\u0007SL\u0007Alu\u0007L 10\u0007Stück\u0007pro\u0007VPE Art.-Nr. 11136-02 EAN 4262355113248 Dachhaken\u00073D\u0007SL\u0007Alu\u000736\u0007L 10\u0007Stück\u0007pro\u0007VPE Art.-Nr. 11100-02 EAN 4262355112579 Dachhaken\u00073D\u0007SL\u0007Alu\u0007XL 10\u0007Stück\u0007pro\u0007VPE Art.-Nr. 11105-05 EAN 4262355110339 Klemmkombination,\u0007vertikal 100\u0007Stück\u0007pro\u0007VPE VARIANTEN 3D SL Alu L3D SL Alu K 3D SL Alu XL3D SL Alu 36 L Optionale vertikale Klemmkombination Art.-Nr. 11105-05 » Dachhaken 3D SL Alu – Geeignet\u0007für\u0007alle\u0007gängigen\u0007Ziegeldächer\u0007und\u0007hohe\u0007 Schneelasten,\u0007sowie\u0007große\u0007überlappende\u0007Dachziegel\u0007 – Höhenverstellbar\u0007mit\u00072 mm\u0007oder\u00075 mm\u0007Unterlegplatten – Einfache\u0007Montage\u0007mit\u0007nur\u0007einem\u0007Werkzeug\u0007(Torx\u000740) – Vormontierte\u0007horizontale\u0007Klemmkombination\u0007für\u0007 \u0007schnelle\u0007Installation – Optionale\u0007vertikale\u0007Klemmkombination\u0007erhältlich – Einlagige\u0007oder\u0007Kreuzverbund-Installation\u0007möglich – Abmessungen:\u0007Länge\u0007176\u0007bis\u0007225 mm,\u0007 Breite\u0007150 mm,\u0007Höhe\u0007192 ‒ 212 mm\u0007 – Material:\u0007Edelstahl,\u0007Schrauben\u0007Edelstahl",
+      "content": "3 SL Rack GmbH\u0007\u0007|\u0007\u0007Münchener\u0007Straße\u00071\u0007\u0007|\u0007\u000783527\u0007Haag\u0007i.\u0007OB\u0007\u0007|\u0007\u0007Tel:\u0007+49\u00078072\u00073767-0\u0007\u0007|\u0007\u0007sales@sl-rack.de | www.sl-rack.de BETA-PLATTE Zubehör Art.-Nr. 11145-01 EAN 4262355112555 Dachhaken\u00073D\u0007SL\u0007Alu\u0007K 10\u0007Stück\u0007pro\u0007VPE Art.-Nr. 11100-01 EAN 4262355112562 Dachhaken\u00073D\u0007SL\u0007Alu\u0007L 10\u0007Stück\u0007pro\u0007VPE Art.-Nr. 11136-02 EAN 4262355113248 Dachhaken\u00073D\u0007SL\u0007Alu\u000736\u0007L 10\u0007Stück\u0007pro\u0007VPE Art.-Nr. 11100-02 EAN 4262355112579 Dachhaken\u00073D\u0007SL\u0007Alu\u0007XL 10\u0007Stück\u0007pro\u0007VPE Art.-Nr. 11105-05 EAN 4262355110339 Klemmkombination,\u0007vertikal 100\u0007Stück\u0007pro\u0007VPE VARIANTEN 3D SL Alu L3D SL Alu K 3D SL Alu XL3D SL Alu 36 L Optionale vertikale Klemmkombination Art.-Nr. 11105-05 » Dachhaken 3D SL Alu – Geeignet\u0007für\u0007alle\u0007gängigen\u0007Ziegeldächer\u0007und\u0007hohe\u0007 Schneelasten,\u0007sowie\u0007große\u0007überlappende\u0007Dachziegel\u0007 – Höhenverstellbar\u0007mit\u00072 mm\u0007oder\u00075 mm\u0007Unterlegplatten – Einfache\u0007Montage\u0007mit\u0007nur\u0007einem\u0007Werkzeug\u0007(Torx\u000740) – Vormontierte\u0007horizontale\u0007Klemmkombination\u0007für\u0007 \u0007schnelle\u0007Installation – Optionale\u0007vertikale\u0007Klemmkombination\u0007erhältlich – Einlagige\u0007oder\u0007Kreuzverbund-Installation\u0007möglich – Abmessungen:\u0007Länge\u0007176\u0007bis\u0007225 mm,\u0007 Breite\u0007150 mm,\u0007Höhe\u0007192 ‒ 212 mm\u0007 – Material:\u0007Aluminium,\u0007Schrauben\u0007Edelstahl",
       "keywords": [
         "alu",
         "art",
@@ -6767,10 +6767,10 @@
         "11105-05",
         "optionale",
         "vertikale",
-        "edelstahl",
         "betondachstein",
         "produktblätter",
-        "rack"
+        "rack",
+        "gmbh"
       ]
     },
     {
@@ -6811,7 +6811,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Beta-Platte/SL_Rack_Beta-Platte_Produktblatt_Montageanleitung_Betonziegel_DE.pdf",
       "localPdf": "data/sl-rack-documents/076-Beta-Platte-Betondachstein.pdf",
       "page": 5,
-      "content": "StartStart mittigmittig 1 2 SH 5 6 8 9 4 DH 3 7 5 SL Rack GmbH\u0007\u0007|\u0007\u0007Münchener\u0007Straße\u00071\u0007\u0007|\u0007\u000783527\u0007Haag\u0007i.\u0007OB\u0007\u0007|\u0007\u0007Tel:\u0007+49\u00078072\u00073767-0\u0007\u0007|\u0007\u0007sales@sl-rack.de | www.sl-rack.de BETA-PLATTE Beta-Platte\u0007beginnend\u0007von\u0007der\u0007Mitte\u0007 nach\u0007außen\u0007fest\u0007und\u0007formschlüssig\u0007 andrücken. Höhe\u0007der\u0007Beta-Platte\u0007durch\u0007Umfalzen\u0007 des\u0007Stützblechs\u0007auf\u0007der\u0007Rückseite\u0007 entsprechend\u0007anpassen. Schutzfolie\u0007des\u0007Klebestreifens\u0007auf\u0007der\u0007 Unterseite\u0007der\u0007Beta-Platte\u0007komplett\u0007 abziehen.\u0007 Ermitteln\u0007der\u0007auszugleichenden\u0007 Dachplattenhöhe\u0007(DH). Dachplattenhöhe\u0007(DH)\u0007\u0007=\u0007Stützblech- höhe\u0007(SH). Aussparung\u0007des\u0007Stützblechs\u0007auf\u0007der\u0007 oberen\u0007Querlatte\u0007platzieren. ...unter\u0007der\u0007oberen\u0007Reihe\u0007so\u0007plazieren,\u0007 dass\u0007die\u0007Querlattung\u0007gut\u0007einseh-\u0007und\u0007 erreichbar\u0007ist. Dacheindeckung\u0007im\u0007Montagebereich\u0007 (max.\u00073\u0007Ziegel)\u0007aufdecken\u0007und\u0007die\u0007 äußeren\u0007Dachplatten... Montageablauf Achten Sie darauf, dass der Installations- bereich sauber, staubfrei und trocken ist! Durch\u0007Druck\u0007auf\u0007die\u0007untere\u0007Kante\u0007die Beta-Platte\u0007grob\u0007an\u0007die\u0007Ziegel\u0007an\u0007formen.",
+      "content": "1 2 SH 5 6 8 9 4 DH 3 7 5 SL Rack GmbH\u0007\u0007|\u0007\u0007Münchener\u0007Straße\u00071\u0007\u0007|\u0007\u000783527\u0007Haag\u0007i.\u0007OB\u0007\u0007|\u0007\u0007Tel:\u0007+49\u00078072\u00073767-0\u0007\u0007|\u0007\u0007sales@sl-rack.de | www.sl-rack.de BETA-PLATTE Beta-Platte\u0007beginnend\u0007von\u0007der\u0007Mitte\u0007 nach\u0007außen\u0007fest\u0007und\u0007formschlüssig\u0007 andrücken. Höhe\u0007der\u0007Beta-Platte\u0007durch\u0007Umfalzen\u0007 des\u0007Stützblechs\u0007auf\u0007der\u0007Rückseite\u0007 entsprechend\u0007anpassen. Schutzfolie\u0007des\u0007Klebestreifens\u0007auf\u0007der\u0007 Unterseite\u0007der\u0007Beta-Platte\u0007komplett\u0007 abziehen.\u0007 Ermitteln\u0007der\u0007auszugleichenden\u0007 Dachplattenhöhe\u0007(DH). Dachplattenhöhe\u0007(DH)\u0007\u0007=\u0007Stützblech- höhe\u0007(SH). Aussparung\u0007des\u0007Stützblechs\u0007auf\u0007der\u0007 oberen\u0007Querlatte\u0007platzieren. ...unter\u0007der\u0007oberen\u0007Reihe\u0007so\u0007plazieren,\u0007 dass\u0007die\u0007Querlattung\u0007gut\u0007einseh-\u0007und\u0007 erreichbar\u0007ist. Dacheindeckung\u0007im\u0007Montagebereich\u0007 (max.\u00073\u0007Ziegel)\u0007aufdecken\u0007und\u0007die\u0007 äußeren\u0007Dachplatten... Montageablauf Achten Sie darauf, dass der Installations- bereich sauber, staubfrei und trocken ist! Durch\u0007Druck\u0007auf\u0007die\u0007untere\u0007Kante\u0007die Beta-Platte\u0007grob\u0007an\u0007die\u0007Ziegel\u0007an\u0007formen. StartStart mittigmittig",
       "keywords": [
         "beta-platte",
         "des",
@@ -6826,11 +6826,11 @@
         "ziegel",
         "betondachstein",
         "produktblätter",
-        "startstart",
-        "mittigmittig",
         "rack",
         "gmbh",
-        "münchener"
+        "münchener",
+        "straße",
+        "83527"
       ]
     },
     {
@@ -6931,7 +6931,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Beta-Platte/SL_Rack_Beta-Platte_Produktblatt_Montageanleitung_Tonziegel_DE.pdf",
       "localPdf": "data/sl-rack-documents/077-Beta-Platte-Tonziegel.pdf",
       "page": 1,
-      "content": "SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de BETA-PLATTE UNIVERSELLE ERSATZPLATTE FÜR ALLE GÄNGIGEN DACHPFANNEN Beta-Platte RAL 8004 Kupferbraun (Ziegelrot) Art.-Nr. 11522-00 Beta-Platte RAL 7016 Anthrazit Art.-Nr. 11522-01 Ihre Vorteile mit unseren Produkten » Erspart mechanisches Ausschneiden => Kein Ziegelbruch » Frei positionierbar » Dauerhaft hohe Stabilität => Trittfestigkeit » Windberuhigte Zonen in den Vertiefungen der Riffelungen => Wasserabfluss nach unten in Längsrichtung » Hochgekantete Plattenseiten => Maximale Abdichtung » Mit Ungeziefer- und Kleintierschutz » Mit bewährtem Butyl-Klebestreifen » Einfache Lagerhaltung » Kombinierbar mit der Dachhaken Serie SL Alu » Material: gewalztes Aluminiumblech » Decklänge: 430 mm * Es gelten unsere Garantiebedingungen. Diese sind auf unserer Webseite einsehbar unter www.sl-rack.de Haltbarkeits- 10 Jahre Garantie* FÜR TONZIEGEL PRODUKTBLATT",
+      "content": "SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de BETA-PLATTE UNIVERSELLE ERSATZPLATTE FÜR ALLE GÄNGIGEN DACHPFANNEN Beta-Platte RAL 8004 Kupferbraun (Ziegelrot) Art.-Nr. 11522-00 Beta-Platte RAL 7016 Anthrazit Art.-Nr. 11522-01 Ihre Vorteile mit unseren Produkten » Erspart mechanisches Ausschneiden => Kein Ziegelbruch » Frei positionierbar » Dauerhaft hohe Stabilität => Trittfestigkeit » Windberuhigte Zonen in den Vertiefungen der Riffelungen => Wasserabfluss nach unten in Längsrichtung » Hochgekantete Plattenseiten => Maximale Abdichtung » Mit Ungeziefer- und Kleintierschutz » Mit bewährtem Butyl-Klebestreifen » Einfache Lagerhaltung » Kombinierbar mit der Dachhaken Serie SL Alu » Material: gewalztes Aluminiumblech » Decklänge: 430 mm * Es gelten unsere Garantiebedingungen. Diese sind auf unserer Webseite einsehbar unter www.sl-rack.de Garantie* 10 Jahre Haltbarkeits- FÜR TONZIEGEL PRODUKTBLATT",
       "keywords": [
         "beta-platte",
         "sl-rack",
@@ -6961,7 +6961,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Beta-Platte/SL_Rack_Beta-Platte_Produktblatt_Montageanleitung_Tonziegel_DE.pdf",
       "localPdf": "data/sl-rack-documents/077-Beta-Platte-Tonziegel.pdf",
       "page": 2,
-      "content": "b c a d e f 2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de BETA-PLATTE Abmessungen a b c d e f Beta-Platte ca. 457 mm ca. 193 mm ca. 586 mm ca. 520 mm ca. 52 mm ca. 32 mm Für eine perfekte Dachanbindung vor Einbau auf Montageeignung prüfen! » Mindestdachneigung 10° nach ZVDH; die Vorgaben des ZVDH bzgl. des Unterdaches sind zu beachten. » Um Dichtigkeit zu erlangen, müssen während der Installation die Dachziegel trocken und frei von Schmutz sein. » Lattungsabstand zwischen 300 mm und 380 mm. » Dachplatten mit Verriegelungspyramiden auf der Unterseite und extremen Sicken- unterschieden/Welligkeit sind nicht kompatibel. » Sackbildung mit Wasserstau ist zu umgehen: Nasen von aufliegenden Dachziegeln sind ggf. zu entfernen. » Eine Beta-Platte ersetzt einen Dachziegel. » Beta-Platten dürfen nicht direkt übereinander eingebaut werden. » Die seitliche Überdeckung darf ca. 10 cm nicht unterschreiten. » Die Beta-Platte ist kein Ersatz für einen Orginalziegel; hier muss um einen Ziegel nach innen gerutscht werden, evtl. mit Hilfe des Sparrenüberspannungsprofiles. » Wird ein Dachziegel mit einer montierten Sturmklammer durch die Beta-Platte ersetzt, so muss die Klammer am nächsten angrenzenden Ziegel montiert werden. » Sonderfreigaben nach Absprache. » Rückfragen zu Ziegeln unter sales@sl-rack.de",
+      "content": "b c a d e f 2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de BETA-PLATTE Abmessungen a b c d e f Beta-Platte ca. 457 mm ca. 193 mm ca. 586 mm ca. 520 mm ca. 52 mm ca. 32 mm Für eine perfekte Dachanbindung vor Einbau auf Montageeignung prüfen! » Mindestdachneigung 10° nach ZVDH; die Vorgaben des ZVDH bzgl. des Unterdaches sind zu beachten. » Um Dichtigkeit zu erlangen, müssen während der Installation die Dachziegel trocken und frei von Schmutz sein. » Lattungsabstand zwischen 300 mm und 380 mm. » Dachplatten mit Verriegelungspyramiden auf der Unterseite und extremen Sicken- unterschieden/Welligkeit sind nicht kompatibel. » Sackbildung mit Wasserstau ist zu umgehen: Nasen von aufliegenden Dachziegeln sind ggf. zu entfernen. » Eine Beta-Platte ersetzt einen Dachziegel. » Beta-Platten dürfen nicht direkt übereinander eingebaut werden. » Die seitliche Überdeckung darf ca. 10 cm nicht unterschreiten. » Die Beta-Platte ist kein Ersatz für einen Ortgangziegel; hier muss um einen Ziegel nach innen gerutscht werden, evtl. mit Hilfe des Sparrenüberspannungsprofiles. » Wird ein Dachziegel mit einer montierten Sturmklammer durch die Beta-Platte ersetzt, so muss die Klammer am nächsten angrenzenden Ziegel montiert werden. » Sonderfreigaben nach Absprache. » Rückfragen zu Ziegeln unter sales@sl-rack.de",
       "keywords": [
         "beta-platte",
         "sl-rack",
@@ -7051,7 +7051,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Beta-Platte/SL_Rack_Beta-Platte_Produktblatt_Montageanleitung_Tonziegel_DE.pdf",
       "localPdf": "data/sl-rack-documents/077-Beta-Platte-Tonziegel.pdf",
       "page": 5,
-      "content": "1 SH 5 6 7 8 9 4 DH 3 2 5 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de BETA-PLATTE Höhe der Beta-Platte durch Umfalzen des Stützblechs auf der Rückseite entsprechend anpassen. Ermitteln der auszugleichenden Dachplattenhöhe (DH). Dachplattenhöhe (DH) = Stützblech- höhe (SH). ...unter der oberen Reihe so plazieren, dass die Querlattung gut einseh- und erreichbar ist. Dacheindeckung im Montagebereich (max. 3 Ziegel) aufdecken und die äußeren Dachplatten... Aussparung des Stützblechs auf der oberen Querlatte einhängen. Die hintere Blechkantung leicht nach hinten drücken. Schutzfolie des Klebestreifens auf der Unterseite des Schaumstoffkeils abziehen. Schaumstoffkeil auf der Innenseite der oberen Blechkante der Beta-Platte festkleben. Achtung: Der Schaumstoffkeil und die Holzlattung dürfen sich nicht berühren. Montageablauf Achten Sie darauf, dass der Installations- bereich sauber, staubfrei und trocken ist!",
+      "content": "1 5 6 7 8 9 4 3 2 5 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de BETA-PLATTE Höhe der Beta-Platte durch Umfalzen des Stützblechs auf der Rückseite entsprechend anpassen. Ermitteln der auszugleichenden Dachplattenhöhe (DH). Dachplattenhöhe (DH) = Stützblech- höhe (SH). ...unter der oberen Reihe so plazieren, dass die Querlattung gut einseh- und erreichbar ist. Dacheindeckung im Montagebereich (max. 3 Ziegel) aufdecken und die äußeren Dachplatten... Aussparung des Stützblechs auf der oberen Querlatte einhängen. Die hintere Blechkantung leicht nach hinten drücken. Schutzfolie des Klebestreifens auf der Unterseite des Schaumstoffkeils abziehen. Schaumstoffkeil auf der Innenseite der oberen Blechkante der Beta-Platte festkleben. Achtung: Der Schaumstoffkeil und die Holzlattung dürfen sich nicht berühren. SH Montageablauf Achten Sie darauf, dass der Installations- bereich sauber, staubfrei und trocken ist! DH",
       "keywords": [
         "beta-platte",
         "des",
@@ -7111,7 +7111,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Beta-Platte/SL_Rack_Beta-Platte_Produktblatt_Montageanleitung_Tonziegel_DE.pdf",
       "localPdf": "data/sl-rack-documents/077-Beta-Platte-Tonziegel.pdf",
       "page": 7,
-      "content": "20 21 24 25 26 23 22 19 7 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de BETA-PLATTE Montageablauf Achten Sie darauf, dass der Installations- bereich sauber, staubfrei und trocken ist! ...stülpen. Dacheindeckung wieder... ...vervollständigen. Dachhaken in Fuß einhängen.Schaumstoffkeil an der Position des Dachhakens mit einem L-Schnitt einschneiden. Einschnitt am Schaumstoffkeil um den Dachhaken... Position des Dachhaken durch Anziehen der Schraube fixieren (6 Nm). ...befestigen.",
+      "content": "20 21 24 25 26 23 22 19 7 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de BETA-PLATTE Montageablauf Achten Sie darauf, dass der Installations- bereich sauber, staubfrei und trocken ist! ...stülpen. Dacheindeckung wieder... ...vervollständigen. Dachhaken in Fuß einhängen.Schaumstoffkeil an der Position des Dachhakens mit einem L-Schnitt einschneiden. Einschnitt am Schaumstoffkeil um den Dachhaken... Position des Dachhaken durch Anziehen der Schraube fixieren. ...befestigen.",
       "keywords": [
         "dachhaken",
         "beta-platte",
