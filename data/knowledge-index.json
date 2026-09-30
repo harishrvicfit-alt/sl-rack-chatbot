@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T09:23:43.449Z",
+  "generatedAt": "2026-09-30T10:36:12.864Z",
   "sourceUrl": "https://www.sl-rack.com/downloads",
   "documentCount": 95,
   "chunkCount": 1347,
@@ -557,16 +557,16 @@
       "sourceSha256": "9d6a90af99103d279d9e97360d24cc55ce203e29c370c2cf305afb468386c7cd"
     },
     {
-      "id": "doc-109",
+      "id": "doc-136",
       "title": "SL Fast Flat Bodenschuh Sonderlösung für Gründach/Kiesdach",
       "category": "Produktblätter",
-      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-V01-DE.pdf",
-      "localPdf": "data/sl-rack-documents/109-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
-      "localText": "data/sl-rack-text/109-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.json",
+      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-DE.pdf",
+      "localPdf": "data/sl-rack-documents/136-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
+      "localText": "data/sl-rack-text/136-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.json",
       "pageCount": 6,
       "chunkCount": 6,
-      "sourceBytes": 1497094,
-      "sourceSha256": "33decaf2d0aaefa385f63f934af363e77423353c5ba9e5841b56af49e00ca7b3"
+      "sourceBytes": 1825170,
+      "sourceSha256": "f0f19b3b71aedb9ff0765ae3153855f32100127612132178959d875c7f021487"
     },
     {
       "id": "doc-110",
@@ -14022,22 +14022,22 @@
       ]
     },
     {
-      "id": "doc-109-p1-1",
-      "documentId": "doc-109",
+      "id": "doc-136-p1-1",
+      "documentId": "doc-136",
       "title": "SL Fast Flat Bodenschuh Sonderlösung für Gründach/Kiesdach",
       "category": "Produktblätter",
-      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-V01-DE.pdf",
-      "localPdf": "data/sl-rack-documents/109-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
+      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-DE.pdf",
+      "localPdf": "data/sl-rack-documents/136-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
       "page": 1,
-      "content": "SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Ihre Vorteile mit unseren Produkten » Passend für die Montage auf Grün-, Substrat- und Kiesdächern. » Weichmacher-freier Kiesdachschuh ermöglicht die Montage auch mit Kontakt zur Dachhaut. » Optimierte Geometrie ermöglicht Ausgleich von Dachunebenheiten bei Substrat- und Kiesdächern. » Integrierte Ballastierung bei Gründächern durch Betonsteine. *\u0007 Es\u0007gelten\u0007unsere\u0007Garantiebedingungen.\u0007Diese\u0007sind\u0007auf\u0007unserer\u0007Webseite\u0007einsehbar\u0007unter\u0007www.sl-rack.de Haltbarkeits- 10 Jahre Garantie* DATENBLATT SL FAST FLAT GRÜN-/KIESDACH",
+      "content": "SL FAST FLAT GRÜN-/KIESDACH SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Haltbarkeits- 10 Jahre Garantie* Ihre Vorteile mit unseren Produkten » Passend für die Montage auf Grün-, Substrat- und Kiesdächern. » Weichmacher-freier Kiesdachschuh ermöglicht die Montage auch mit Kontakt zur Dachhaut. » Optimierte Geometrie ermöglicht Ausgleich von Dachunebenheiten bei Substrat- und Kiesdächern. » Integrierte Ballastierung bei Gründächern durch Betonsteine. *\u0007 Es\u0007gelten\u0007unsere\u0007Garantiebedingungen.\u0007Diese\u0007sind\u0007auf\u0007unserer\u0007Webseite\u0007einsehbar\u0007unter\u0007www.sl-rack.de PRODUKTBLATT",
       "keywords": [
         "sl-rack",
         "fast",
         "flat",
         "kiesdach",
+        "grün-",
         "www",
         "montage",
-        "grün-",
         "substrat-",
         "kiesdächern",
         "ermöglicht",
@@ -14052,14 +14052,14 @@
       ]
     },
     {
-      "id": "doc-109-p2-2",
-      "documentId": "doc-109",
+      "id": "doc-136-p2-2",
+      "documentId": "doc-136",
       "title": "SL Fast Flat Bodenschuh Sonderlösung für Gründach/Kiesdach",
       "category": "Produktblätter",
-      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-V01-DE.pdf",
-      "localPdf": "data/sl-rack-documents/109-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
+      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-DE.pdf",
+      "localPdf": "data/sl-rack-documents/136-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
       "page": 2,
-      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de SL FAST FLAT GRÜN-/KIESDACH 3. Platzieren Sie die Bodenschuhe des SL Fast Flat in die passende Öffnung des Bodenschuh Kies- dach. 4. Montieren Sie die Module wie gewohnt. 1. Legen Sie Die Fast Flat Basic Frames wie ge- wohnt aus. Rütteln Sie den SL Rack Bodenschuh Kiesdach (Art.-Nr. 22300-85) an der korrekten Position leicht in den Untergrund ein. Hinweis: Der\u0007Bodenschuh\u0007sollte\u0007ca.\u000725 mm\u0007über\u0007 der\u0007Oberfläche\u0007stehen. 2. Für zusätzliche Stabilität sollte jeder zweite Bodenschuh um 90 Grad gedreht werden. Montage auf Substrat & Kiesdächern Montagehinweis: Die Montage des SL Fast Flat erfolgt wie gewohnt mit den Boden - schuhen HDPE, HDPE light oder EPDM. Informationen zur Montage finden Sie in der Montageanleitung SL Fast Flat. Zur\u0007besseren\u0007Lesbarkeit\u0007wird\u0007in\u0007diesem\u0007Produktblatt\u0007das\u0007generische\u0007Maskulinum\u0007verwendet.\u0007Die\u0007in\u0007diesem\u0007Produktblatt\u0007verwendeten\u0007 Personenbezeichnungen beziehen sich – sofern nicht anders kenntlich gemacht – auf alle Geschlechter. ca. 25 mmca. 25 mm",
+      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de SL FAST FLAT GRÜN-/KIESDACH ca. 25 mmca. 25 mm 3. Platzieren Sie die Bodenschuhe des SL Fast Flat in die passende Öffnung des Bodenschuh Kies- dach. 4. Montieren Sie die Module wie gewohnt. 1. Legen Sie Die Fast Flat Basic Frames wie ge- wohnt aus. Rütteln Sie den SL Rack Bodenschuh Kiesdach (Art.-Nr. 22300-85) an der korrekten Position leicht in den Untergrund ein. Hinweis: Der\u0007Bodenschuh\u0007sollte\u0007ca.\u000725 mm\u0007über\u0007 der\u0007Oberfläche\u0007stehen. 2. Für zusätzliche Stabilität sollte jeder zweite Bodenschuh um 90 Grad gedreht werden. Montage auf Substrat & Kiesdächern Montagehinweis: Die Montage des SL Fast Flat erfolgt wie gewohnt mit den Boden - schuhen HDPE, HDPE light oder EPDM. Informationen zur Montage finden Sie in der Montageanleitung SL Fast Flat.",
       "keywords": [
         "fast",
         "flat",
@@ -14074,22 +14074,22 @@
         "gewohnt",
         "sollte",
         "hdpe",
-        "diesem",
-        "produktblatt",
         "sonderlösung",
         "gründach",
-        "produktblätter"
+        "produktblätter",
+        "gmbh",
+        "münchener"
       ]
     },
     {
-      "id": "doc-109-p3-3",
-      "documentId": "doc-109",
+      "id": "doc-136-p3-3",
+      "documentId": "doc-136",
       "title": "SL Fast Flat Bodenschuh Sonderlösung für Gründach/Kiesdach",
       "category": "Produktblätter",
-      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-V01-DE.pdf",
-      "localPdf": "data/sl-rack-documents/109-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
+      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-DE.pdf",
+      "localPdf": "data/sl-rack-documents/136-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
       "page": 3,
-      "content": "3SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de SL FAST FLAT GRÜN-/KIESDACH Zubehör Abmessungen Bodenschuh Kiesdach Art.-Nr. 22300-85",
+      "content": "3 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de SL FAST FLAT GRÜN-/KIESDACH Bodenschuh Kiesdach Art.-Nr. 22300-85 Zubehör Abmessungen",
       "keywords": [
         "kiesdach",
         "fast",
@@ -14099,7 +14099,6 @@
         "sonderlösung",
         "gründach",
         "produktblätter",
-        "3sl",
         "rack",
         "gmbh",
         "münchener",
@@ -14108,18 +14107,19 @@
         "haag",
         "tel",
         "8072",
-        "3767-0"
+        "3767-0",
+        "sales"
       ]
     },
     {
-      "id": "doc-109-p4-4",
-      "documentId": "doc-109",
+      "id": "doc-136-p4-4",
+      "documentId": "doc-136",
       "title": "SL Fast Flat Bodenschuh Sonderlösung für Gründach/Kiesdach",
       "category": "Produktblätter",
-      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-V01-DE.pdf",
-      "localPdf": "data/sl-rack-documents/109-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
+      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-DE.pdf",
+      "localPdf": "data/sl-rack-documents/136-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
       "page": 4,
-      "content": "4 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de SL FAST FLAT GRÜN-/KIESDACH 3. Für zusätzliche Stabilität sollte jeder zweite \u0007Bodenschuh\u0007um\u000790\u0007Grad\u0007gedreht\u0007werden. 4. Platzieren Sie die Basic Frame Reihen auf den Hohlkammersteinen und verschrauben Sie \u0007diese\u0007… 5. …\u0007an\u0007den\u0007gezeigten\u0007Löchern\u0007des\u0007Basic\u0007Frame.\u0007 6. Montieren Sie das SL Fast Flat und die Module wie gewohnt. 1. Legen Sie die Hohlklammersteine an die Position der Fast Flat Bodenschuhe. Die Position erhalten Sie\u0007aus\u0007dem\u0007Planungstool. 2. Richten Sie die Hohlkammersteine im Wasser aus. Montage auf Gründächern Montagehinweis: Die Gründachlösung wird auf handelsüblichen Betonsteinen mon - tiert. Dafür ist eine spezielle Betonschraube erforderlich.",
+      "content": "4 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de SL FAST FLAT GRÜN-/KIESDACH 3. Für zusätzliche Stabilität sollte jeder zweite Hohl- kammerstein\u0007um\u000790\u0007Grad\u0007gedreht\u0007werden. 4. Platzieren Sie die Basic Frame Reihen auf den Hohlkammersteinen und verschrauben Sie \u0007diese\u0007… 5. …\u0007an\u0007den\u0007gezeigten\u0007Löchern\u0007des\u0007Basic\u0007Frame.\u0007 6. Montieren Sie das SL Fast Flat und die Module wie gewohnt. 1. Legen Sie die Hohlklammersteine an die Position der Fast Flat Bodenschuhe. Die Position erhalten Sie\u0007aus\u0007dem\u0007Planungstool. 2. Richten Sie die Hohlkammersteine im Wasser aus. Montage auf Gründächern Montagehinweis: Die Gründachlösung wird auf handelsüblichen Betonsteinen montiert. Die Verschraubung zwischen Betonstein und Bodenschuh ist bauseits zu wählen.",
       "keywords": [
         "sie",
         "fast",
@@ -14142,14 +14142,14 @@
       ]
     },
     {
-      "id": "doc-109-p5-5",
-      "documentId": "doc-109",
+      "id": "doc-136-p5-5",
+      "documentId": "doc-136",
       "title": "SL Fast Flat Bodenschuh Sonderlösung für Gründach/Kiesdach",
       "category": "Produktblätter",
-      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-V01-DE.pdf",
-      "localPdf": "data/sl-rack-documents/109-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
+      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-DE.pdf",
+      "localPdf": "data/sl-rack-documents/136-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
       "page": 5,
-      "content": "5SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de SL FAST FLAT GRÜN-/KIESDACH Zusätzlich notwendiges Zubehör -\u0007 Betonschraube\u00076\u0007x\u000735,\u0007z. B.\u0007Hilti\u0007HUS4-HR - handelsüblicher Hohlkammerbetonstein Abmessungen",
+      "content": "5 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de SL FAST FLAT GRÜN-/KIESDACH Zusätzlich notwendiges Zubehör -\u0007 Betonschraube\u00076\u0007x\u000735,\u0007z. B.\u0007Hilti\u0007HUS4-HR - handelsüblicher Hohlkammerbetonstein Abmessungen",
       "keywords": [
         "fast",
         "flat",
@@ -14159,7 +14159,6 @@
         "sonderlösung",
         "gründach",
         "produktblätter",
-        "5sl",
         "rack",
         "gmbh",
         "münchener",
@@ -14168,18 +14167,19 @@
         "haag",
         "tel",
         "8072",
-        "3767-0"
+        "3767-0",
+        "sales"
       ]
     },
     {
-      "id": "doc-109-p6-6",
-      "documentId": "doc-109",
+      "id": "doc-136-p6-6",
+      "documentId": "doc-136",
       "title": "SL Fast Flat Bodenschuh Sonderlösung für Gründach/Kiesdach",
       "category": "Produktblätter",
-      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-V01-DE.pdf",
-      "localPdf": "data/sl-rack-documents/109-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
+      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Fast_Flat/SL_Rack-FastFlat_Bodenschuh-Produktblatt-DE.pdf",
+      "localPdf": "data/sl-rack-documents/136-SL-Fast-Flat-Bodenschuh-Sonderlosung-fur-GrundachKiesdach.pdf",
       "page": 6,
-      "content": "SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Technische Änderungen und Druckfehler vorbehalten. Stand 08/2025 V01 Kontaktieren\u0007Sie\u0007uns\u0007für\u0007 Ihr persönliches Angebot: SL Rack GmbH Münchener Straße 1 83527 Haag i. OB E-Mail: sales@sl-rack.de Tel.: +49 8072 3767-0 www.sl-rack.de SL Rack Online- Bestellsystem SL Rack YouTube SL Rack Website Technische Daten Material\u0007 HPDE-Kunststoff Planungshilfen\u0007 SL-Rack-Konﬁgurator\u0007Solar.Pro.Tool Statik\u0007 Die\u0007statische\u0007Berechnung\u0007erfolgt\u0007gemäß\u0007der\u0007aktuellen\u0007länderspezieﬁschen\u0007Normen\u0007(EN\u00071991,\u0007EC1\u0007für\u0007Deutschland).\u0007 Es kann je nach Schnee- oder Windlasten, bzw. bei großen Modulen, erforderlich sein, mehr als die üblichen 4\u0007Befestigungspunkte\u0007einzusetzen.\u0007Bitte\u0007beachten\u0007Sie\u0007unbedingt\u0007die\u0007jeweiligen\u0007Hinweise\u0007des\u0007Modulherstellers\u0007in\u0007 der\u0007Installationsaleitung.\u0007Die\u0007Tragfähigkeit\u0007des\u0007Daches\u0007wird\u0007nicht\u0007von\u0007uns\u0007geprüft. SL FAST FLAT GRÜN-/KIESDACH",
+      "content": "SL FAST FLAT GRÜN-/KIESDACH SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Technische Änderungen und Druckfehler vorbehalten. Stand 08/2025 V01 Kontaktieren\u0007Sie\u0007uns\u0007für\u0007 Ihr persönliches Angebot: SL Rack GmbH Münchener Straße 1 83527 Haag i. OB E-Mail: sales@sl-rack.de Tel.: +49 8072 3767-0 www.sl-rack.de SL Rack Online- Bestellsystem SL Rack YouTube SL Rack Website Technische Daten Material\u0007 HPDE-Kunststoff Planungshilfen\u0007 SL-Rack-Konﬁgurator\u0007Solar.Pro.Tool Statik\u0007 Die\u0007statische\u0007Berechnung\u0007erfolgt\u0007gemäß\u0007der\u0007aktuellen\u0007länderspezieﬁschen\u0007Normen\u0007(EN\u00071991,\u0007EC1\u0007für\u0007Deutschland).\u0007 Es kann je nach Schnee- oder Windlasten, bzw. bei großen Modulen, erforderlich sein, mehr als die üblichen 4\u0007Befestigungspunkte\u0007einzusetzen.\u0007Bitte\u0007beachten\u0007Sie\u0007unbedingt\u0007die\u0007jeweiligen\u0007Hinweise\u0007des\u0007Modulherstellers\u0007in\u0007 der\u0007Installationsaleitung.\u0007Die\u0007Tragfähigkeit\u0007des\u0007Daches\u0007wird\u0007nicht\u0007von\u0007uns\u0007geprüft.",
       "keywords": [
         "rack",
         "sl-rack",
