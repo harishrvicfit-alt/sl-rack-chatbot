@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T09:30:30.934Z",
+  "generatedAt": "2026-10-23T09:25:47.833Z",
   "sourceUrl": "https://www.sl-rack.com/downloads",
   "documentCount": 101,
   "chunkCount": 1513,
@@ -205,8 +205,8 @@
       "localText": "data/sl-rack-text/081-Dachhaken-3D-SL-Alu.json",
       "pageCount": 4,
       "chunkCount": 4,
-      "sourceBytes": 838003,
-      "sourceSha256": "100d5d5141bd5832714093ce79975a339f87eaf19e58ed55b42ac87a8b2ef54e"
+      "sourceBytes": 887029,
+      "sourceSha256": "bbcbbae5ed172487c789aaf828e56b3acfc76069f8cf518290a638cc3aaf335c"
     },
     {
       "id": "doc-82",
@@ -8727,14 +8727,13 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Dachhaken_3D_SL_Alu/SL_Rack_Dachhaken_3D_SL_Alu_Produktblatt_DE.pdf",
       "localPdf": "data/sl-rack-documents/081-Dachhaken-3D-SL-Alu.pdf",
       "page": 1,
-      "content": "SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de DACHHAKEN 3D SL ALU *Es gelten unsere Garantiebedingungen. Diese sind auf unserer Webseite einsehbar unter www.sl-rack.de Ihre Vorteile mit unseren Produkten » Geeignet für alle gängigen Ziegeldächer/Schneelastzonen » Dreidimensionale Verstellbarkeit des Dachhakens: - Optimale Anpassung an jedes Dach, ganz ohne Unterlegplatten - Einfache vertikale Verstellbarkeit des Fußes von 36 mm – 64 mm, Dachhaken entsprechend einhängen und fixieren » Bewährte und schnelle Einhängetechnik für Schienen » Schiene in der Höhe verstellbar durch vormontierte Klemmkombination (für vertikale Schieneninstallation mit optional erhältlicher Klemmkom- bination vertikal, Art.-Nr. 11105-05 austauschen) » Nur ein Werkzeug nötig: Torx 40 » Installation einlagig oder im Kreuzverbund » Lässt sich auch auf schmale Träger verschrauben (z.B. Nagelbinder), bei 6er Schrauben sogar schon ab einer Holzbreite von 36 mm möglich » Komplett aus Aluminium gefertigt » Zusätzliche Aufnahmemöglichkeit für Potential-Ausgleichsklemme (Art.-Nr. 11101-20) » Kompatibel mit Sparrenüberspannungsprofil SL Alu-Flex 2000 (Art.-Nr. 11102-2000): - Erlaubt maximale horizontale Verschiebbarkeit und das Positionieren der Dachhaken zwischen 2 Sparren - zum Überspannen von einem Sparren, wenn dieser nicht belastbar ist - Ideal, wenn Dachhaken nahe am Ortgang oder an einer Gaube installiert werden sollen SL Alu 36L Art.-Nr. 11136-02 SL Alu L Art.-Nr. 11100-01 SL Alu K Art.-Nr. 11145-01 SL Alu XL Art.-Nr. 11100-02 PRODUKTBLATT Haltbarkeits- 10 Jahre Garantie*",
+      "content": "SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de DACHHAKEN 3D SL ALU Haltbarkeits- 10 Jahre Garantie* Ihre Vorteile mit unseren Produkten » Geeignet für alle gängigen Ziegeldächer/Schneelastzonen » Dreidimensionale Verstellbarkeit des Dachhakens: - Optimale Anpassung an jedes Dach, ganz ohne Unterlegplatten - Einfache vertikale Verstellbarkeit des Fußes von 36 mm – 64 mm, Dachhaken entsprechend einhängen und fixieren » Bewährte und schnelle Einhängetechnik für Schienen » Schiene in der Höhe verstellbar durch vormontierte Klemmkombination (für vertikale Schieneninstallation mit optional erhältlicher Klemmkom- bination vertikal, Art.-Nr. 11105-05 austauschen) » Nur ein Werkzeug nötig: Torx 40 » Installation einlagig oder im Kreuzverbund » Lässt sich auch auf schmale Träger verschrauben (z.B. Nagelbinder), bei 6er Schrauben sogar schon ab einer Holzbreite von 36 mm möglich » Komplett aus Aluminium gefertigt » Zusätzliche Aufnahmemöglichkeit für Potential-Ausgleichsklemme (Art.-Nr. 11101-20) » Kompatibel mit Sparrenüberspannungsprofil SL Alu-Flex 2000 (Art.-Nr. 11102-2000): - Erlaubt maximale horizontale Verschiebbarkeit und das Positionieren der Dachhaken zwischen 2 Sparren - zum Überspannen von einem Sparren, wenn dieser nicht belastbar ist - Ideal, wenn Dachhaken nahe am Ortgang oder an einer Gaube installiert werden sollen PRODUKTBLATT SL Alu 36L Art.-Nr. 11136-02 SL Alu L Art.-Nr. 11100-01 SL Alu K Art.-Nr. 11145-01 SL Alu XL Art.-Nr. 11100-02",
       "keywords": [
         "art",
         "-nr",
         "alu",
         "dachhaken",
         "sl-rack",
-        "www",
         "verstellbarkeit",
         "des",
         "vertikale",
@@ -8746,7 +8745,8 @@
         "gmbh",
         "83527",
         "haag",
-        "tel"
+        "tel",
+        "8072"
       ]
     },
     {
@@ -8757,7 +8757,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Dachhaken_3D_SL_Alu/SL_Rack_Dachhaken_3D_SL_Alu_Produktblatt_DE.pdf",
       "localPdf": "data/sl-rack-documents/081-Dachhaken-3D-SL-Alu.pdf",
       "page": 2,
-      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de DACHHAKEN 3D SL ALU a b c d e SL Alu K 44 – 64 mm 92 – 100 mm 121 – 141 mm 120 mm 8,5 mm SL Alu 36 L 36 – 56 mm 110 – 118 mm 121 – 141 mm 120 mm 8,5 mm SL Alu L 44 – 64 mm 110 – 118 mm 121 – 141 mm 120 mm 8,5 mm SL Alu XL 44 – 64 mm 110 – 118 mm 121 – 141 mm 120 mm 8,5 mm Abmessungen Optionale vertikale Klemmkombination Art.-Nr. 11105-05 Optionales Sparrenüberspannungs- profil SL Alu-Flex 2000 Art.-Nr. 11102-2000 Optionale Potential- Ausgleichsklemme für SL Alu und Alpha-Flex Art.-Nr. 11101-20 Zubehör b c a d e",
+      "content": "2 b c a d e SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de DACHHAKEN 3D SL ALU a b c d e SL Alu K 44 – 64 mm 92 – 100 mm 121 – 141 mm 120 mm 8,5 mm SL Alu 36 L 36 – 56 mm 110 – 118 mm 121 – 141 mm 120 mm 8,5 mm SL Alu L 44 – 64 mm 110 – 118 mm 121 – 141 mm 120 mm 8,5 mm SL Alu XL 44 – 64 mm 110 – 118 mm 121 – 141 mm 120 mm 8,5 mm Abmessungen Zubehör Optionale vertikale Klemmkombination Art.-Nr. 11105-05 Optionales Sparrenüberspannungs- profil SL Alu-Flex 2000 Art.-Nr. 11102-2000 Optionale Potential- Ausgleichsklemme für SL Alu und Alpha-Flex Art.-Nr. 11101-20",
       "keywords": [
         "alu",
         "121",
@@ -8787,7 +8787,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Dachhaken_3D_SL_Alu/SL_Rack_Dachhaken_3D_SL_Alu_Produktblatt_DE.pdf",
       "localPdf": "data/sl-rack-documents/081-Dachhaken-3D-SL-Alu.pdf",
       "page": 3,
-      "content": "3SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de DACHHAKEN 3D SL ALU 1. Dachziegel ausdecken, Schraubenlöcher vorbohren (sofern nötig, s. nachfolgende Tabelle) und Bodenplatte mit mind. 2 Holzschrauben (mind. 1 Stück pro horizontale Lochreihe) am Dachsparren befestigen (wie üblich Deckziegel und unteren Ziegel im Bereich des Auslegers mit dem Winkelschleifer ausflexen) 2. Hakenoberteil (Bügel) an geeigneter Position einhängen 3. Das Hakenoberteil (Bügel) herunterklappen. Ganz wichtig beim Einhängen des Hakenoberteils an der Bodenplatte: das Hakenoberteil muss auf beiden Seiten des gleichen Rastergangs eingehängt werden. Dabei den Mindestabstand von 5 mm zwischen Ausleger und Ziegel beachten 4. Position durch Anziehen der Schraube fixieren (10 Nm), Dachziegel wieder eindecken 5. Schiene auflegen und Höhe am Dachhaken anpassen 6. Position durch Anziehen der Schraube fixieren (25 Nm) – fertig! min. 5 mm Montageablauf Montagevideo SL Alu-Vario » Tellerkopfschraube Ø 6 mm Tellerkopfschraube Ø 8 mm SL Alu K; SL Alu L; SL Alu XL Mind. 36 mm – 60 mm* Mind. 48 mm – 72 mm* SL Alu L Mind. 36 mm – 56 mm* Mind. 48 mm – 72 mm* Sparrenbreiten 10 Nm10 Nm *je nach Bohrungskombination: Schraubendurchmesser 6 mm – Bohrloch Ø 4,0 mm Schraubendurchmesser 8 mm – Bohrloch Ø 5,0 mm Tabelle nur gültig in Verbindung mit Vorbohren 25 Nm25 Nm 1 5 2 3 6 4",
+      "content": "3 min. 5 mm 10 Nm10 Nm 25 Nm25 Nm 1 5 2 3 6 4 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de DACHHAKEN 3D SL ALU Montagevideo SL Alu-Vario » 1. Dachziegel ausdecken, Schraubenlöcher vorbohren (sofern nötig, s. nachfolgende Tabelle) und Bodenplatte mit mind. 2 Holzschrauben (mind. 1 Stück pro horizontale Lochreihe) am Dachsparren befestigen (wie üblich Deckziegel und unteren Ziegel im Bereich des Auslegers mit dem Winkelschleifer ausflexen) 2. Hakenoberteil (Bügel) an geeigneter Position einhängen 3. Das Hakenoberteil (Bügel) herunterklappen. Ganz wichtig beim Einhängen des Hakenoberteils an der Bodenplatte: das Hakenoberteil muss auf beiden Seiten des gleichen Rastergangs eingehängt werden. Dabei den Mindestabstand von 5 mm zwischen Ausleger und Ziegel beachten 4. Position durch Anziehen der Schraube fixieren (10 Nm), Dachziegel wieder eindecken 5. Schiene auflegen und Höhe am Dachhaken anpassen 6. Position durch Anziehen der Schraube fixieren (25 Nm) – fertig! Montageablauf Tellerkopfschraube Ø 6 mm Tellerkopfschraube Ø 8 mm SL Alu K; SL Alu L; SL Alu XL Mind. 36 mm – 60 mm* Mind. 48 mm – 72 mm* SL Alu L Mind. 36 mm – 56 mm* Mind. 48 mm – 72 mm* Sparrenbreiten *je nach Bohrungskombination: Schraubendurchmesser 6 mm – Bohrloch Ø 4,0 mm Schraubendurchmesser 8 mm – Bohrloch Ø 5,0 mm Tabelle nur gültig in Verbindung mit Vorbohren",
       "keywords": [
         "alu",
         "mind",
