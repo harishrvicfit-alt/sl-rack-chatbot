@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-23T09:25:47.833Z",
+  "generatedAt": "2026-10-30T10:56:42.418Z",
   "sourceUrl": "https://www.sl-rack.com/downloads",
   "documentCount": 101,
-  "chunkCount": 1513,
+  "chunkCount": 1516,
   "documents": [
     {
       "id": "doc-1",
@@ -181,8 +181,8 @@
       "localText": "data/sl-rack-text/079-D-Platte.json",
       "pageCount": 14,
       "chunkCount": 14,
-      "sourceBytes": 2369426,
-      "sourceSha256": "c85c92326635e7d206c9cd7b372291f95664c3acd4e30513fcb9c3903ba67c89"
+      "sourceBytes": 2523074,
+      "sourceSha256": "c2f2a48eb7768b204710ddbf70d7437c29864ab38bbee8ff801873e3598797f3"
     },
     {
       "id": "doc-80",
@@ -611,10 +611,10 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "localText": "data/sl-rack-text/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.json",
-      "pageCount": 58,
-      "chunkCount": 81,
-      "sourceBytes": 5127117,
-      "sourceSha256": "65445001d28ddf84b1810d83fa17468dade7f8f41b30a2174103cb31e640d94d"
+      "pageCount": 62,
+      "chunkCount": 84,
+      "sourceBytes": 6632637,
+      "sourceSha256": "5ba65e74dbe7859b99edcc04632f7c58b3a6a7a12f303c01230b2ca262c9a337"
     },
     {
       "id": "doc-48",
@@ -8127,7 +8127,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/D-Platte/SL_Rack_D-Platte_Produktblatt-DE.pdf",
       "localPdf": "data/sl-rack-documents/079-D-Platte.pdf",
       "page": 3,
-      "content": "3 RAIL 40 RAIL 60 RAIL 120 D-PLATTE SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Damit Ihre Dachanbindung perfekt gelingt » Überprüfen Sie vor Einbau die Montageeignung. » Beachten Sie die Richtlinien des ZVDH DDH8.4. » Einbau nur bei vom Dachziegelhersteller zugelassener Dachneigung. » Die Anzahl der Befestiger richtet sich nach der Berechnung aus dem Solar.Pro.Tool. » Beachten Sie, dass Sonderfreigaben nur nach Absprache möglich sind. » Geeignet für Lattungshöhe 24 – 50 mm. » Für Rückfragen zur SL Rack D-Platte wenden Sie sich an sales@sl-rack.de Lieferumfang: 5x D-Platte (VPE: 5 Stück) Zubehör: RAIL 40 / 60 / 120 Art.-Nr. 81140-XXXX; Art.-Nr. 81160-XXXX; Art.-Nr. 81112-XXXX Zur Montage wird folgendes Zubehör benötigt: 5x Tellerkopfschraube A2 6 x 100 TX40 (Art.-Nr. 92107-10) 15x Tellerkopfschraube A2 6 x 35 TX40 (Art.-Nr. 92107-35) Vertikale Klemmkombination Art.-Nr. 11105-05 Mittel- / Endklemmen Art.-Nr. 96160-00; Art. Nr. 91162-00 Höhenausgleich 5 mm Art.-Nr. 11550-10",
+      "content": "3 RAIL 40 RAIL 60 RAIL 120 D-PLATTE SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Damit Ihre Dachanbindung perfekt gelingt » Überprüfen Sie vor Einbau die Montageeignung. » Beachten Sie die Richtlinien des ZVDH DDH8.4. » Einbau nur bei vom Dachziegelhersteller zugelassener Dachneigung. » Die Anzahl der Befestiger richtet sich nach der Berechnung aus dem Solar.Pro.Tool. » Beachten Sie, dass Sonderfreigaben nur nach Absprache möglich sind. » Geeignet für Lattungshöhe 24 – 50 mm. » Für Rückfragen zur SL Rack D-Platte wenden Sie sich an sales@sl-rack.de Lieferumfang: 8x D-Platte (VPE: 8 Stück) Zubehör: RAIL 40 / 60 / 120 Art.-Nr. 81140-XXXX; Art.-Nr. 81160-XXXX; Art.-Nr. 81112-XXXX Zur Montage wird folgendes Zubehör benötigt: 8x Tellerkopfschraube A2 6 x 100 TX40 (Art.-Nr. 92107-10) 24x Tellerkopfschraube A2 6 x 35 TX40 (Art.-Nr. 92107-35) Vertikale Klemmkombination Art.-Nr. 11105-05 Mittel- / Endklemmen Art.-Nr. 96160-00; Art. Nr. 91162-00 Höhenausgleich 5 mm Art.-Nr. 11550-10",
       "keywords": [
         "art",
         "-nr",
@@ -8157,7 +8157,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/D-Platte/SL_Rack_D-Platte_Produktblatt-DE.pdf",
       "localPdf": "data/sl-rack-documents/079-D-Platte.pdf",
       "page": 4,
-      "content": "4 D-PLATTE SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de passend für: Frankfurter Pfanne Kompatible Dachsteine: • Bras Frankfurter Pfanne • Bramac Classic 1/1 Hinweis: Baugleiche Dachsteine von anderen Herstellern müssen auf Kompatibilität geprüft werden. a b c d e Art.-Nr. 11550-00, RAL 8004 Kupferbraun (Ziegelrot) 135 mm 360 mm 430 mm 330 mm 30 mm Art.-Nr. 11550-01, RAL 7016 Anthrazit 135 mm 360 mm 430 mm 330 mm 30 mm",
+      "content": "4 D-PLATTE SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de passend für: Frankfurter Pfanne Kompatible Dachsteine: • Bras Frankfurter Pfanne • Bramac Classic 1/1 Hinweis: Baugleiche Dachsteine von anderen Herstellern müssen auf Kompatibilität geprüft werden. a b c d e Art.-Nr. 11550-00, RAL 8004 Kupferbraun (Ziegelrot) 135 mm 360 mm 430 mm 330 mm 24 mm Art.-Nr. 11550-01, RAL 7016 Anthrazit 135 mm 360 mm 430 mm 330 mm 24 mm",
       "keywords": [
         "d-platte",
         "sl-rack",
@@ -8187,7 +8187,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/D-Platte/SL_Rack_D-Platte_Produktblatt-DE.pdf",
       "localPdf": "data/sl-rack-documents/079-D-Platte.pdf",
       "page": 5,
-      "content": "5 D-PLATTESL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de passend für: Erlus E58 / E58S Kompatible Tondachziegel: • Erlus E58 • Erlus E58S a b c d e Art.-Nr. 11551-00, RAL 8004 Kupferbraun (Ziegelrot) 135 mm 320 mm 416 mm 278 mm 30 mm Art.-Nr. 11551-01, RAL 7016 Anthrazit 135 mm 320 mm 416 mm 278 mm 30 mm",
+      "content": "5 D-PLATTESL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de passend für: Erlus E58 / E58S Kompatible Tondachziegel: • Erlus E58 • Erlus E58S a b c d e Art.-Nr. 11551-00, RAL 8004 Kupferbraun (Ziegelrot) 135 mm 320 mm 416 mm 278 mm 24 mm Art.-Nr. 11551-01, RAL 7016 Anthrazit 135 mm 320 mm 416 mm 278 mm 24 mm",
       "keywords": [
         "erlus",
         "sl-rack",
@@ -8217,7 +8217,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/D-Platte/SL_Rack_D-Platte_Produktblatt-DE.pdf",
       "localPdf": "data/sl-rack-documents/079-D-Platte.pdf",
       "page": 6,
-      "content": "6 D-PLATTE SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de passend für: Erlus Forma Kompatible Tondachziegel: • Erlus Forma a b c d e Art.-Nr. 11552-00, RAL 8004 Kupferbraun (Ziegelrot) 135 mm 330 mm 462 mm 300 mm 30 mm Art.-Nr. 11552-01, RAL 7016 Anthrazit 135 mm 330 mm 462 mm 300 mm 30 mm",
+      "content": "6 D-PLATTE SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de passend für: Erlus Forma Kompatible Tondachziegel: • Erlus Forma a b c d e Art.-Nr. 11552-00, RAL 8004 Kupferbraun (Ziegelrot) 135 mm 330 mm 462 mm 300 mm 24 mm Art.-Nr. 11552-01, RAL 7016 Anthrazit 135 mm 330 mm 462 mm 300 mm 24 mm",
       "keywords": [
         "d-platte",
         "sl-rack",
@@ -8247,7 +8247,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/D-Platte/SL_Rack_D-Platte_Produktblatt-DE.pdf",
       "localPdf": "data/sl-rack-documents/079-D-Platte.pdf",
       "page": 7,
-      "content": "7 D-PLATTESL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de passend für: Erlus Reformpfanne XXL Kompatible Tondachziegel: • Erlus Reformpfanne XXL a b c d e Art.-Nr. 11553-00, RAL 8004 Kupferbraun (Ziegelrot) 135 mm 360 mm 469 mm 292 mm 30 mm Art.-Nr. 11553-01, RAL 7016 Anthrazit 135 mm 360 mm 469 mm 292 mm 30 mm",
+      "content": "7 D-PLATTESL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de passend für: Erlus Reformpfanne XXL Kompatible Tondachziegel: • Erlus Reformpfanne XXL a b c d e Art.-Nr. 11553-00, RAL 8004 Kupferbraun (Ziegelrot) 135 mm 360 mm 469 mm 292 mm 24 mm Art.-Nr. 11553-01, RAL 7016 Anthrazit 135 mm 360 mm 469 mm 292 mm 24 mm",
       "keywords": [
         "sl-rack",
         "erlus",
@@ -8277,7 +8277,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/D-Platte/SL_Rack_D-Platte_Produktblatt-DE.pdf",
       "localPdf": "data/sl-rack-documents/079-D-Platte.pdf",
       "page": 8,
-      "content": "8 D-PLATTE SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de passend für: Creaton MZ3 neu Kompatible Tondachziegel: • Creaton MZ3 neu Hinweis: Baugleiche Dachsteine von anderen Herstellern müssen auf Kompatibilität geprüft werden. a b c d e Art.-Nr. 11554-00, RAL 8004 Kupferbraun (Ziegelrot) 135 mm 308 mm 416 mm 278 mm 30 mm Art.-Nr. 11554-01, RAL 7016 Anthrazit 135 mm 308 mm 416 mm 278 mm 30 mm",
+      "content": "8 D-PLATTE SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de passend für: Creaton MZ3 neu Kompatible Tondachziegel: • Creaton MZ3 neu Hinweis: Baugleiche Dachsteine von anderen Herstellern müssen auf Kompatibilität geprüft werden. a b c d e Art.-Nr. 11554-00, RAL 8004 Kupferbraun (Ziegelrot) 135 mm 308 mm 416 mm 278 mm 24 mm Art.-Nr. 11554-01, RAL 7016 Anthrazit 135 mm 308 mm 416 mm 278 mm 24 mm",
       "keywords": [
         "d-platte",
         "sl-rack",
@@ -8307,7 +8307,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/D-Platte/SL_Rack_D-Platte_Produktblatt-DE.pdf",
       "localPdf": "data/sl-rack-documents/079-D-Platte.pdf",
       "page": 9,
-      "content": "9 D-PLATTESL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de passend für: Biberschwanz a b c d e Art.-Nr. 11555-00, RAL 8004 Kupferbraun (Ziegelrot) 135 mm 210 mm 416 mm 180 mm 30 mm Art.-Nr. 11555-01, RAL 7016 Anthrazit 135 mm 210 mm 416 mm 180 mm 30 mm",
+      "content": "9 D-PLATTESL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de passend für: Biberschwanz a b c d e Art.-Nr. 11555-00, RAL 8004 Kupferbraun (Ziegelrot) 135 mm 210 mm 416 mm 180 mm 24 mm Art.-Nr. 11555-01, RAL 7016 Anthrazit 135 mm 210 mm 416 mm 180 mm 24 mm",
       "keywords": [
         "sl-rack",
         "art",
@@ -8457,7 +8457,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/D-Platte/SL_Rack_D-Platte_Produktblatt-DE.pdf",
       "localPdf": "data/sl-rack-documents/079-D-Platte.pdf",
       "page": 14,
-      "content": "D-PLATTE Material Aluminium, Stahl Planungshilfen SL-Rack-Konﬁgurator Solar.Pro.Tool Statik Die statische Berechnung erfolgt gemäß der aktuellen länderspezieﬁschen Normen (EN 1991, EC1 für Deutschland). Es kann je nach Schnee- oder Windlasten, bzw. bei großen Modulen, erforderlich sein, mehr als die üblichen 4 Befestigungspunkte einzusetzen. Bitte beachten Sie unbedingt die jeweiligen Hinweise des Modulherstellers in der Installationsaleitung. Die Tragfähigkeit des Daches wird nicht von uns geprüft. Technische Daten Technische Änderungen und Druckfehler vorbehalten. Stand 06/2026 V01 Kontaktieren Sie uns für Ihr persönliches Angebot: SL Rack GmbH Münchener Straße 1 83527 Haag i. OB E-Mail: sales@sl-rack.de Tel.: +49 8072 3767-0 www.sl-rack.de SL Rack Online- Bestellsystem SL Rack YouTube SL Rack Website SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Sonstige Hinweise • Die Demontage muss in umgekehrter Reihenfolge unter Berücksichtigung der geltenden Sicherheitsbestimmungen erfolgen. • Hinweise zur Entsorgung und Recycling ﬁnden Sie auf der Website unter www.sl-rack.de.",
+      "content": "D-PLATTE Material Aluminium, Stahl Planungshilfen SL-Rack-Konﬁgurator Solar.Pro.Tool Statik Die statische Berechnung erfolgt gemäß der aktuellen länderspezieﬁschen Normen (EN 1991, EC1 für Deutschland). Es kann je nach Schnee- oder Windlasten, bzw. bei großen Modulen, erforderlich sein, mehr als die üblichen 4 Befestigungspunkte einzusetzen. Bitte beachten Sie unbedingt die jeweiligen Hinweise des Modulherstellers in der Installationsaleitung. Die Tragfähigkeit des Daches wird nicht von uns geprüft. Technische Daten Technische Änderungen und Druckfehler vorbehalten. Stand 10/2026 V01 Kontaktieren Sie uns für Ihr persönliches Angebot: SL Rack GmbH Münchener Straße 1 83527 Haag i. OB E-Mail: sales@sl-rack.de Tel.: +49 8072 3767-0 www.sl-rack.de SL Rack Online- Bestellsystem SL Rack YouTube SL Rack Website SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Sonstige Hinweise • Die Demontage muss in umgekehrter Reihenfolge unter Berücksichtigung der geltenden Sicherheitsbestimmungen erfolgen. • Hinweise zur Entsorgung und Recycling ﬁnden Sie auf der Website unter www.sl-rack.de.",
       "keywords": [
         "rack",
         "sl-rack",
@@ -17865,7 +17865,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "page": 2,
-      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de INHALTSVERZEICHNIS 1. GRUNDLEGENDE INFORMATIONEN 5 2. SICHERHEITSHINWEISE 6 2.1. Konvention für Sicherheitshinweise ........................................................................................................ 6 2.2. Verhalten im Notfall ................................................................................................................................ 7 3. GEWÄHRLEISTUNG & HAFTUNG 8 4. VORAUSSETZUNGEN FÜR PROJEKTIERUNG & MONTAGE 9 4.1. Nötige Angaben zur Projektierung .......................................................................................................... 9 4.1.1. Örtliche Gegebenheiten: .........................................................................................................................9 4.1.2. Ökologische Gegebenheiten: .................................................................................................................. 9 4.2. Umgebungsbedingungen: ..................................................................................................................... 10 4.3. Örtliche und ökologische Gegebenheiten: ............................................................................................ 10 4.3.1. Gelände ................................................................................................................................................. 10 4.3.2. Geländeabweichungen berücksichtigen ........................................................................................... 10 4.4. Schutzzaun ............................................................................................................................................ 11 4.5. Erdleitungen und ni",
+      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de INHALTSVERZEICHNIS 1. GRUNDLEGENDE INFORMATIONEN 4 2. SICHERHEITSHINWEISE 6 2.1. Konvention für Sicherheitshinweise ........................................................................................................ 6 2.2. Verhalten im Notfall ................................................................................................................................ 7 3. GEWÄHRLEISTUNG & HAFTUNG 8 4. VORAUSSETZUNGEN FÜR PROJEKTIERUNG & MONTAGE 9 4.1. Nötige Angaben zur Projektierung .......................................................................................................... 9 4.1.1. Örtliche Gegebenheiten: .........................................................................................................................9 4.1.2. Ökologische Gegebenheiten: .................................................................................................................. 9 4.2. Umgebungsbedingungen: ..................................................................................................................... 10 4.3. Örtliche und ökologische Gegebenheiten: ............................................................................................ 10 4.3.1. Gelände ................................................................................................................................................. 10 4.3.2. Geländeabweichungen berücksichtigen ............................................................................................... 10 4.4. Schutzzaun ............................................................................................................................................ 11 4.5. Erdleitungen un",
       "keywords": [
         "gegebenheiten",
         "sl-rack",
@@ -17895,7 +17895,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "page": 2,
-      "content": ".................................................... 10 4.4. Schutzzaun ............................................................................................................................................ 11 4.5. Erdleitungen und nicht tragendes Erdreich ........................................................................................... 11 5. PLANUNG 12 6. LIEFERUNG 13 6.1. Modultragende Teile ............................................................................................................................. 13 6.2. Verbindungskomponenten .................................................................................................................... 14 6.3. Aufbaubeschreibung ............................................................................................................................. 15 7. BENÖTIGTE WERKZEUGE 16 7.1. Aufmessen und Abstecken der Rammfundamente ............................................................................... 16 7.2. Rammen ................................................................................................................................................ 16 7.3. Gestellmontage ..................................................................................................................................... 16 7.4. Modulmontage ...................................................................................................................................... 16 8. TRANSPORTIEREN, AUF- & ABLADEN 17 9. FUNDAMENTE RAMMEN 19 9.1. Rammpläne rechtzeitig erstellen lassen ................................................................................................19 9.2. Positionieren ........................................................................................................",
+      "content": "........................................................ 10 4.4. Schutzzaun ............................................................................................................................................ 11 4.5. Erdleitungen und nicht tragendes Erdreich ........................................................................................... 11 5. PLANUNG 12 6. LIEFERUNG 13 6.1. Modultragende Teile ............................................................................................................................. 13 6.2. Verbindungskomponenten .................................................................................................................... 14 6.3. Aufbaubeschreibung ............................................................................................................................. 15 7. BENÖTIGTE WERKZEUGE 16 7.1. Aufmessen und Abstecken der Rammfundamente ............................................................................... 16 7.2. Rammen ................................................................................................................................................ 16 7.3. Gestellmontage ..................................................................................................................................... 16 7.4. Modulmontage ...................................................................................................................................... 16 8. TRANSPORTIEREN, AUF- & ABLADEN 17 9. FUNDAMENTE RAMMEN 19 9.1. Rammpläne rechtzeitig erstellen lassen ................................................................................................19 9.2. Positionieren ....................................................................................................",
       "keywords": [
         "rammen",
         "montage-",
@@ -17925,7 +17925,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "page": 2,
-      "content": "erstellen lassen ................................................................................................19 9.2. Positionieren ......................................................................................................................................... 19 9.3. Rammkopf überprüfen ......................................................................................................................... 19 9.4. Geforderte Toleranzen einhalten ..........................................................................................................20 9.5. Montageablauf bei PVC Rammprofilen .................................................................................................21 9.6. Montageablauf mit geteiltem Rammprofil ............................................................................................ 23 9.6.1 Montageablauf mit geteiltem Rammprofil ohne Rammprofilverbinder ............................................... 24 9.7. Montageablauf bei Betonfundament .................................................................................................... 25 9.8. Standardmontage mit Rammprofil .......................................................................................................26 9.8.1. Rammen bei schwierigem Untergrund ................................................................................................. 26 9.8.2. Rammprofile am oberen Ende grundieren ............................................................................................ 26",
+      "content": "itig erstellen lassen ................................................................................................19 9.2. Positionieren ......................................................................................................................................... 19 9.3. Rammkopf überprüfen ......................................................................................................................... 19 9.4. Geforderte Toleranzen einhalten ..........................................................................................................20 9.5. Montageablauf bei PVC Rammprofilen .................................................................................................21 9.6. Montageablauf mit geteiltem Rammprofil ............................................................................................ 23 9.6.1 Montageablauf mit geteiltem Rammprofil ohne Rammprofilverbinder ............................................... 24 9.7. Montageablauf bei Betonfundament .................................................................................................... 25 9.8. Standardmontage mit Rammprofil .......................................................................................................26 9.8.1. Rammen bei schwierigem Untergrund ................................................................................................. 26 9.8.2. Rammprofile am oberen Ende grundieren ............................................................................................ 26",
       "keywords": [
         "montageablauf",
         "bei",
@@ -17937,14 +17937,14 @@
         "pfettensystem",
         "p101",
         "montageanleitungen",
+        "itig",
         "erstellen",
         "lassen",
         "positionieren",
         "rammkopf",
         "überprüfen",
         "geforderte",
-        "toleranzen",
-        "einhalten"
+        "toleranzen"
       ]
     },
     {
@@ -17955,14 +17955,14 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "page": 3,
-      "content": "3 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de INHALTSVERZEICHNIS 10. MONTAGE 28 10.1. Bindermontage ..................................................................................................................................... 28 10.1.1 Montage mit Diagonalverstrebung ...................................................................................................... 29 10.2. Montage Pfette .................................................................................................................................... 29 10.2.1 Stahlpfettenverbinder SPFV 80 – 630 mm............................................................................................. 31 10.3. Montage mit Pfetten-Binder-Gelenk (optional) ................................................................................... 32 10.3.1 Montage der Binderversteifung zusätzlich zum Pfetten-Binder-Gelenk .............................................. 34 10.4. Modulbefestigung von oben mit Pfettenklemmen Solo und Duo .........................................................36 10.5. Modulbefestigung von unten mit Klemme unten ................................................................................. 37 10.6. Montage Adapter für bifaziale Module .................................................................................................38 11. ANLAGE ERDEN 40 11.1. Gründe für die notwendige Schutzerdung ............................................................................................ 40 11.2. Module in den Potentialausgleich einbeziehen .................................................................................... 40 12. PFLEGE UND WARTUNG 41 12.1. Sicherheitshinweise ...................................",
+      "content": "3 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de INHALTSVERZEICHNIS 10. MONTAGE 28 10.1. Bindermontage ..................................................................................................................................... 28 10.1.1 Montage mit Diagonalverstrebung ...................................................................................................... 29 10.2. Montage Pfette .................................................................................................................................... 29 10.2.1 Stahlpfettenverbinder SPFV 80 – 630 mm............................................................................................. 31 10.3. Montage mit Pfetten-Binder-Gelenk (optional) .............................................................................32 10.3.1 Montage der Binderversteifung zusätzlich zum Pfetten-Binder-Gelenk .............................................. 34 10.4. Modulbefestigung von oben mit Pfettenklemmen Solo und Duo ....................................................36 10.5. Modulbefestigung von unten mit Klemme unten ...........................................................................37 10.6. Montage Adapter für bifaziale Module .................................................................................................38 10.7. Montage von Zubehörteilen .................................................................................................................40 10.7.1 Einteilige Druckplatten .......................................................................................................................... 40 10.7.2. Zweigeteilte Druckplatten – C-Rammprofil ....................................................",
       "keywords": [
         "montage",
         "sl-rack",
         "pfetten-binder-gelenk",
         "modulbefestigung",
         "unten",
-        "module",
+        "druckplatten",
         "montage-",
         "wartungsanleitung",
         "freiflächensystem",
@@ -17985,26 +17985,26 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "page": 3,
-      "content": ".......... 40 11.2. Module in den Potentialausgleich einbeziehen .................................................................................... 40 12. PFLEGE UND WARTUNG 41 12.1. Sicherheitshinweise .............................................................................................................................. 41 12.2. Verpflichtung des Betreibers und des Peronals .....................................................................................42 12.2.1. Verpflichtung des Betreibers ................................................................................................................42 12.2.2. Verpflichtung des Personals ................................................................................................................. 42 12.3. Geologie ................................................................................................................................................ 42 12.3.1. Vor Errichtung der Unterkonstruktion .................................................................................................. 42 12.3.2. Während der Errichtung der Unterkonstruktion ...................................................................................42 12.3.3. Nach Abschluss der Errichtung der Unterkonstruktion .........................................................................43 12.4. Erosion .................................................................................................................................................. 43 12.5. Anzeichen für Erosion ........................................................................................................................... 44 12.6. Mechanik der Konstruktion ....................................................................................",
+      "content": "Druckplatten .......................................................................................................................... 40 10.7.2. Zweigeteilte Druckplatten – C-Rammprofil ........................................................................................... 41 10.7.3. Zweigeteilte Druckplatten – W-Rammprofil ..........................................................................................42 10.7.4 Aluminiumstreben ................................................................................................................................ 43 10.7.5 Wechselrichterhalter ............................................................................................................................. 44 11. ANLAGE ERDEN 45 11.1. Gründe für die notwendige Schutzerdung ............................................................................................ 45 11.2. Module in den Potentialausgleich einbeziehen .................................................................................... 45 12. PFLEGE UND WARTUNG 46 12.1. Sicherheitshinweise .............................................................................................................................. 46 12.2. Verpflichtung des Betreibers und des Peronals .....................................................................................47 12.2.1. Verpflichtung des Betreibers ................................................................................................................47 12.2.2. Verpflichtung des Personals ................................................................................................................. 47 12.3. Geologie ........................................................................................................................",
       "keywords": [
         "des",
+        "druckplatten",
         "verpflichtung",
-        "errichtung",
-        "unterkonstruktion",
+        "zweigeteilte",
         "betreibers",
-        "erosion",
         "montage-",
         "wartungsanleitung",
         "freiflächensystem",
         "pfettensystem",
         "p101",
         "montageanleitungen",
-        "module",
-        "potentialausgleich",
-        "einbeziehen",
-        "pflege",
-        "wartung",
-        "sicherheitshinweise"
+        "c-rammprofil",
+        "w-rammprofil",
+        "aluminiumstreben",
+        "wechselrichterhalter",
+        "anlage",
+        "erden",
+        "gründe"
       ]
     },
     {
@@ -18015,26 +18015,26 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "page": 3,
-      "content": "........................................................................................................................ 44 12.6. Mechanik der Konstruktion ...................................................................................................................45 12.7. Korrosion ...............................................................................................................................................45 12.8. Begriffserklärungen ............................................................................................................................... 46 13. DEMONTIEREN UND ENTSORGEN 48 13.1. Allgemeine Hinweise zur Demontage ................................................................................................... 48 13.2. Normen- und Rechtsgrundlagen ........................................................................................................... 48 13.3. Persönliche Schutzausrüstung (PSA) ..................................................................................................... 48 13.4. Außerbetriebnahme der Anlage ........................................................................................................... 49 13.5. Allgemein gültiger Demontageablauf .................................................................................................. 49 13.6. Materialtrennung und AVV-Abfallschlüssel ...........................................................................................51 13.7. Entsorgung ............................................................................................................................................ 51 13.8. Dokumentation ................................................................................................................................",
+      "content": "..................................................................................................... 47 12.3. Geologie ................................................................................................................................................ 47 12.3.1. Vor Errichtung der Unterkonstruktion .................................................................................................. 47 12.3.2. Während der Errichtung der Unterkonstruktion ...................................................................................47 12.3.3. Nach Abschluss der Errichtung der Unterkonstruktion .........................................................................48 12.4. Erosion .................................................................................................................................................. 48 12.5. Anzeichen für Erosion ........................................................................................................................... 49 12.6. Mechanik der Konstruktion ...................................................................................................................50 12.7. Korrosion ...............................................................................................................................................50 12.8. Begriffserklärungen ............................................................................................................................... 51 13. DEMONTIEREN UND ENTSORGEN 53 13.1. Allgemeine Hinweise zur Demontage ................................................................................................... 53 13.2. Normen- und Rechtsgrundlagen ........................................................................................................... 53",
       "keywords": [
+        "errichtung",
+        "unterkonstruktion",
+        "erosion",
         "montage-",
         "wartungsanleitung",
         "freiflächensystem",
         "pfettensystem",
         "p101",
         "montageanleitungen",
+        "geologie",
+        "vor",
+        "während",
+        "nach",
+        "abschluss",
+        "anzeichen",
         "mechanik",
         "konstruktion",
-        "korrosion",
-        "begriffserklärungen",
-        "demontieren",
-        "entsorgen",
-        "allgemeine",
-        "hinweise",
-        "demontage",
-        "normen-",
-        "rechtsgrundlagen",
-        "persönliche"
+        "korrosion"
       ]
     },
     {
@@ -18045,7 +18045,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "page": 3,
-      "content": "........................................................................................ 51 13.8. Dokumentation ..................................................................................................................................... 51 14. PRÜFPROTOKOLL 52 15. ERGÄNZENDE UNTERLAGEN 56 15.1. Rammplan ............................................................................................................................................. 56 15.2. Zeichnungen und Layouts ..................................................................................................................... 56",
+      "content": ".......................................................................................... 53 13.2. Normen- und Rechtsgrundlagen ........................................................................................................... 53 13.3. Persönliche Schutzausrüstung (PSA) ..................................................................................................... 53 13.4. Außerbetriebnahme der Anlage ........................................................................................................... 54 13.5. Allgemein gültiger Demontageablauf .................................................................................................. 54 13.6. Materialtrennung und AVV-Abfallschlüssel ...........................................................................................56 13.7. Entsorgung ............................................................................................................................................ 56 13.8. Dokumentation ..................................................................................................................................... 56 14. PRÜFPROTOKOLL 57 15. ERGÄNZENDE UNTERLAGEN 61 15.1. Rammplan ............................................................................................................................................. 61 15.2. Zeichnungen und Layouts ..................................................................................................................... 61",
       "keywords": [
         "montage-",
         "wartungsanleitung",
@@ -18053,13 +18053,18 @@
         "pfettensystem",
         "p101",
         "montageanleitungen",
-        "dokumentation",
-        "prüfprotokoll",
-        "ergänzende",
-        "unterlagen",
-        "rammplan",
-        "zeichnungen",
-        "layouts"
+        "normen-",
+        "rechtsgrundlagen",
+        "persönliche",
+        "schutzausrüstung",
+        "psa",
+        "außerbetriebnahme",
+        "anlage",
+        "allgemein",
+        "gültiger",
+        "demontageablauf",
+        "materialtrennung",
+        "avv-abfallschlüssel"
       ]
     },
     {
@@ -18100,60 +18105,30 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "page": 4,
-      "content": "entlich-rechtliche Verantwortung aus dem Geräte- und Produktsicherheits- gesetz (GPSG), nur sichere Anlagen auf den Markt zu bringen. Die Marktkontrolle führen die staatlichen Gewerbeaufsichtsämter der Länder durch. Soweit die Anlagen beim Inverkehrbringen nicht den Vorschriften entsprechen, steht der Gewerbeaufsicht das Recht von Beanstandungen zu. Die CE-Kennzeichnung ist Voraussetzung für das erstmalige Inverkehrbringen (oder Inbetriebnehmen) von Produkten, für die eine CE-Kennzeichnung gemäß nachfolgenden EU-Richtlinien gefordert ist, nämlich in allen Teilnehmerstaaten des Europäischen Wirtschaftsraumes (EWR). Der EWR umfasst die EU-Mit- gliedstaaten und die EFTA-Staaten mit Ausnahme der Schweiz. Damit ist beim Inverkehrbringen in der Schweiz die CE-Kennzeichnung nicht gefordert. Es gibt vielfach spezielle Konformitätskennzeichen, die CE-Kennzeichnung nach den EU-Richtlinien wird jedoch anerkannt. 1.2 Arbeitssicherheit Der Auftragnehmer verpflichtet sich, nur Personen an der Anlage arbeiten zu lassen, die ▪ alle für die jeweilige Tätigkeit relevanten Textpassagen bzw. Informationen der Montage- und Installations anleitung gelesen und diese auch verstanden haben. ▪ mit den grundlegenden Vorschriften über Arbeitssicherheit, Unfallverhütung und Umweltschutz vertraut sind. ▪ in die sichere Handhabung der Anlage eingewiesen wurden (Unterweisung). ▪ die mit den verwendeten Zeichen und den daraus resultierenden Verhüttungsmaßnahmen ver- traut sind. Zur besseren Lesbarkeit wird in dieser Montageanleitung das generische Maskulinum verwendet. Die in dieser Montage- und Wartungsanlei- tung verwendeten Personenbezeichnungen beziehen sich – sofern nicht anders kenntlich gemacht – auf alle Geschlechter .",
+      "content": "entlich-rechtliche Verantwortung aus dem Geräte- und Produktsicherheits- gesetz (GPSG), nur sichere Anlagen auf den Markt zu bringen. Die Marktkontrolle führen die staatlichen Gewerbeaufsichtsämter der Länder durch. Soweit die Anlagen beim Inverkehrbringen nicht den Vorschriften entsprechen, steht der Gewerbeaufsicht das Recht von Beanstandungen zu. Die CE-Kennzeichnung ist Voraussetzung für das erstmalige Inverkehrbringen (oder Inbetriebnehmen) von Produkten, für die eine CE-Kennzeichnung gemäß nachfolgenden EU-Richtlinien gefordert ist, nämlich in allen Teilnehmerstaaten des Europäischen Wirtschaftsraumes (EWR). Der EWR umfasst die EU-Mit- gliedstaaten und die EFTA-Staaten mit Ausnahme der Schweiz. Damit ist beim Inverkehrbringen in der Schweiz die CE-Kennzeichnung nicht gefordert. Es gibt vielfach spezielle Konformitätskennzeichen, die CE-Kennzeichnung nach den EU-Richtlinien wird jedoch anerkannt. 1.2 Arbeitssicherheit Der Auftragnehmer verpflichtet sich, nur Personen an der Anlage arbeiten zu lassen, die ▪ alle für die jeweilige Tätigkeit relevanten Textpassagen bzw. Informationen der Montage- und Installations anleitung gelesen und diese auch verstanden haben. ▪ mit den grundlegenden Vorschriften über Arbeitssicherheit, Unfallverhütung und Umweltschutz vertraut sind. ▪ in die sichere Handhabung der Anlage eingewiesen wurden (Unterweisung). ▪ die mit den verwendeten Zeichen und den daraus resultierenden Verhüttungsmaßnahmen ver- traut sind.",
       "keywords": [
         "ce-kennzeichnung",
-        "montage-",
         "inverkehrbringen",
-        "nicht",
         "ist",
+        "montage-",
         "nur",
         "sichere",
         "anlagen",
         "beim",
+        "nicht",
         "vorschriften",
         "eu-richtlinien",
         "gefordert",
         "ewr",
         "schweiz",
-        "wird",
         "arbeitssicherheit",
-        "sich",
-        "anlage"
+        "anlage",
+        "sind",
+        "wartungsanleitung"
       ]
     },
     {
-      "id": "doc-47-p4-11",
-      "documentId": "doc-47",
-      "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
-      "category": "Montageanleitungen",
-      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
-      "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 4,
-      "content": "t. Die in dieser Montage- und Wartungsanlei- tung verwendeten Personenbezeichnungen beziehen sich – sofern nicht anders kenntlich gemacht – auf alle Geschlechter .",
-      "keywords": [
-        "montage-",
-        "wartungsanleitung",
-        "freiflächensystem",
-        "pfettensystem",
-        "p101",
-        "montageanleitungen",
-        "dieser",
-        "wartungsanlei-",
-        "tung",
-        "verwendeten",
-        "personenbezeichnungen",
-        "beziehen",
-        "sich",
-        "sofern",
-        "nicht",
-        "anders",
-        "kenntlich",
-        "gemacht"
-      ]
-    },
-    {
-      "id": "doc-47-p5-12",
+      "id": "doc-47-p5-11",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18183,7 +18158,7 @@
       ]
     },
     {
-      "id": "doc-47-p6-13",
+      "id": "doc-47-p6-12",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18213,7 +18188,7 @@
       ]
     },
     {
-      "id": "doc-47-p6-14",
+      "id": "doc-47-p6-13",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18243,7 +18218,7 @@
       ]
     },
     {
-      "id": "doc-47-p7-15",
+      "id": "doc-47-p7-14",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18273,7 +18248,7 @@
       ]
     },
     {
-      "id": "doc-47-p8-16",
+      "id": "doc-47-p8-15",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18303,7 +18278,7 @@
       ]
     },
     {
-      "id": "doc-47-p8-17",
+      "id": "doc-47-p8-16",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18333,7 +18308,7 @@
       ]
     },
     {
-      "id": "doc-47-p9-18",
+      "id": "doc-47-p9-17",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18363,7 +18338,7 @@
       ]
     },
     {
-      "id": "doc-47-p9-19",
+      "id": "doc-47-p9-18",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18393,7 +18368,7 @@
       ]
     },
     {
-      "id": "doc-47-p10-20",
+      "id": "doc-47-p10-19",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18423,7 +18398,7 @@
       ]
     },
     {
-      "id": "doc-47-p10-21",
+      "id": "doc-47-p10-20",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18453,7 +18428,7 @@
       ]
     },
     {
-      "id": "doc-47-p11-22",
+      "id": "doc-47-p11-21",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18483,7 +18458,7 @@
       ]
     },
     {
-      "id": "doc-47-p12-23",
+      "id": "doc-47-p12-22",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18513,7 +18488,7 @@
       ]
     },
     {
-      "id": "doc-47-p13-24",
+      "id": "doc-47-p13-23",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18543,7 +18518,7 @@
       ]
     },
     {
-      "id": "doc-47-p14-25",
+      "id": "doc-47-p14-24",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18573,7 +18548,7 @@
       ]
     },
     {
-      "id": "doc-47-p15-26",
+      "id": "doc-47-p15-25",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18603,7 +18578,7 @@
       ]
     },
     {
-      "id": "doc-47-p16-27",
+      "id": "doc-47-p16-26",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18633,7 +18608,7 @@
       ]
     },
     {
-      "id": "doc-47-p17-28",
+      "id": "doc-47-p17-27",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18663,7 +18638,7 @@
       ]
     },
     {
-      "id": "doc-47-p18-29",
+      "id": "doc-47-p18-28",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18693,7 +18668,7 @@
       ]
     },
     {
-      "id": "doc-47-p19-30",
+      "id": "doc-47-p19-29",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18723,7 +18698,7 @@
       ]
     },
     {
-      "id": "doc-47-p19-31",
+      "id": "doc-47-p19-30",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18753,21 +18728,23 @@
       ]
     },
     {
-      "id": "doc-47-p20-32",
+      "id": "doc-47-p20-31",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "page": 20,
-      "content": "20 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Beispielabbildung Höhendifferenz innerhalb einer Reihe: +/– 35 mm Verdrehung: +/– 3° Rammtiefe: +/– 100 mm Neigung Ost-West: +/– 3° Neigung Nord-Süd: +/– 3° 9.4. Geforderte Toleranzen einhalten Die Tischgestelle werden stets für die Wind- und Schneeeinwirkungen des jeweiligen Standorts ausgelegt. Im Sinne der Wirtschaftlichkeit sind die Einzelkomponenten dabei typischerweise bis zur Bauteil trag fähig keit ausgenutzt. Daher ist die Einhaltung der nachfolgend aufgeführten Toleranzen wesentlich für die Standsicherheit des Gestells. ▪ Lassen Sie die Rammarbeiten ausschließlich durch Fachfirmen ausführen. ▪ Rammen Sie bereits die Fundamente mit hoher Präzision. So schaffen Sie die Grundvoraussetzung für das Einhalten der geforderten Toleranzen bei der Montage des Gestells. 9. FUNDAMENTE RAMMEN Rammtoleranzen Stützenweiten Auskragung",
+      "content": "20 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Beispielabbildung Höhendifferenz innerhalb einer Reihe: +/– 35 mm Verdrehung: +/– 3° Rammtiefe: +/– 100 mm Neigung Ost-West: +/– 3° Neigung Nord-Süd: +/– 3° 9.4. Geforderte Toleranzen einhalten Die Tischgestelle werden stets für die Wind- und Schneeeinwirkungen des jeweiligen Standorts ausgelegt. Im Sinne der Wirtschaftlichkeit sind die Einzelkomponenten dabei typischerweise bis zur Bauteil trag fähig keit ausgenutzt. Daher ist die Einhaltung der nachfolgend aufgeführten Toleranzen wesentlich für die Standsicherheit des Gestells. ▪ Lassen Sie die Rammarbeiten ausschließlich durch Fachfirmen ausführen. ▪ Rammen Sie bereits die Fundamente mit hoher Präzision. So schaffen Sie die Grundvoraussetzung für das Einhalten der geforderten Toleranzen bei der Montage des Gestells. 9. FUNDAMENTE RAMMEN Rammtoleranzen Drehmoment-Toleranzen Auf die Einhaltung der Drehmomentangaben ist zu achten; eine Abweichung von ± 10 % ist akzeptabel. Stützenweiten Auskragung",
       "keywords": [
         "toleranzen",
         "des",
+        "ist",
         "sie",
         "sl-rack",
         "neigung",
         "einhalten",
+        "einhaltung",
         "gestells",
         "rammen",
         "fundamente",
@@ -18777,13 +18754,11 @@
         "pfettensystem",
         "p101",
         "montageanleitungen",
-        "rack",
-        "gmbh",
-        "münchener"
+        "rack"
       ]
     },
     {
-      "id": "doc-47-p21-33",
+      "id": "doc-47-p21-32",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18813,7 +18788,7 @@
       ]
     },
     {
-      "id": "doc-47-p22-34",
+      "id": "doc-47-p22-33",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18843,7 +18818,7 @@
       ]
     },
     {
-      "id": "doc-47-p23-35",
+      "id": "doc-47-p23-34",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18873,14 +18848,14 @@
       ]
     },
     {
-      "id": "doc-47-p24-36",
+      "id": "doc-47-p24-35",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "page": 24,
-      "content": "24 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 9.6.1 Montageablauf mit geteiltem Rammprofil ohne Rammprofilverbinder 9. FUNDAMENTE RAMMEN 1. Das Rammprofil wird mit einer branchen- üblichen Hydraulikramme nach vorgeschrie- benem Rammplan im Boden befestigt. Achtung: Achten Sie auf den vorgegebenen Bodenabstand der Oberkante. 2. Befestigen Sie das zweite Rammprofil stirn seitig am gerammten Rammprofil mit zwei M16 Schrauben (Art.-Nr . 71216-30). Achtung: Achten Sie darauf, dass das Ramm- profil vollflächig aufliegt. Drehmoment 150 Nm",
+      "content": "24 1 2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 9.6.1 Montageablauf mit geteiltem Rammprofil ohne Rammprofilverbinder 9. FUNDAMENTE RAMMEN 1. Das Rammprofil wird mit einer branchen- üblichen Hydraulikramme nach vorgeschrie- benem Rammplan im Boden befestigt. Achtung: Achten Sie auf den vorgegebenen Bodenabstand der Oberkante. 2. Befestigen Sie das zweite Rammprofil stirn seitig am gerammten Rammprofil mit zwei M16 Schrauben (Art.-Nr . 71216-30). Achtung: Achten Sie darauf, dass das Ramm- profil vollflächig aufliegt. Drehmoment 150 Nm",
       "keywords": [
         "rammprofil",
         "sie",
@@ -18903,27 +18878,27 @@
       ]
     },
     {
-      "id": "doc-47-p25-37",
+      "id": "doc-47-p25-36",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "page": 25,
-      "content": "25 1 2 43 5 150 Nm150 Nm 150 Nm150 Nm SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Setzen Sie den Fundamentwinkel (Art.-Nr. 42102-01) auf das Betonfundament. Achtung: Abstände beachten! Verschrauben Sie den Fundamentwinkel mit dem Betonfundament. Achtung: Herstellervorgaben für Befestigung beachten Platzieren Sie das Rammprofil auf der Innenseite des Fundamentwinkels. Verschrauben Sie den Fundamentwinkel mit dem Rammprofil an den äußersten Löchern mit den Schrauben (Art.-Nr. 71216-30) und Muttern (Art.-Nr. 77216-00). Achten Sie auf das korrekte Drehmoment (150 Nm). 9.7. Montageablauf bei Betonfundament 9. FUNDAMENTE RAMMEN",
+      "content": "25 1 2 43 5 6 150 Nm150 Nm 150 Nm150 Nm SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 9.7. Montageablauf bei Betonfundament 9. FUNDAMENTE RAMMEN Setzen Sie den Fundamentwinkel (Art.-Nr. 42102-01) auf das Betonfundament. Achtung: Abstände beachten! Verschrauben Sie den Fundamentwinkel mit dem Betonfundament. Achtung: Herstellervorgaben für Befestigung beachten Platzieren Sie das Rammprofil auf der Außenseite des Fundamentwinkels. Verschrauben Sie den Fundamentwinkel mit dem Rammprofil an den äußersten Löchern mit den Schrauben (Art.-Nr. 71216-30) und Muttern (Art.-Nr. 77216-00). Achten Sie auf das korrekte Drehmoment (150 Nm). Den Stahlbinder mit dem Rammprofil verschrauben – Toleranzen durch Wahl der entsprechenden Löcher am Binder ausgleichen. Achtung: Am vorderen und hinteren Rammfunda- ment gleich ausführen. Das Anzugsmoment von M16 x 30 beträgt 150 Nm.",
       "keywords": [
         "sie",
         "150",
+        "betonfundament",
         "fundamentwinkel",
         "art",
         "-nr",
-        "betonfundament",
-        "nm150",
-        "sl-rack",
         "achtung",
-        "beachten",
         "verschrauben",
         "rammprofil",
+        "nm150",
+        "sl-rack",
+        "beachten",
         "montage-",
         "wartungsanleitung",
         "freiflächensystem",
@@ -18933,7 +18908,7 @@
       ]
     },
     {
-      "id": "doc-47-p26-38",
+      "id": "doc-47-p26-37",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18963,7 +18938,7 @@
       ]
     },
     {
-      "id": "doc-47-p26-39",
+      "id": "doc-47-p26-38",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -18993,7 +18968,7 @@
       ]
     },
     {
-      "id": "doc-47-p27-40",
+      "id": "doc-47-p27-39",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19023,22 +18998,18 @@
       ]
     },
     {
-      "id": "doc-47-p28-41",
+      "id": "doc-47-p28-40",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "page": 28,
-      "content": "28 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 10.1. Bindermontage Das Maß bis zur Oberkante des Rammfundaments ist von projektspezifischen Gegebenheiten abhängig und muss ermittelt werden. 1. Rammen Sie die Pfosten gemäß dem angegebenem Rammplan. Beachten Sie dabei unbedingt die korrekte Ausrichtung der Profilöffnung. 2. Binder/Pfosten verschrauben – Toleranzen durch Wahl der entsprechenden Löcher am Pfosten/Binder ausgleichen. Bei Zweipfostensystem an vorderen und hinteren Rammfundament gleich ausführen (Anzugsmoment*: 150 Nm). * in Anlehnung an VDI 2230 M16 x 30 ISO 4017 (Art.-Nr . 71216-30) M16 Flanschmutter mit Sperrverzahnung ISO 4161 Anzugsmoment*: 150 Nm 10. MONTAGE Einzelpfosten- system Einzelpfosten- system Zweipfosten- system Zweipfosten- system",
+      "content": "28 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 10.1. Bindermontage Das Maß bis zur Oberkante des Rammfundaments ist von projektspezifischen Gegebenheiten abhängig und muss ermittelt werden. 1. Rammen Sie die Pfosten gemäß dem angegebenem Rammplan. Beachten Sie dabei unbedingt die korrekte Ausrichtung der Profilöffnung. 2. Den Stahlbinder mit dem Rammprofil ver- schrauben – Toleranzen durch Wahl der entsprechenden Löcher am Binder ausgleichen. Achtung: Am vorderen und hinteren Ramm- fundament gleich ausführen. * in Anlehnung an VDI 2230 M16 x 30 ISO 4017 (Art.-Nr . 71216-30) M16 Flanschmutter mit Sperrverzahnung ISO 4161 Anzugsmoment*: 150 Nm 10. MONTAGE Einzelpfosten- system Einzelpfosten- system Zweipfosten- system Zweipfosten- system",
       "keywords": [
         "system",
-        "pfosten",
         "sl-rack",
         "sie",
-        "binder",
-        "anzugsmoment",
-        "150",
         "m16",
         "iso",
         "einzelpfosten-",
@@ -19049,11 +19020,15 @@
         "pfettensystem",
         "p101",
         "montageanleitungen",
-        "rack"
+        "rack",
+        "gmbh",
+        "münchener",
+        "straße",
+        "83527"
       ]
     },
     {
-      "id": "doc-47-p29-42",
+      "id": "doc-47-p29-41",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19083,7 +19058,7 @@
       ]
     },
     {
-      "id": "doc-47-p30-43",
+      "id": "doc-47-p30-42",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19113,7 +19088,7 @@
       ]
     },
     {
-      "id": "doc-47-p31-44",
+      "id": "doc-47-p31-43",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19143,7 +19118,7 @@
       ]
     },
     {
-      "id": "doc-47-p32-45",
+      "id": "doc-47-p32-44",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19173,7 +19148,7 @@
       ]
     },
     {
-      "id": "doc-47-p32-46",
+      "id": "doc-47-p32-45",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19203,7 +19178,7 @@
       ]
     },
     {
-      "id": "doc-47-p33-47",
+      "id": "doc-47-p33-46",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19233,7 +19208,7 @@
       ]
     },
     {
-      "id": "doc-47-p33-48",
+      "id": "doc-47-p33-47",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19263,7 +19238,7 @@
       ]
     },
     {
-      "id": "doc-47-p34-49",
+      "id": "doc-47-p34-48",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19293,7 +19268,7 @@
       ]
     },
     {
-      "id": "doc-47-p35-50",
+      "id": "doc-47-p35-49",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19323,7 +19298,7 @@
       ]
     },
     {
-      "id": "doc-47-p36-51",
+      "id": "doc-47-p36-50",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19353,7 +19328,7 @@
       ]
     },
     {
-      "id": "doc-47-p37-52",
+      "id": "doc-47-p37-51",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19383,7 +19358,7 @@
       ]
     },
     {
-      "id": "doc-47-p38-53",
+      "id": "doc-47-p38-52",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19413,7 +19388,7 @@
       ]
     },
     {
-      "id": "doc-47-p38-54",
+      "id": "doc-47-p38-53",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19440,7 +19415,7 @@
       ]
     },
     {
-      "id": "doc-47-p39-55",
+      "id": "doc-47-p39-54",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
@@ -19470,14 +19445,164 @@
       ]
     },
     {
-      "id": "doc-47-p40-56",
+      "id": "doc-47-p40-55",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
       "page": 40,
-      "content": "40 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 11.1. Gründe für die notwendige Schutzerdung Eine konsequente Erdung aller metallischen Teile, die mit Teilen der elektrischen Anlage in Verbindung stehen, ist gemäß gültigen Normen zwingend vorgeschrieben. So wird bei Fehlern an elektrischen Betriebsmitteln die Berührungssicherheit gewährleistet. Eine Erdungsanbindung der Montagegestelle im Sinne einer Schutzerdung ist also in jedem Falle not- wendig. Differenzierter ist jedoch das Modul selbst zu betrachten. Viele gängige Modulbauarten sind als Betriebsmittel der Schutzklasse II definiert, so dass eine Erdungsanbindung des Moduls oftmals nicht notwendig und unter Umständen auch gar nicht sinnvoll ist. Dennoch geben einige Modulhersteller durch ein Erdungssymbol auf dem Modulrahmen und entsprechende Anweisungen in der Montageanleitung dem Installateur vor, auch das Modul selbst zu erden. 11.2. Module in den Potentialausgleich einbeziehen Eine Einbeziehung der Modulrahmen in den Potentialaus- gleich z. B. aus Gründen der Betriebssicherheit, kann erforderlich sein, auch wenn die Anwendung der jeweils gültigen Normen dies u.U. nicht unbedingt erfordert. ▪ Berücksichtigen Sie dies bei der Systemplanung. Für die Erdung der Modulrahmen können aus dem Liefer umfang der Fa. SL Rack GmbH optional geeignete Komponenten (z. B. Erdungsklemmen statt normaler Klemmen) bestellt werden, diese sind standardmäßig mit Potentialausgleich. Um Personen und die technischen Einrichtungen zu schützen, wird bei Photovoltaikanlagen ein Blitz- und/oder Überspannungsschutz empfohlen. Was dabei zu beachten ist, steht im Beiblatt G der DIN EN 62305-3. Setzen Sie sich hierzu mit Ihrer Fachkraft vor Ort in Verbindung, um die beste Lösung",
+      "content": "40 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 10. MONTAGE 10.7. Montage von Zubehörteilen Im Folgendem wird die Montage von Projektspezifischem Zubehör oder Ergänzungskomponenten gezeigt. Den genauen Lieferumfang entnehmen Sie bitte der Materialliste oder der Tischzeichnung. 10.7.1 Einteilige Druckplatten Komponenten: ▪ Druckplatte für Rammpfosten (Art.-Nr . 4270X-00) Achtung: Die passenden Schrauben und Muttern sind bereits im Lieferumfang der Druckplatte enthalten. 1. H 2. . 3. B",
+      "keywords": [
+        "montage",
+        "sl-rack",
+        "lieferumfang",
+        "druckplatte",
+        "montage-",
+        "wartungsanleitung",
+        "freiflächensystem",
+        "pfettensystem",
+        "p101",
+        "montageanleitungen",
+        "rack",
+        "gmbh",
+        "münchener",
+        "straße",
+        "83527",
+        "haag",
+        "tel",
+        "8072"
+      ]
+    },
+    {
+      "id": "doc-47-p41-56",
+      "documentId": "doc-47",
+      "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
+      "category": "Montageanleitungen",
+      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
+      "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
+      "page": 41,
+      "content": "41 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 10. MONTAGE 10.7.2. Zweigeteilte Druckplatten – C-Rammprofil Komponenten: ▪ 2x Druckplatte C-Profil (Art.-Nr . 42702-00) ▪ 2x Sechskantschraube M16x30 (Art.-Nr . 77216-30) ▪ 2x Sechskantmutter M16 (Art.-Nr .77216-00) Die zweigeteilten Druckplatten werden mit den gleichen Komponenten zusammengebaut. Lediglich die Ausrichtung im Vergleich zum Rammprofil unterscheidet sich. 1. l 2. . 3. B 4. B",
+      "keywords": [
+        "art",
+        "-nr",
+        "sl-rack",
+        "druckplatten",
+        "komponenten",
+        "montage-",
+        "wartungsanleitung",
+        "freiflächensystem",
+        "pfettensystem",
+        "p101",
+        "montageanleitungen",
+        "rack",
+        "gmbh",
+        "münchener",
+        "straße",
+        "83527",
+        "haag",
+        "tel"
+      ]
+    },
+    {
+      "id": "doc-47-p42-57",
+      "documentId": "doc-47",
+      "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
+      "category": "Montageanleitungen",
+      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
+      "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
+      "page": 42,
+      "content": "42 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 10. MONTAGE 10.7.3. Zweigeteilte Druckplatten – W-Rammprofil Komponenten: ▪ 2x Druckplatte W-Profil (Art.-Nr . 42703-00) ▪ 2x Sechskantschraube M16x30 (Art.-Nr . 77216-30) ▪ 2x Sechskantmutter M16 (Art.-Nr .77216-00) Die zweigeteilten Druckplatten werden mit den gleichen Komponenten zusammengebaut. Lediglich die Ausrichtung im Vergleich zum Rammprofil unterscheidet sich. 1. 2. . 3. B 4. B",
+      "keywords": [
+        "art",
+        "-nr",
+        "sl-rack",
+        "druckplatten",
+        "komponenten",
+        "montage-",
+        "wartungsanleitung",
+        "freiflächensystem",
+        "pfettensystem",
+        "p101",
+        "montageanleitungen",
+        "rack",
+        "gmbh",
+        "münchener",
+        "straße",
+        "83527",
+        "haag",
+        "tel"
+      ]
+    },
+    {
+      "id": "doc-47-p43-58",
+      "documentId": "doc-47",
+      "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
+      "category": "Montageanleitungen",
+      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
+      "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
+      "page": 43,
+      "content": "43 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 10.7.4 Aluminiumstreben Aluminiumstreben werden zur Aussteifung einzelner Tische verwendet. Der Einsatz und die Länge werden Projektspezifisch ermittelt. Komponenten: ▪ 2x Aluminiumflach (Art.-Nr . 41901) ▪ 4x Bohrschrauben mit Bohrspitze (Art.-Nr .93160-25) 1. Befestigen Sie das Aluminiumflach am oberen Befestigungspunkt mit einer Bohrschraube. Achten Sie hierbei auf die Abstände zum Ende des Rammprofils. Achtung: Der Befestigungspunkt am Schenkel des Rammprofils sollte möglichst mittig liegen. 2. Spannen Sie mit dem Aluminiumflach ein X zum nächsten Rammprofil und befestigen Sie das Aluminiumflach am unteren Ende des nächsten Rammprofils mit einer Bohrschraube. Achtung: Der Befestigungspunkt am Schenkel des Rammprofils sollte möglichst mittig liegen. Wiederholen Sie den Vorgang an jedem Tisch 10. MONTAGE",
+      "keywords": [
+        "sie",
+        "aluminiumflach",
+        "des",
+        "rammprofils",
+        "befestigungspunkt",
+        "sl-rack",
+        "aluminiumstreben",
+        "werden",
+        "art",
+        "-nr",
+        "befestigen",
+        "einer",
+        "bohrschraube",
+        "zum",
+        "ende",
+        "achtung",
+        "schenkel",
+        "sollte"
+      ]
+    },
+    {
+      "id": "doc-47-p44-59",
+      "documentId": "doc-47",
+      "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
+      "category": "Montageanleitungen",
+      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
+      "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
+      "page": 44,
+      "content": "44 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 44SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 10. MONTAGE 10.7.5 Wechselrichterhalter Aluminiumstreben werden zur Aussteifung einzelner Tische verwendet. Der Einsatz und die Länge werden Projektspezifisch ermittelt. Komponenten: ▪ Zusätzliche Rammprofile (Art.-Nr . nach Projektierung) ▪ Winkel für WR (Art.-Nr . 43101-00) ▪ C-Schiene (Art.-Nr . nach Projektierung) ▪ Sechskantschraube M12 (Art.-Nr . 71212-25) ▪ Sechskantmutter M12 (Art.-Nr . 71212-00) 1. Rammen Sie die benötigten Rammprofil nach Tischzeichnung und Rammplan 2. Befestigen Sie den Winkel WR am Rammprofil mit Drehmoment (90 Nm) 3. Befestigen Sie die C-Schiene am Winkel WR mit Drehmoment (90 Nm) 4. Befestigen Sie den Wechselrichter ( beachten Sie hierbei die Montageanleitung des Herstellers)",
+      "keywords": [
+        "art",
+        "-nr",
+        "sie",
+        "sl-rack",
+        "nach",
+        "winkel",
+        "befestigen",
+        "rack",
+        "gmbh",
+        "münchener",
+        "straße",
+        "83527",
+        "haag",
+        "tel",
+        "8072",
+        "3767-0",
+        "sales",
+        "www"
+      ]
+    },
+    {
+      "id": "doc-47-p45-60",
+      "documentId": "doc-47",
+      "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
+      "category": "Montageanleitungen",
+      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
+      "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
+      "page": 45,
+      "content": "45 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 11.1. Gründe für die notwendige Schutzerdung Eine konsequente Erdung aller metallischen Teile, die mit Teilen der elektrischen Anlage in Verbindung stehen, ist gemäß gültigen Normen zwingend vorgeschrieben. So wird bei Fehlern an elektrischen Betriebsmitteln die Berührungssicherheit gewährleistet. Eine Erdungsanbindung der Montagegestelle im Sinne einer Schutzerdung ist also in jedem Falle not- wendig. Differenzierter ist jedoch das Modul selbst zu betrachten. Viele gängige Modulbauarten sind als Betriebsmittel der Schutzklasse II definiert, so dass eine Erdungsanbindung des Moduls oftmals nicht notwendig und unter Umständen auch gar nicht sinnvoll ist. Dennoch geben einige Modulhersteller durch ein Erdungssymbol auf dem Modulrahmen und entsprechende Anweisungen in der Montageanleitung dem Installateur vor, auch das Modul selbst zu erden. 11.2. Module in den Potentialausgleich einbeziehen Eine Einbeziehung der Modulrahmen in den Potentialaus- gleich z. B. aus Gründen der Betriebssicherheit, kann erforderlich sein, auch wenn die Anwendung der jeweils gültigen Normen dies u.U. nicht unbedingt erfordert. ▪ Berücksichtigen Sie dies bei der Systemplanung. Für die Erdung der Modulrahmen können aus dem Liefer umfang der Fa. SL Rack GmbH optional geeignete Komponenten (z. B. Erdungsklemmen statt normaler Klemmen) bestellt werden, diese sind standardmäßig mit Potentialausgleich. Um Personen und die technischen Einrichtungen zu schützen, wird bei Photovoltaikanlagen ein Blitz- und/oder Überspannungsschutz empfohlen. Was dabei zu beachten ist, steht im Beiblatt G der DIN EN 62305-3. Setzen Sie sich hierzu mit Ihrer Fachkraft vor Ort in Verbindung, um die beste Lösung",
       "keywords": [
         "ist",
         "bei",
@@ -19500,13 +19625,13 @@
       ]
     },
     {
-      "id": "doc-47-p40-57",
+      "id": "doc-47-p45-61",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 40,
+      "page": 45,
       "content": "ützen, wird bei Photovoltaikanlagen ein Blitz- und/oder Überspannungsschutz empfohlen. Was dabei zu beachten ist, steht im Beiblatt G der DIN EN 62305-3. Setzen Sie sich hierzu mit Ihrer Fachkraft vor Ort in Verbindung, um die beste Lösung zu finden. Gefahr durch elektrischen Strom Die Anlage arbeitet mit hoher Spannung. ▪ Öffnen Sie niemals Schaltschränke und Klemmkästen der elektrischen Ausrüstung, wenn Sie keine ausgebildete Elektrofachkraft sind. ▪ Informieren Sie Ihre Elektrofachkraft. GEFAHR Klemme mit Potentialausgleich 11. ANLAGE ERDEN",
       "keywords": [
         "sie",
@@ -19530,14 +19655,14 @@
       ]
     },
     {
-      "id": "doc-47-p41-58",
+      "id": "doc-47-p46-62",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 41,
-      "content": "41 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 12.1. Sicherheitshinweise Alle Pflegearbeiten sind von Fachpersonal entsprechender Qualifikation auszuführen. Einhaltung der Wartungsfristen und die Verwendung von Original-Ersatzteilen der Fa. SL Rack GmbH sind für eine lange Lebensdauer und einen störungsfreien Betrieb von entscheidender Bedeutung. Eventuell auftretende kleine Schäden am Gestell können so beseitigt werden und weiterführende größere Schäden verhindert bzw. eingeschränkt werden. Treten zunehmend Fehler bei den Prüfungen auf, ist es empfehlenswert, die Wartungsintervalle angemes- sen zu verkürzen. Zudem ist es ratsam, nach schweren Unwettern, Erdbeben oder anderwei tigen Ereignis- sen, die die Konstruktion beschädigen könnten, Sonderinspektionen durchzuführen. Gefahr durch den Umgang mit elektrischem Strom. Vor allem bei Solaranlagen mit einer großen Anzahl an geschalteten Modulen ist die Gefahr von Funkenbildung und tödlichem Stromschlag deutlich erhöht. Im Falle von Isolierungsschäden an Kabel- oder Steck- verbindern kann selbst das Solargestell Strom ausgesetzt werden. Beachten Sie daher unbedingt alle Sicherheitshinweise Ihres Modul- bzw. Wechselrichterherstellers und verwenden Sie nur isolierte Werkzeuge! Ausführen von Wartungsarbeiten, Führen von Baustellenfahrzeugen oder Bedienen von Baumaschinen darf nur durch Fachpersonal oder entsprechend geschultes Personal geschehen! Tragen Sie persönliche Schutzausrüstung bei allen Wartungsarbeiten: Warnweste und Sicherheitsschuhe tragen jederzeit Schutzhelm tragen bei Arbeiten mit herabfallenden Lasten oder Gefahr des Anstoßens Schutzhandschuhe tragen bei Arbeiten mit scharfkantigen Teilen Gehörschutz tragen bei lärmenden Tätigkeiten Atemschutz",
+      "page": 46,
+      "content": "46 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 12.1. Sicherheitshinweise Alle Pflegearbeiten sind von Fachpersonal entsprechender Qualifikation auszuführen. Einhaltung der Wartungsfristen und die Verwendung von Original-Ersatzteilen der Fa. SL Rack GmbH sind für eine lange Lebensdauer und einen störungsfreien Betrieb von entscheidender Bedeutung. Eventuell auftretende kleine Schäden am Gestell können so beseitigt werden und weiterführende größere Schäden verhindert bzw. eingeschränkt werden. Treten zunehmend Fehler bei den Prüfungen auf, ist es empfehlenswert, die Wartungsintervalle angemes- sen zu verkürzen. Zudem ist es ratsam, nach schweren Unwettern, Erdbeben oder anderwei tigen Ereignis- sen, die die Konstruktion beschädigen könnten, Sonderinspektionen durchzuführen. Gefahr durch den Umgang mit elektrischem Strom. Vor allem bei Solaranlagen mit einer großen Anzahl an geschalteten Modulen ist die Gefahr von Funkenbildung und tödlichem Stromschlag deutlich erhöht. Im Falle von Isolierungsschäden an Kabel- oder Steck- verbindern kann selbst das Solargestell Strom ausgesetzt werden. Beachten Sie daher unbedingt alle Sicherheitshinweise Ihres Modul- bzw. Wechselrichterherstellers und verwenden Sie nur isolierte Werkzeuge! Ausführen von Wartungsarbeiten, Führen von Baustellenfahrzeugen oder Bedienen von Baumaschinen darf nur durch Fachpersonal oder entsprechend geschultes Personal geschehen! Tragen Sie persönliche Schutzausrüstung bei allen Wartungsarbeiten: Warnweste und Sicherheitsschuhe tragen jederzeit Schutzhelm tragen bei Arbeiten mit herabfallenden Lasten oder Gefahr des Anstoßens Schutzhandschuhe tragen bei Arbeiten mit scharfkantigen Teilen Gehörschutz tragen bei lärmenden Tätigkeiten Atemschutz",
       "keywords": [
         "bei",
         "tragen",
@@ -19560,13 +19685,13 @@
       ]
     },
     {
-      "id": "doc-47-p41-59",
+      "id": "doc-47-p46-63",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 41,
+      "page": 46,
       "content": "und Sicherheitsschuhe tragen jederzeit Schutzhelm tragen bei Arbeiten mit herabfallenden Lasten oder Gefahr des Anstoßens Schutzhandschuhe tragen bei Arbeiten mit scharfkantigen Teilen Gehörschutz tragen bei lärmenden Tätigkeiten Atemschutz tragen bei allen staubigen Tätigkeiten Schutzbrille tragen bei Schleif- und Flexarbeiten und wenn durch herumfliegende Teile/Flüssigkeiten die Augen gefährdet werden 12. PFLEGE UND WARTUNG",
       "keywords": [
         "tragen",
@@ -19590,14 +19715,14 @@
       ]
     },
     {
-      "id": "doc-47-p42-60",
+      "id": "doc-47-p47-64",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 42,
-      "content": "42 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 12.2. Verpflichtung des Betreibers und des Peronals 12.2.1. Verpflichtung des Betreibers Der Betreiber sorgt dafür, dass alle Teile der Wartungsleitung stets griffbereit an der Anlage aufbewahrt werden. Der Betreiber verpflichtet sich, nur Personen an und im Bereich der Anlage arbeiten zu lassen, die ▪ alle für die jeweilige Tätigkeit relevanten Teile der Wartungsanleitung gelesen und verstanden haben ▪ mit den grundlegenden Vorschriften über Arbeitssicherheit, Unfallverhütung und Umweltschutz vertraut sind ▪ in die sichere Handhabung der Anlage eingewiesen sind (Unterweisung) 12.2.2. Verpflichtung des Personals Als Personal sind nur Personen zugelassen, von denen zu erwarten ist, dass sie ihre Arbeit zuverlässig ausführen. Personen, deren Reaktionsfähigkeit beeinflusst ist, z. B. durch Drogen, Alkohol oder Medika- mente, sind NICHT zugelassen. ▪ Jede Person, die sich mit der Wartung des Montagesystems befasst, muss diese Wartungsanleitung sowie alle relevanten Kapitel im Bezug auf die entsprechende Tätigkeit gelesen und verstanden haben. ▪ Diese Wartungsanleitung sollte stets allen beteiligten Personen zugänglich und griffbereit aufbewahrt werden. ▪ Nur geschultes und eingewiesenes Personal darf die in dieser Anleitung beschriebenen Tätigkeiten ausführen. ▪ Anzulernendes Personal darf nur unter Aufsicht einer erfahrenen Person an der Wartung mitwirken. Dem Betreiber wird empfohlen, sich dies jeweils schriftlich bestätigen zu lassen. 12.3. Geologie 12.3.1. Vor Errichtung der Unterkonstruktion Im Rahmen eines vor Errichtung der Unterkonstruktion einzuholenden geologischen Gutachtens hat eine Abschätzung zur Standfestigkeit der Unterkonstruktion anhand der vo",
+      "page": 47,
+      "content": "47 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 12.2. Verpflichtung des Betreibers und des Peronals 12.2.1. Verpflichtung des Betreibers Der Betreiber sorgt dafür, dass alle Teile der Wartungsleitung stets griffbereit an der Anlage aufbewahrt werden. Der Betreiber verpflichtet sich, nur Personen an und im Bereich der Anlage arbeiten zu lassen, die ▪ alle für die jeweilige Tätigkeit relevanten Teile der Wartungsanleitung gelesen und verstanden haben ▪ mit den grundlegenden Vorschriften über Arbeitssicherheit, Unfallverhütung und Umweltschutz vertraut sind ▪ in die sichere Handhabung der Anlage eingewiesen sind (Unterweisung) 12.2.2. Verpflichtung des Personals Als Personal sind nur Personen zugelassen, von denen zu erwarten ist, dass sie ihre Arbeit zuverlässig ausführen. Personen, deren Reaktionsfähigkeit beeinflusst ist, z. B. durch Drogen, Alkohol oder Medika- mente, sind NICHT zugelassen. ▪ Jede Person, die sich mit der Wartung des Montagesystems befasst, muss diese Wartungsanleitung sowie alle relevanten Kapitel im Bezug auf die entsprechende Tätigkeit gelesen und verstanden haben. ▪ Diese Wartungsanleitung sollte stets allen beteiligten Personen zugänglich und griffbereit aufbewahrt werden. ▪ Nur geschultes und eingewiesenes Personal darf die in dieser Anleitung beschriebenen Tätigkeiten ausführen. ▪ Anzulernendes Personal darf nur unter Aufsicht einer erfahrenen Person an der Wartung mitwirken. Dem Betreiber wird empfohlen, sich dies jeweils schriftlich bestätigen zu lassen. 12.3. Geologie 12.3.1. Vor Errichtung der Unterkonstruktion Im Rahmen eines vor Errichtung der Unterkonstruktion einzuholenden geologischen Gutachtens hat eine Abschätzung zur Standfestigkeit der Unterkonstruktion anhand der vo",
       "keywords": [
         "des",
         "wartungsanleitung",
@@ -19620,13 +19745,13 @@
       ]
     },
     {
-      "id": "doc-47-p42-61",
+      "id": "doc-47-p47-65",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 42,
+      "page": 47,
       "content": "n zu lassen. 12.3. Geologie 12.3.1. Vor Errichtung der Unterkonstruktion Im Rahmen eines vor Errichtung der Unterkonstruktion einzuholenden geologischen Gutachtens hat eine Abschätzung zur Standfestigkeit der Unterkonstruktion anhand der vor Ort befindlichen geologischen Parameter (mechanische Bodeneigenschaften, chemische Analyse, etc.) zu erfolgen. 12.3.2. Während der Errichtung der Unterkonstruktion Die Standfestigkeit der Unterkonstruktion und damit der gesamten Photovoltaikanlage ist wesentliches Ziel. Freiflächensysteme sind nur dann standfest, wenn für die Standfestigkeit alle in dieser Montage- und Wartungsanleitung vorgeschriebenen Maßnahmen durchgeführt wurden. Diese Maßnahmen sind entsprechend der standortspezifischen Statik und geologischen Gutachten durchzuführen. 12. PFLEGE UND WARTUNG",
       "keywords": [
         "unterkonstruktion",
@@ -19650,14 +19775,14 @@
       ]
     },
     {
-      "id": "doc-47-p43-62",
+      "id": "doc-47-p48-66",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 43,
-      "content": "43 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 12.3.3. Nach Abschluss der Errichtung der Unterkonstruktion Zusätzlich ist nach besonderen Ereignissen mit potenziell unmittelbarer oder mittelbarer Wirkung auf das verwendete System eine gesonderte Prüfung durchzuführen (z.B. Änderungen in der Bodenzusammen- setzung in chemischer oder sonstiger Hinsicht, wie durch die Errichtung einer emmissions intensiven Industrie in der Nähe, z.B. Chemiewerk). Zur Bewertung des Bodens hinsichtlich der stahl angreifenden Inhaltsstoffe werden schon vor Baubeginn im Gelände Bodenproben entnommen und chemische Analysen im Labor durchgeführt. Die Auswertung und Beurteilung dieser Proben, sowie die Wirkung der Feuerver- zinkung erfolgen gem. DIN 50929-3. 12.4. Erosion Hinsichtlich Erosion ist zu beachten: a) Durch Wasser: Intensive oder lang anhaltende Regenfälle können den Boden verfrachten. Bodenteilchen werden aus ihrem Aggregatverbund gelöst und abtransportiert. Dies führt zu einer möglichen Erosionsgefährdung. Die tatsächliche Erosionsgefährdung kann nur unter zusätzlicher Berücksichtigung folgender Faktoren ermittelt werden: Topografie des Geländes (Ebene, Hanglage), Bodenbedeckung sowie Bodenart. In ebenen Gebieten tritt Bodenerosion aufgrund der fehlenden Hangneigung eher selten auf. Eine nicht bepflanzte Oberfläche ist anfälliger für (Wind-)Erosion, ebenso feinkörnige Böden (schluffige, fein sandige Böden) ohne stabile Bodenaggregate (z. B. aufgelockertes Gefüge durch jahrelange, landwirtschaftliche Bearbeitung). b) Durch Wind: Winderosion tritt bevorzugt in ariden Gebieten (Wüste) mit geringer Vegetation auf. Die Bodenteilchen werden mit dem Wind verfrachtet. 12. PFLEGE UND WARTUNG",
+      "page": 48,
+      "content": "48 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 12.3.3. Nach Abschluss der Errichtung der Unterkonstruktion Zusätzlich ist nach besonderen Ereignissen mit potenziell unmittelbarer oder mittelbarer Wirkung auf das verwendete System eine gesonderte Prüfung durchzuführen (z.B. Änderungen in der Bodenzusammen- setzung in chemischer oder sonstiger Hinsicht, wie durch die Errichtung einer emmissions intensiven Industrie in der Nähe, z.B. Chemiewerk). Zur Bewertung des Bodens hinsichtlich der stahl angreifenden Inhaltsstoffe werden schon vor Baubeginn im Gelände Bodenproben entnommen und chemische Analysen im Labor durchgeführt. Die Auswertung und Beurteilung dieser Proben, sowie die Wirkung der Feuerver- zinkung erfolgen gem. DIN 50929-3. 12.4. Erosion Hinsichtlich Erosion ist zu beachten: a) Durch Wasser: Intensive oder lang anhaltende Regenfälle können den Boden verfrachten. Bodenteilchen werden aus ihrem Aggregatverbund gelöst und abtransportiert. Dies führt zu einer möglichen Erosionsgefährdung. Die tatsächliche Erosionsgefährdung kann nur unter zusätzlicher Berücksichtigung folgender Faktoren ermittelt werden: Topografie des Geländes (Ebene, Hanglage), Bodenbedeckung sowie Bodenart. In ebenen Gebieten tritt Bodenerosion aufgrund der fehlenden Hangneigung eher selten auf. Eine nicht bepflanzte Oberfläche ist anfälliger für (Wind-)Erosion, ebenso feinkörnige Böden (schluffige, fein sandige Böden) ohne stabile Bodenaggregate (z. B. aufgelockertes Gefüge durch jahrelange, landwirtschaftliche Bearbeitung). b) Durch Wind: Winderosion tritt bevorzugt in ariden Gebieten (Wüste) mit geringer Vegetation auf. Die Bodenteilchen werden mit dem Wind verfrachtet. 12. PFLEGE UND WARTUNG",
       "keywords": [
         "durch",
         "werden",
@@ -19680,13 +19805,13 @@
       ]
     },
     {
-      "id": "doc-47-p43-63",
+      "id": "doc-47-p48-67",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 43,
+      "page": 48,
       "content": "andwirtschaftliche Bearbeitung). b) Durch Wind: Winderosion tritt bevorzugt in ariden Gebieten (Wüste) mit geringer Vegetation auf. Die Bodenteilchen werden mit dem Wind verfrachtet. 12. PFLEGE UND WARTUNG",
       "keywords": [
         "wind",
@@ -19710,14 +19835,14 @@
       ]
     },
     {
-      "id": "doc-47-p44-64",
+      "id": "doc-47-p49-68",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 44,
-      "content": "44 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 12.5. Anzeichen für Erosion Im Folgenden werden verschiedene Anzeichen für Erosion genannt. Es ist erforderlich, die Anlage jährlich, mindestens jedoch aber nach extremen Witterungsereignissen auf Erosionsschäden zu über- prüfen. Erosionsrinnen: Furchen, die durch fließendes Wasser entstehen. Der Abtrag von Bodenteilchen kann im schlimmsten Fall die Stand- festigkeit der Anlage gefährden. Freigespülte Pfosten: Von fließendem Wasser freigelegte Rammprofi- le. Spaltmaß Boden-Rammfundament: Ein Hohlraum zwischen Ramm- fundament und Boden kann ebenso durch Austrocknung des Bodens, sowie Abtrag von Bodenteilchen durch Wind (Deflation) entstehen. Das Spaltmaß sollte nicht mehr als 5 cm betragen. Hangabwärts geneigte Pfosten: Starke Hangneigungen und eine geringe Erosionsresistenz des Untergrundes können dazu führen, dass sich die Pfosten hangabwärts neigen. Abweichungen der Tischneigung im flachen Gelände: Durch Wasser/Schnee oder starke Winde verursachte Tischneigung im flachen Gelände. Setzungen am Tisch: Setzungen kommen i.d.R. bei frisch aufge füllten, nicht verdichteten Böden vor, die durch die Auflast allmählich kompaktiert werden. 12. PFLEGE UND WARTUNG",
+      "page": 49,
+      "content": "49 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 12.5. Anzeichen für Erosion Im Folgenden werden verschiedene Anzeichen für Erosion genannt. Es ist erforderlich, die Anlage jährlich, mindestens jedoch aber nach extremen Witterungsereignissen auf Erosionsschäden zu über- prüfen. Erosionsrinnen: Furchen, die durch fließendes Wasser entstehen. Der Abtrag von Bodenteilchen kann im schlimmsten Fall die Stand- festigkeit der Anlage gefährden. Freigespülte Pfosten: Von fließendem Wasser freigelegte Rammprofi- le. Spaltmaß Boden-Rammfundament: Ein Hohlraum zwischen Ramm- fundament und Boden kann ebenso durch Austrocknung des Bodens, sowie Abtrag von Bodenteilchen durch Wind (Deflation) entstehen. Das Spaltmaß sollte nicht mehr als 5 cm betragen. Hangabwärts geneigte Pfosten: Starke Hangneigungen und eine geringe Erosionsresistenz des Untergrundes können dazu führen, dass sich die Pfosten hangabwärts neigen. Abweichungen der Tischneigung im flachen Gelände: Durch Wasser/Schnee oder starke Winde verursachte Tischneigung im flachen Gelände. Setzungen am Tisch: Setzungen kommen i.d.R. bei frisch aufge füllten, nicht verdichteten Böden vor, die durch die Auflast allmählich kompaktiert werden. 12. PFLEGE UND WARTUNG",
       "keywords": [
         "durch",
         "wasser",
@@ -19740,14 +19865,14 @@
       ]
     },
     {
-      "id": "doc-47-p45-65",
+      "id": "doc-47-p50-69",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 45,
-      "content": "45 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 12.6. Mechanik der Konstruktion Die Wartung der Konstruktion hat vorwiegend als Sichtprüfung in einem Intervall von 12 Monaten zu erfolgen. Bei wichtigen Schraubverbindungen, die unter dem Punkt „Kontrollpunkte“ aufgeführt sind, ist mit einem Drehmomentschlüssel zu prüfen. Dabei müssen unabhängig der Anlagengröße 2 % der Kontrollpunkte geprüft werden, wird dabei ein erhöhter Anteil (über 10 %) an losen Schrauben festgestellt muss eine flächendeckende Prüfung der Kontrollpunkte vorgenommen werden. Ziehen Sie die Schraub- verbindungen unter Angabe der Drehmomente fest. Ist dies nicht möglich, müssen die Schrauben ausgetauscht werden. In An lehnung an die Regelungen in DIN 18914 ist sicherzustellen, dass 50 % der planmäßigen Vorspannung vorhanden ist. Die Prüfung erfolgt, indem der Drehmomentschlüssel auf 50 % des Anzugsdrehmoments eingestellt wird (Prüfmoment). Wenn sich die Schraube damit nicht lösen lässt, ist die Prüfung erfolgreich. Hierbei ist ein Dreh momentschlüssel entsprechend DIN EN 6789 zu verwenden (anzeigender Drehmomentschlüssel [Messschlüssel] oder auslösender Drehtmomentschlüssel [Klick- oder Knackschlüssel]). Das einzuhaltende Anzugsdrehmoment ist an die VDI 2230 angelehnt. 12.7. Korrosion Die Stahlfundamente müssen jährlich mit einer Sichtkontrolle auf Rotrostbildung geprüft werden. Bei auftretendem Rotrost ist die betroffene Stelle mit einer Drahtbürste oder Schleifpapier abzuschleifen, bis kein Rost mehr zu sehen ist. Im Anschluss daran die Stelle mit Reinigungsmittel gründlich säubern und mit Zinkstaubgrundierung (siehe Definition unter dem Punkt „Begriffserklärungen“) mit erhöhtem Anteil an Zinkpartikeln streichen. Hier müssen die Anweis",
+      "page": 50,
+      "content": "50 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 12.6. Mechanik der Konstruktion Die Wartung der Konstruktion hat vorwiegend als Sichtprüfung in einem Intervall von 12 Monaten zu erfolgen. Bei wichtigen Schraubverbindungen, die unter dem Punkt „Kontrollpunkte“ aufgeführt sind, ist mit einem Drehmomentschlüssel zu prüfen. Dabei müssen unabhängig der Anlagengröße 2 % der Kontrollpunkte geprüft werden, wird dabei ein erhöhter Anteil (über 10 %) an losen Schrauben festgestellt muss eine flächendeckende Prüfung der Kontrollpunkte vorgenommen werden. Ziehen Sie die Schraub- verbindungen unter Angabe der Drehmomente fest. Ist dies nicht möglich, müssen die Schrauben ausgetauscht werden. In An lehnung an die Regelungen in DIN 18914 ist sicherzustellen, dass 50 % der planmäßigen Vorspannung vorhanden ist. Die Prüfung erfolgt, indem der Drehmomentschlüssel auf 50 % des Anzugsdrehmoments eingestellt wird (Prüfmoment). Wenn sich die Schraube damit nicht lösen lässt, ist die Prüfung erfolgreich. Hierbei ist ein Dreh momentschlüssel entsprechend DIN EN 6789 zu verwenden (anzeigender Drehmomentschlüssel [Messschlüssel] oder auslösender Drehtmomentschlüssel [Klick- oder Knackschlüssel]). Das einzuhaltende Anzugsdrehmoment ist an die VDI 2230 angelehnt. 12.7. Korrosion Die Stahlfundamente müssen jährlich mit einer Sichtkontrolle auf Rotrostbildung geprüft werden. Bei auftretendem Rotrost ist die betroffene Stelle mit einer Drahtbürste oder Schleifpapier abzuschleifen, bis kein Rost mehr zu sehen ist. Im Anschluss daran die Stelle mit Reinigungsmittel gründlich säubern und mit Zinkstaubgrundierung (siehe Definition unter dem Punkt „Begriffserklärungen“) mit erhöhtem Anteil an Zinkpartikeln streichen. Hier müssen die Anweis",
       "keywords": [
         "ist",
         "müssen",
@@ -19770,13 +19895,13 @@
       ]
     },
     {
-      "id": "doc-47-p45-66",
+      "id": "doc-47-p50-70",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 45,
+      "page": 50,
       "content": "zu sehen ist. Im Anschluss daran die Stelle mit Reinigungsmittel gründlich säubern und mit Zinkstaubgrundierung (siehe Definition unter dem Punkt „Begriffserklärungen“) mit erhöhtem Anteil an Zinkpartikeln streichen. Hier müssen die Anweisungen aus der DIN EN ISO 1461 und DIN EN ISO 1460 eingehalten werden. Die Korrosionsbelastung im Erdreich hängt vom Mineralgehalt und der Art der Mineralien und organi- schen Bestandteile ab. Ein weiterer Faktor ist der Wasser- und Sauerstoffgehalt. Bei großen Bauwerken, die durch verschiedene Bodenarten verlaufen, kann Korrosion (Lochfraß) auftreten. In solchen Fällen muss Fachpersonal (Geologen) hinzugezogen werden, um die Korrosionsbelastung fachgerecht zu beurteilen. Die verwendeten Rammfundamente werden mit der nach DIN EN ISO 1461 erforderlichen Zinkschichtdi- cke bedeckt. Diese Zinkschichtdicke nimmt aufgrund natürlicher Prozesse im Laufe der Zeit ab. Hierbei reagieren Stahl und Zink der Fundamente mit Umgebungsluft, Regenwasser, etc.; vgl. hierzu auch Einlei- tung „Nach Abschluss der Errichtung der Unterkonstruktion“ Die Geschwindigkeit der Zinkschichtdicken- abnahme hängt hierbei von der jeweiligen Korrosivitätskategorie ab (vgl. die Kategorieeinteilung nach DIN EN ISO 12944-2). 12. PFLEGE UND WARTUNG",
       "keywords": [
         "din",
@@ -19800,14 +19925,14 @@
       ]
     },
     {
-      "id": "doc-47-p46-67",
+      "id": "doc-47-p51-71",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 46,
-      "content": "46 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Je Korrosivitätskategorie ist von folgendem durchschnittlichen, jährlichen Zinkabtrag auszugehen: Korrosivitäts- kategorie Belastung Durchschnittlicher Zinkabtrag pro Jahr Beispiele C1 sehr gering < 0,1 μm/a Innen: beheizte Räume, z. B. Büros, Praxen, Schulen C2 gering < 0,1 – 0,7 μm/a Innen: ungeheizte Räume mit Kondensationsvorkommen, z. B. Lagerräume, Sporthallen Außen: Ländliche Bereiche C3 mittel < 0,7 – 2,0 μm/a Innen: Räume mit erhöhter Luftfeuchte, z. B. Brauereien, Wäschereien oder Lebensmittelproduktion Außen: Städtische oder Küstenbereiche mit mäßiger Luft- belastung C4 hoch < 2,0 – 4,0 μm/a Innen: Gebäude mit hoher Luftfeuchte, z. B. Schwimmbäder oder Industrieanlagen Außen: Städtische Bereiche mit erhöhter Luftbelastung durch industrielle oder chemische Anlagen, Küstengebiete mit mittlerer Salzbelastung C5 sehr hoch < 4,0 – 8,0 μm/a Innen: Gebäude mit konstant hoher Luftfeuchte Außen: Küstenbereiche mit starker Salzbelastung und industrielle Zonen mit starker Luftbelastung ▪ Die Abnahme der Zinkschicht ist unabhängig der Anlagengröße pro Bauteilgruppe an 1 % der zuge- hörigen Bauteile alle vier Jahre zu prüfen. ▪ Achten Sie darauf, dass die Messungen immer an den gleichen Stellen der Rammfundamente durch- geführt werden, um eine eindeutige Veränderung der Zinkschicht dokumentieren zu können. ▪ Wir empfehlen, die entsprechenden Stellen zu markieren. ▪ Bei der Messung der Schichtdicke muss hierbei ein zerstörungsfreies Prüfverfahren gewählt werden. Die gebräuchlichsten Verfahren sind die elektromagnetische Schichtdickenmessung und die Schicht- dicken messung per Ultraschall. Beide Verfahren werden unter dem Punkt „Begriffs erklärung“ be- schriebe",
+      "page": 51,
+      "content": "51 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Je Korrosivitätskategorie ist von folgendem durchschnittlichen, jährlichen Zinkabtrag auszugehen: Korrosivitäts- kategorie Belastung Durchschnittlicher Zinkabtrag pro Jahr Beispiele C1 sehr gering < 0,1 μm/a Innen: beheizte Räume, z. B. Büros, Praxen, Schulen C2 gering < 0,1 – 0,7 μm/a Innen: ungeheizte Räume mit Kondensationsvorkommen, z. B. Lagerräume, Sporthallen Außen: Ländliche Bereiche C3 mittel < 0,7 – 2,0 μm/a Innen: Räume mit erhöhter Luftfeuchte, z. B. Brauereien, Wäschereien oder Lebensmittelproduktion Außen: Städtische oder Küstenbereiche mit mäßiger Luft- belastung C4 hoch < 2,0 – 4,0 μm/a Innen: Gebäude mit hoher Luftfeuchte, z. B. Schwimmbäder oder Industrieanlagen Außen: Städtische Bereiche mit erhöhter Luftbelastung durch industrielle oder chemische Anlagen, Küstengebiete mit mittlerer Salzbelastung C5 sehr hoch < 4,0 – 8,0 μm/a Innen: Gebäude mit konstant hoher Luftfeuchte Außen: Küstenbereiche mit starker Salzbelastung und industrielle Zonen mit starker Luftbelastung ▪ Die Abnahme der Zinkschicht ist unabhängig der Anlagengröße pro Bauteilgruppe an 1 % der zuge- hörigen Bauteile alle vier Jahre zu prüfen. ▪ Achten Sie darauf, dass die Messungen immer an den gleichen Stellen der Rammfundamente durch- geführt werden, um eine eindeutige Veränderung der Zinkschicht dokumentieren zu können. ▪ Wir empfehlen, die entsprechenden Stellen zu markieren. ▪ Bei der Messung der Schichtdicke muss hierbei ein zerstörungsfreies Prüfverfahren gewählt werden. Die gebräuchlichsten Verfahren sind die elektromagnetische Schichtdickenmessung und die Schicht- dicken messung per Ultraschall. Beide Verfahren werden unter dem Punkt „Begriffs erklärung“ be- schriebe",
       "keywords": [
         "innen",
         "außen",
@@ -19830,13 +19955,13 @@
       ]
     },
     {
-      "id": "doc-47-p46-68",
+      "id": "doc-47-p51-72",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 46,
+      "page": 51,
       "content": "gsfreies Prüfverfahren gewählt werden. Die gebräuchlichsten Verfahren sind die elektromagnetische Schichtdickenmessung und die Schicht- dicken messung per Ultraschall. Beide Verfahren werden unter dem Punkt „Begriffs erklärung“ be- schrieben. ▪ Spätestens bei Erreichen der Mindestschichtdicke der benötigten Korrosivitätsklasse ist auf die Rammfundamente in ausreichender Menge eine geeignete Zinkstaubgrundierung aufzutragen. 12.8. Begriffserklärungen Elektromagnetische Schichtdickenmessung: Bei diesem Verfahren sendet eine Messsonde einen elektrischen Impuls aus, der durch die unmag netische Beschichtung auf den ferromagnetischen Grundwerkstoff trifft. Der Widerstand der Zinkschicht verändert den magnetischen Fluss, welcher von der Sonde gemessen und als Schichtdicke angezeigt wird. 12. PFLEGE UND WARTUNG",
       "keywords": [
         "verfahren",
@@ -19860,14 +19985,14 @@
       ]
     },
     {
-      "id": "doc-47-p47-69",
+      "id": "doc-47-p52-73",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 47,
-      "content": "47 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Schichtdickenmessung per Ultraschall: Die Ultraschall-Prüfung ist ein Verfahren zur Messung der Schichtdicke und zum Auffinden von Mate- rialfehlern. Ein Prüfkopf, der manuell über die Oberfläche geführt wird, sendet Ultraschallimpulse aus, die das Material durchdringen und davon reflektiert werden. Die Materialstärke wird dabei aus der benötigten Zeit, die die Ultraschallwellen zur Durchdringung des Materials benötigen, errechnet. Zinkstaubgrundierung: Grundbeschichtung für Stahl bei mechanischer Beanspruchung oder zum Schutz von schlecht zugäng- lichen Stellen. Dient als Rostschutzgrundierung zur Ausbesserung von Schadstellen an spritz- oder feuerverzinkten Stahluntergründen. Modulabstand: Die genannten „Anzeichen für Erosion“ können die Standfestigkeit der Anlage gefährden. Ein weiteres Anzeichen dafür, dass die Tischkonstruktion Erosion oder mechanischen Fehlern (wie z. B. lose Schrauben) ausgesetzt ist, ist eine augenscheinliche Veränderung des Modulabstandes. Dieser ist bei der jährli- chen Wartung stichprobenartig (2 % der Anlage) zu überprüfen. Kontrollpunkte: Die Kontrollpunkte an der Unterkonstruktion müssen während der Wartungsperiode jährlich auf Schäden und lose Schraubverbindungen geprüft werden. Gehen Sie zur Mängelbeseitigung, wie unter dem Punkt „Mechanik der Konstruktion“ und „Korrosion“ beschrieben vor . Im Folgenden sind die Prüfpunkte aufgeführt, die dieser Anleitung entsprechen: Stahlpfettenklemmen M12 x 60, Anzugsmoment: 90 Nm Schraubverbindungen Binder/Pfosten M16 x 30, Anzugsmoment: 150 Nm Pfettenverbinder M12 x 25, Anzugsmoment: 90 Nm Pfettenverbinder M16 x 30, Anzugsmoment: 150 Nm 12. PFLEGE UND WARTUNG",
+      "page": 52,
+      "content": "52 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Schichtdickenmessung per Ultraschall: Die Ultraschall-Prüfung ist ein Verfahren zur Messung der Schichtdicke und zum Auffinden von Mate- rialfehlern. Ein Prüfkopf, der manuell über die Oberfläche geführt wird, sendet Ultraschallimpulse aus, die das Material durchdringen und davon reflektiert werden. Die Materialstärke wird dabei aus der benötigten Zeit, die die Ultraschallwellen zur Durchdringung des Materials benötigen, errechnet. Zinkstaubgrundierung: Grundbeschichtung für Stahl bei mechanischer Beanspruchung oder zum Schutz von schlecht zugäng- lichen Stellen. Dient als Rostschutzgrundierung zur Ausbesserung von Schadstellen an spritz- oder feuerverzinkten Stahluntergründen. Modulabstand: Die genannten „Anzeichen für Erosion“ können die Standfestigkeit der Anlage gefährden. Ein weiteres Anzeichen dafür, dass die Tischkonstruktion Erosion oder mechanischen Fehlern (wie z. B. lose Schrauben) ausgesetzt ist, ist eine augenscheinliche Veränderung des Modulabstandes. Dieser ist bei der jährli- chen Wartung stichprobenartig (2 % der Anlage) zu überprüfen. Kontrollpunkte: Die Kontrollpunkte an der Unterkonstruktion müssen während der Wartungsperiode jährlich auf Schäden und lose Schraubverbindungen geprüft werden. Gehen Sie zur Mängelbeseitigung, wie unter dem Punkt „Mechanik der Konstruktion“ und „Korrosion“ beschrieben vor . Im Folgenden sind die Prüfpunkte aufgeführt, die dieser Anleitung entsprechen: Stahlpfettenklemmen M12 x 60, Anzugsmoment: 90 Nm Schraubverbindungen Binder/Pfosten M16 x 30, Anzugsmoment: 150 Nm Pfettenverbinder M12 x 25, Anzugsmoment: 90 Nm Pfettenverbinder M16 x 30, Anzugsmoment: 150 Nm 12. PFLEGE UND WARTUNG",
       "keywords": [
         "ist",
         "anzugsmoment",
@@ -19890,13 +20015,13 @@
       ]
     },
     {
-      "id": "doc-47-p47-70",
+      "id": "doc-47-p52-74",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 47,
+      "page": 52,
       "content": "12 x 60, Anzugsmoment: 90 Nm Schraubverbindungen Binder/Pfosten M16 x 30, Anzugsmoment: 150 Nm Pfettenverbinder M12 x 25, Anzugsmoment: 90 Nm Pfettenverbinder M16 x 30, Anzugsmoment: 150 Nm 12. PFLEGE UND WARTUNG",
       "keywords": [
         "anzugsmoment",
@@ -19918,14 +20043,14 @@
       ]
     },
     {
-      "id": "doc-47-p48-71",
+      "id": "doc-47-p53-75",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 48,
-      "content": "48 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 13.1. Allgemeine Hinweise zur Demontage Die Demontage des SL Rack Pfettensystems darf ausschließlich durch geschultes Fachpersonal erfolgen. Die Demontage ist in exakt umgekehrter Reihenfolge zur Montage gemäß der Montage- und Wartungs- anleitung durchzuführen. Alle geltenden Arbeitsschutz-, Unfallverhütungs- und Umweltschutzvor- schriften sind einzuhalten. Die Entsorgung der Komponenten muss nach AVV-Abfallschlüssel erfolgen. 13.2. Normen- und Rechtsgrundlagen Gesetze und Verordnungen: ▪ Arbeitsschutzgesetz (ArbSchG) ▪ DGUV Vorschrift 1 – Grundsätze der Prävention ▪ Betriebssicherheitsverordnung (BetrSichV) ▪ Kreislaufwirtschaftsgesetz (KrWG) ▪ Abfallverzeichnis-Verordnung (AVV) ▪ Elektro- und Elektronikgerätegesetz (ElektroG / WEEE) Normen: ▪ DIN EN ISO 1461 – Feuerverzinken von Stahl ▪ DIN EN ISO 1460 – Zinküberzüge auf Eisen- und Stahl-Erzeugnissen ▪ DIN EN ISO 12944 – Korrosionsschutz von Stahlbauten ▪ DIN EN 62305-3 – Blitzschutz bei PV-Anlagen 13.3. Persönliche Schutzausrüstung (PSA) ▪ Schutzhelm ▪ Schutzbrille ▪ Schutzhandschuhe ▪ Sicherheitsschuhe ▪ Warnweste ▪ Gehör- und Atemschutz bei trennenden oder stauberzeugenden Arbeiten 13. DEMONTIEREN UND ENTSORGEN",
+      "page": 53,
+      "content": "53 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 13.1. Allgemeine Hinweise zur Demontage Die Demontage des SL Rack Pfettensystems darf ausschließlich durch geschultes Fachpersonal erfolgen. Die Demontage ist in exakt umgekehrter Reihenfolge zur Montage gemäß der Montage- und Wartungs- anleitung durchzuführen. Alle geltenden Arbeitsschutz-, Unfallverhütungs- und Umweltschutzvor- schriften sind einzuhalten. Die Entsorgung der Komponenten muss nach AVV-Abfallschlüssel erfolgen. 13.2. Normen- und Rechtsgrundlagen Gesetze und Verordnungen: ▪ Arbeitsschutzgesetz (ArbSchG) ▪ DGUV Vorschrift 1 – Grundsätze der Prävention ▪ Betriebssicherheitsverordnung (BetrSichV) ▪ Kreislaufwirtschaftsgesetz (KrWG) ▪ Abfallverzeichnis-Verordnung (AVV) ▪ Elektro- und Elektronikgerätegesetz (ElektroG / WEEE) Normen: ▪ DIN EN ISO 1461 – Feuerverzinken von Stahl ▪ DIN EN ISO 1460 – Zinküberzüge auf Eisen- und Stahl-Erzeugnissen ▪ DIN EN ISO 12944 – Korrosionsschutz von Stahlbauten ▪ DIN EN 62305-3 – Blitzschutz bei PV-Anlagen 13.3. Persönliche Schutzausrüstung (PSA) ▪ Schutzhelm ▪ Schutzbrille ▪ Schutzhandschuhe ▪ Sicherheitsschuhe ▪ Warnweste ▪ Gehör- und Atemschutz bei trennenden oder stauberzeugenden Arbeiten 13. DEMONTIEREN UND ENTSORGEN",
       "keywords": [
         "din",
         "demontage",
@@ -19948,14 +20073,14 @@
       ]
     },
     {
-      "id": "doc-47-p49-72",
+      "id": "doc-47-p54-76",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 49,
-      "content": "49 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 13.4. Außerbetriebnahme der Anlage Vor Beginn der Demontage ist die Anlage vollständig außer Betrieb zu nehmen. Elektrische Komponen- ten dürfen ausschließlich durch eine Elektrofachkraft von der bauseitigen Stromversorgung getrennt werden. Die Spannungsfreiheit ist zu prüfen und zu dokumentieren. 13.5. Allgemein gültiger Demontageablauf 1. Demontage der Photovoltaikmodule 1.1. Lösen Sie die MC4-Stecker der PV Module. 1.2. Lösen Sie die Modulklemmen und demontieren Sie kontrolliert die Module. 2. Demontage der Pfetten und Pfettenverbinder 2.1. Lösen Sie die Verbindungsschrauben der Pfettenverbinder und demontieren Sie den Pfettenverbinder . 2.2. Lösen Sie die Stahlpfettenklemme und demontieren Sie kontrolliert die Pfetten. 13. DEMONTIEREN UND ENTSORGEN",
+      "page": 54,
+      "content": "54 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 13.4. Außerbetriebnahme der Anlage Vor Beginn der Demontage ist die Anlage vollständig außer Betrieb zu nehmen. Elektrische Komponen- ten dürfen ausschließlich durch eine Elektrofachkraft von der bauseitigen Stromversorgung getrennt werden. Die Spannungsfreiheit ist zu prüfen und zu dokumentieren. 13.5. Allgemein gültiger Demontageablauf 1. Demontage der Photovoltaikmodule 1.1. Lösen Sie die MC4-Stecker der PV Module. 1.2. Lösen Sie die Modulklemmen und demontieren Sie kontrolliert die Module. 2. Demontage der Pfetten und Pfettenverbinder 2.1. Lösen Sie die Verbindungsschrauben der Pfettenverbinder und demontieren Sie den Pfettenverbinder . 2.2. Lösen Sie die Stahlpfettenklemme und demontieren Sie kontrolliert die Pfetten. 13. DEMONTIEREN UND ENTSORGEN",
       "keywords": [
         "sie",
         "lösen",
@@ -19978,14 +20103,14 @@
       ]
     },
     {
-      "id": "doc-47-p50-73",
+      "id": "doc-47-p55-77",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 50,
-      "content": "50 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 3. Demontage der Binder, Streben und Diagonal- verstrebungen 3.1. Lösen Sie die Schraubverbindungen der Binder und demontieren Sie diese kontrolliert. 4. Rückbau der Rammprofile bzw. Trennung von Betonfundamenten (projektspezifisch) 4.1. Demontage mit Rammprofilen 4.1.1. Ziehen Sie die Rammprofile mit einem geeigneten Gerät Achtung: Achten Sie auf die gültigen Normen, Vorschriften sowie Landesrichtlinien zum Rückbau von mit Zinkbeschichteten Bauteilen oder Kunststoffteilen im Erdreich. 4.2. Demontage mit Betonfundament 4.2.1. Lösen Sie kontrolliert die Rammprofile vom Betonfundament. 4.2.2. Lösen Sie die Fundamentwinkel vom Betonfundament 4.2.3. Entfernen Sie das Betonfundament. Achten Sie hierbei auf die gültigen Normen, Vorschriften sowie Landes- richtlinien 13. DEMONTIEREN UND ENTSORGEN",
+      "page": 55,
+      "content": "55 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 3. Demontage der Binder, Streben und Diagonal- verstrebungen 3.1. Lösen Sie die Schraubverbindungen der Binder und demontieren Sie diese kontrolliert. 4. Rückbau der Rammprofile bzw. Trennung von Betonfundamenten (projektspezifisch) 4.1. Demontage mit Rammprofilen 4.1.1. Ziehen Sie die Rammprofile mit einem geeigneten Gerät Achtung: Achten Sie auf die gültigen Normen, Vorschriften sowie Landesrichtlinien zum Rückbau von mit Zinkbeschichteten Bauteilen oder Kunststoffteilen im Erdreich. 4.2. Demontage mit Betonfundament 4.2.1. Lösen Sie kontrolliert die Rammprofile vom Betonfundament. 4.2.2. Lösen Sie die Fundamentwinkel vom Betonfundament 4.2.3. Entfernen Sie das Betonfundament. Achten Sie hierbei auf die gültigen Normen, Vorschriften sowie Landes- richtlinien 13. DEMONTIEREN UND ENTSORGEN",
       "keywords": [
         "sie",
         "betonfundament",
@@ -20008,14 +20133,14 @@
       ]
     },
     {
-      "id": "doc-47-p51-74",
+      "id": "doc-47-p56-78",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 51,
-      "content": "51 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 13. DEMONTIEREN UND ENTSORGEN 13.6. Materialtrennung und AVV-Abfallschlüssel Zur Materialtrennung werden folgende Abfallschlüssel benötigt, die Einteilung der Fremdprodukten obliegt dem jeweiligen Hersteller . Einordnung von SL Rack Bauteilen: ▪ Stahl / Eisen (verzinkt): AVV 17 04 05 Rammprofile, Binder, Pfetten, Pfettenverbinder, Z-Strebe, Fundamentwinkel ▪ Gemischte Metalle: AVV 17 04 07 Modulklemmen, Pfetten-Binder Gelenk, Stahlpfettenklemme ▪ Aluminium: AVV 17 04 02 ▪ Edelstahl: AVV 17 04 05 Schrauben, Muttern, Unterlegscheiben ▪ Kunststoffe: AVV 17 02 03 Kunststofframmprofile, Kabelführung Einordnung von nicht SL Rack-Bauteilen: Module inklusive Stecker und Anbauteile ▪ Glas (PV-Module): AVV 16 01 20 bzw. 17 02 02 ▪ Elektro- und Elektronikschrott: AVV 16 02 13* (gefährlich) bzw. 16 02 14 ▪ Kupfer: AVV 17 04 01 13.7. Entsorgung Die Entsorgung der demontierten Komponenten hat gemäß Kreislaufwirtschaftsgesetz (KrWG) und Abfallverzeichnis-Verordnung (AVV) zu erfolgen. Elektronikschrott ist getrennt zu erfassen und über zugelassene Sammel- oder Rücknahmesysteme zu entsorgen. Photovoltaikmodule sind über zertifi- zierte Rücknahmesysteme oder den Modulhersteller zu verwerten. 13.8. Dokumentation Die ordnungsgemäße Demontage und Entsorgung ist projektspezifisch zu dokumentieren. Entsorgungs- nachweise, Wiegescheine und Übergabeprotokolle sind aufzubewahren. Die Dokumentation dient als Nachweis gegenüber Auftraggebern und Behörden.",
+      "page": 56,
+      "content": "56 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 13. DEMONTIEREN UND ENTSORGEN 13.6. Materialtrennung und AVV-Abfallschlüssel Zur Materialtrennung werden folgende Abfallschlüssel benötigt, die Einteilung der Fremdprodukten obliegt dem jeweiligen Hersteller . Einordnung von SL Rack Bauteilen: ▪ Stahl / Eisen (verzinkt): AVV 17 04 05 Rammprofile, Binder, Pfetten, Pfettenverbinder, Z-Strebe, Fundamentwinkel ▪ Gemischte Metalle: AVV 17 04 07 Modulklemmen, Pfetten-Binder Gelenk, Stahlpfettenklemme ▪ Aluminium: AVV 17 04 02 ▪ Edelstahl: AVV 17 04 05 Schrauben, Muttern, Unterlegscheiben ▪ Kunststoffe: AVV 17 02 03 Kunststofframmprofile, Kabelführung Einordnung von nicht SL Rack-Bauteilen: Module inklusive Stecker und Anbauteile ▪ Glas (PV-Module): AVV 16 01 20 bzw. 17 02 02 ▪ Elektro- und Elektronikschrott: AVV 16 02 13* (gefährlich) bzw. 16 02 14 ▪ Kupfer: AVV 17 04 01 13.7. Entsorgung Die Entsorgung der demontierten Komponenten hat gemäß Kreislaufwirtschaftsgesetz (KrWG) und Abfallverzeichnis-Verordnung (AVV) zu erfolgen. Elektronikschrott ist getrennt zu erfassen und über zugelassene Sammel- oder Rücknahmesysteme zu entsorgen. Photovoltaikmodule sind über zertifi- zierte Rücknahmesysteme oder den Modulhersteller zu verwerten. 13.8. Dokumentation Die ordnungsgemäße Demontage und Entsorgung ist projektspezifisch zu dokumentieren. Entsorgungs- nachweise, Wiegescheine und Übergabeprotokolle sind aufzubewahren. Die Dokumentation dient als Nachweis gegenüber Auftraggebern und Behörden.",
       "keywords": [
         "avv",
         "entsorgung",
@@ -20038,14 +20163,14 @@
       ]
     },
     {
-      "id": "doc-47-p52-75",
+      "id": "doc-47-p57-79",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 52,
-      "content": "52 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 1. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand Projektname Projektnummer Hersteller/Anschrift SL Rack GmbH Münchener Straße 1 D-83527 Haag i. OB Tel.: +49 8072 3767-0 www.sl-rack.de | info@sl-rack.de 14. PRÜFPROTOKOLL",
+      "page": 57,
+      "content": "57 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 1. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand Projektname Projektnummer Hersteller/Anschrift SL Rack GmbH Münchener Straße 1 D-83527 Haag i. OB Tel.: +49 8072 3767-0 www.sl-rack.de | info@sl-rack.de 14. PRÜFPROTOKOLL",
       "keywords": [
         "sl-rack",
         "rack",
@@ -20068,14 +20193,14 @@
       ]
     },
     {
-      "id": "doc-47-p53-76",
+      "id": "doc-47-p58-80",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 53,
-      "content": "53 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 2. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand 3. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand 14. PRÜFPROTOKOLL",
+      "page": 58,
+      "content": "58 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 2. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand 3. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand 14. PRÜFPROTOKOLL",
       "keywords": [
         "sl-rack",
         "tischnummer",
@@ -20098,14 +20223,14 @@
       ]
     },
     {
-      "id": "doc-47-p54-77",
+      "id": "doc-47-p59-81",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 54,
-      "content": "54 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 4. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand 5. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand 14. PRÜFPROTOKOLL",
+      "page": 59,
+      "content": "59 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 4. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand 5. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand 14. PRÜFPROTOKOLL",
       "keywords": [
         "sl-rack",
         "tischnummer",
@@ -20128,14 +20253,14 @@
       ]
     },
     {
-      "id": "doc-47-p55-78",
+      "id": "doc-47-p60-82",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 55,
-      "content": "55 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 7. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand 6. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand 14. PRÜFPROTOKOLL",
+      "page": 60,
+      "content": "60 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 7. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand 6. Tischnummer: ______ Wartung am (Datum): ________________________ Kontrollpunkt Prüfergebnis Maßnahme/Kommentar Prüfer Unterschrift Erosion Korrosion Chemie-Boden Setzungen Tischneigung Schichtdicke Modulabstand 14. PRÜFPROTOKOLL",
       "keywords": [
         "sl-rack",
         "tischnummer",
@@ -20158,14 +20283,14 @@
       ]
     },
     {
-      "id": "doc-47-p56-79",
+      "id": "doc-47-p61-83",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 56,
-      "content": "56 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 15.1. Rammplan 15.2. Zeichnungen und Layouts 15. ERGÄNZENDE UNTERLAGEN",
+      "page": 61,
+      "content": "61 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 15.1. Rammplan 15.2. Zeichnungen und Layouts 15. ERGÄNZENDE UNTERLAGEN",
       "keywords": [
         "sl-rack",
         "montage-",
@@ -20188,44 +20313,14 @@
       ]
     },
     {
-      "id": "doc-47-p57-80",
+      "id": "doc-47-p62-84",
       "documentId": "doc-47",
       "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
       "category": "Montageanleitungen",
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
       "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 57,
-      "content": "57 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 57SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de NOTIZEN",
-      "keywords": [
-        "sl-rack",
-        "rack",
-        "gmbh",
-        "münchener",
-        "straße",
-        "83527",
-        "haag",
-        "tel",
-        "8072",
-        "3767-0",
-        "sales",
-        "www",
-        "montage-",
-        "wartungsanleitung",
-        "freiflächensystem",
-        "pfettensystem",
-        "p101",
-        "montageanleitungen"
-      ]
-    },
-    {
-      "id": "doc-47-p58-81",
-      "documentId": "doc-47",
-      "title": "Montage- & Wartungsanleitung Freiflächensystem – Pfettensystem P101",
-      "category": "Montageanleitungen",
-      "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/Freiflaechensystem/SL_Rack-Freiflaeche-PfettensystemP101_Montageanleitung-DE.pdf",
-      "localPdf": "data/sl-rack-documents/047-Montage-Wartungsanleitung-Freiflachensystem-Pfettensystem-P101.pdf",
-      "page": 58,
-      "content": "MONTAGE- & WARTUNGSANLEITUNG Kontaktieren Sie uns für Ihr persönliches Angebot: SL Rack GmbH Münchener Straße 1 83527 Haag i. OB E-Mail: sales@sl-rack.de Tel.: +49 8072 3767-0 www.sl-rack.de Technische Änderungen und Druckfehler vorbehalten. Stand 04/2026 V02 SL Rack YouTube SL Rack Website SL Rack Online Bestellsystem",
+      "page": 62,
+      "content": "MONTAGE- & WARTUNGSANLEITUNG Kontaktieren Sie uns für Ihr persönliches Angebot: SL Rack GmbH Münchener Straße 1 83527 Haag i. OB E-Mail: sales@sl-rack.de Tel.: +49 8072 3767-0 www.sl-rack.de Technische Änderungen und Druckfehler vorbehalten. Stand 10/2026 V02 SL Rack YouTube SL Rack Website SL Rack Online Bestellsystem",
       "keywords": [
         "rack",
         "montage-",
