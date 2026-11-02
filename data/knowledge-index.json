@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T10:56:42.418Z",
+  "generatedAt": "2026-11-02T12:34:01.272Z",
   "sourceUrl": "https://www.sl-rack.com/downloads",
   "documentCount": 101,
   "chunkCount": 1516,
@@ -541,8 +541,8 @@
       "localText": "data/sl-rack-text/106-SL-Agri-Wall.json",
       "pageCount": 8,
       "chunkCount": 10,
-      "sourceBytes": 1367765,
-      "sourceSha256": "55da957b15985faf7728244553f72350cbf492debd932a66cda769dae952ecc3"
+      "sourceBytes": 1486900,
+      "sourceSha256": "17782e823586b6d6967180b00ecf34e810a1f5f169d8e5781921df10bbc81b1c"
     },
     {
       "id": "doc-107",
@@ -14100,26 +14100,26 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Agri_Wall/SL_Rack-SL_Agri_Wall-Datenblatt-DE.pdf",
       "localPdf": "data/sl-rack-documents/106-SL-Agri-Wall.pdf",
       "page": 2,
-      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Beispielplanung – SL Agri Wall Bitte beachten: Die PV-Module sind nicht Bestandteil und müssen separat erworben werden. SL AGRI WALL",
+      "content": "2 X ( 1 : 2 ) K ( 2 : 1 ) Stückliste BEMERKUNGENWERKSTOFFNORM / ABMESSUNGBENENNUNGINDEXARTIKEL-NR.STCK.POS. S420GD+ZM430MAC4044 mmRammprofil C110 - D18b82981-404451 S355GD+ZM430MAC Winkel Rammprofil 45101-00102 A2-70ISO 7380-1 - M8 x 20Flachrundkopfschraube mit TX40 73108-20163 A2-70ISO 4017 - M16 x 30Sechskantschraube 71216-30104 A2-70ISO 7093 A - 8,4Unterlegscheibe 78308-00165 A2-7025x16x1,6Unterlegscheibe 25x16x1,6 Elypse M8 A2 93208-01166 A4ISO 4161 - M8 x 1,25Sechskantmutter mit Flansch 72208-00167 A4ISO 4161 - M16 x 2Sechskantmutter mit Flansch 77216-00108 Solarmodul1953 x 1134 x 30Solarmodul - -49 Allgemein Bodenfläche -110 X K Alle Rechte vorbehalten. Vervielfältigungen jeder Art nur unter ausdrücklicher, schriftlicher Zustimmung der Fa: SL Rack GmbH 1 1 2 2 3 3 4 4 A B C C D D AA_AgriWall München_1V-4 0XXX_00_AA_AgriWall München_1V-4 MeieCh 26.08.2026 0XXX 00 Konstruiert von: Datum: Angebotsnummer: 1/1 Index: Blatt:Tisch: AA Kunde: LB Elektro- und Verkehrsanlagenbau GmbH & Co. KG Bezeichnung/Projekt: AgriWall München Projektionsmethode: Dateiname: 2833 (1953) (1134) 122 (1256)(1256) (1256) 880 (1134) 122(1134) (1134) (111) 122 (1256) 376,5 1200 376,5 0 -1256 ` 50 -2512 ` 50 -3768 ` 50 -5024 70 123110 4 829 1 2 9 3567 40444333 105 1239 1500 ` 50 2544 50244x1256=( ) 111 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Beispielplanung – SL Agri Wall Bitte beachten: Die PV-Module sind nicht Bestandteil und müssen separat erworben werden. SL AGRI WALL",
       "keywords": [
+        "1134",
+        "1256",
         "agri",
         "wall",
-        "sl-rack",
-        "produktblätter",
-        "rack",
+        "a2-70iso",
         "gmbh",
-        "münchener",
-        "straße",
-        "83527",
-        "haag",
-        "tel",
-        "8072",
-        "3767-0",
-        "sales",
-        "www",
-        "beispielplanung",
-        "bitte",
-        "beachten"
+        "agriwall",
+        "münchen",
+        "122",
+        "m16",
+        "a4iso",
+        "4161",
+        "flansch",
+        "rack",
+        "1v-4",
+        "0xxx",
+        "111",
+        "376"
       ]
     },
     {
@@ -14130,7 +14130,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Agri_Wall/SL_Rack-SL_Agri_Wall-Datenblatt-DE.pdf",
       "localPdf": "data/sl-rack-documents/106-SL-Agri-Wall.pdf",
       "page": 3,
-      "content": "3 3. 1. 2. 4. SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Lieferumfang SL Agri Wall: Rammprofil C C110 / C130 Rammprofil-Winkel (Art.-Nr. 45101-00) Verbindungsmittel 1. Sechskantschrauben M16 x 30 ISO 4017 (Art.-Nr. 71216-30) 2. Flachrundkopfschraube M8 x 20 (Art.-Nr. 73108-20) 3. Sechskantmutter M8 & M16 mit Flansch ISO 4161 (Art-.Nr. 77208-00 + 77216-00) 4. Unterlegscheibe Elypse (Art.-Nr. 93208-01) SL AGRI WALL",
+      "content": "3 3. 1. 2. 4. 5. SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Lieferumfang SL Agri Wall: Rammprofil C C110 / C130 Rammprofil-Winkel (Art.-Nr. 45101-00) Verbindungsmittel 1. Sechskantschrauben M16 x 30 ISO 4017 (Art.-Nr. 71216-30) 2. Flachrundkopfschraube M8 x 20 (Art.-Nr. 73108-20) 3. Sechskantmutter M8 & M16 mit Flansch ISO 4161 (Art-.Nr. 77208-00 + 77216-00) 4. Unterlegscheibe Elypse (Art.-Nr. 93208-01) 5. Unterlegscheibe 8,4 mm (Art.-Nr. 78308-00) SL AGRI WALL",
       "keywords": [
         "art",
         "-nr",
@@ -14139,6 +14139,7 @@
         "sl-rack",
         "m16",
         "iso",
+        "unterlegscheibe",
         "produktblätter",
         "rack",
         "gmbh",
@@ -14148,8 +14149,7 @@
         "haag",
         "tel",
         "8072",
-        "3767-0",
-        "sales"
+        "3767-0"
       ]
     },
     {
@@ -14280,7 +14280,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/SL_Agri_Wall/SL_Rack-SL_Agri_Wall-Datenblatt-DE.pdf",
       "localPdf": "data/sl-rack-documents/106-SL-Agri-Wall.pdf",
       "page": 6,
-      "content": "6 1 2 3 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de SL AGRI WALL Montage 1. Rammen Sie die Rammprofile nach Ramm- plan. Achtung: Nach dem Rammen die Oberseite der Rammprofile mit Dickschicht-Zinkstaubfarbe Art.-Nr. 06201-01 behandeln. Achtung: Das Anzugsmoment von M16 x 30 beträgt 150 Nm. 2. Montieren Sie die Winkel an den passenden Bohrungen oben und unten am Rammprofil. 3. Befestigen Sie das Photovoltaikmodul am passenden Langloch des Winkels. Achtung: Die Unterlegscheibe muss auf der Innenseite des Modulrahmens platziert werden. Achtung: Das Anzugsmoment von M8 x 20 beträgt 25 Nm.",
+      "content": "6 1 2 3 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de SL AGRI WALL Montage 1. Rammen Sie die Rammprofile nach Ramm- plan. Achtung: Nach dem Rammen die Oberseite der Rammprofile mit Dickschicht-Zinkstaubfarbe Art.-Nr. 06201-01 behandeln. Achtung: Das Anzugsmoment von M16 x 30 beträgt 150 Nm. 2. Montieren Sie die Winkel an den passenden Bohrungen oben und unten am Rammprofil. 3. Befestigen Sie das Photovoltaikmodul am passenden Langloch des Winkels. Wenn ein Potential- ausgleich gewünscht ist, muss zwischen Modul und Rammprofilwinkel eine Kontaktscheibe ange- bracht werden. Achtung: Die Unterlegscheibe muss auf der Innenseite des Modulrahmens platziert werden. Achtung: Das Anzugsmoment von M8 x 20 beträgt 25 Nm.",
       "keywords": [
         "achtung",
         "sie",
@@ -14294,12 +14294,12 @@
         "beträgt",
         "passenden",
         "des",
+        "muss",
+        "werden",
         "produktblätter",
         "rack",
         "gmbh",
-        "münchener",
-        "straße",
-        "83527"
+        "münchener"
       ]
     },
     {
