@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T12:29:09.059Z",
+  "generatedAt": "2026-11-06T12:13:32.373Z",
   "sourceUrl": "https://www.sl-rack.com/downloads",
   "documentCount": 101,
   "chunkCount": 1515,
@@ -301,8 +301,8 @@
       "localText": "data/sl-rack-text/134-Tragschienen-RAIL-7-RAIL-15-in-Verbindung-mit-Stockschraube.json",
       "pageCount": 8,
       "chunkCount": 8,
-      "sourceBytes": 1691696,
-      "sourceSha256": "9403b40ea744a34becf8deb794e4e4fefada5e8d68f2f321e370360d4c5aa9c8"
+      "sourceBytes": 1694064,
+      "sourceSha256": "8780a795b2706b3107eee4ac00adc80b093b06c1c8e3d789405c4f4c87479661"
     },
     {
       "id": "doc-89",
@@ -9955,13 +9955,14 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Tragschienen_RAIL/SL_Rack_RAIL-7_RAIL-15_Produktblatt_DE.pdf",
       "localPdf": "data/sl-rack-documents/134-Tragschienen-RAIL-7-RAIL-15-in-Verbindung-mit-Stockschraube.pdf",
       "page": 3,
-      "content": "3 1 3 2 4 SL Rack GmbH\u0007\u0007|\u0007\u0007Münchener\u0007Straße\u00071\u0007\u0007|\u0007\u000783527\u0007Haag\u0007i.\u0007OB\u0007\u0007|\u0007\u0007Tel:\u0007+49\u00078072\u00073767-0\u0007\u0007|\u0007\u0007sales@sl-rack.de | www.sl-rack.de RAIL 7 / RAIL 15 Setzen\u0007Sie\u0007die\u0007Stockschraube\u0007an\u0007und\u0007drehen\u0007diese\u0007ein\u0007(Bild\u00071). Die\u0007Stockschraube\u0007sollte\u0007mit\u0007Dichtmittel\u0007großzügig\u0007abgedichtet\u0007werden\u0007(Bild\u00072\u0007+\u00073). Montieren\u0007Sie\u0007wahlweise\u0007mit\u0007Universaladapter\u0007Art.-Nr .\u000791205-00\u0007oder\u0007den\u0007Stockschraubenaufsatz\u00072.0\u0007 Art.-Nr .\u000711302-12\u0007(Bild\u00074). Achtung: Berücksichten Sie vor Montage der Stockschraube die gegenseitige Verschattung. Montage Stockschraube – Vorarbeit für alle Montagearten Dieser\u0007Vorgang\u0007ist\u0007für\u0007alle\u0007Montagevarianten\u0007gleich\u0007und\u0007ident\u0007bei\u0007Holz,\u0007Stahlpfetten\u0007oder\u0007Chemisch\u0007in\u0007Beton.",
+      "content": "3 1 3 2 4 SL Rack GmbH\u0007\u0007|\u0007\u0007Münchener\u0007Straße\u00071\u0007\u0007|\u0007\u000783527\u0007Haag\u0007i.\u0007OB\u0007\u0007|\u0007\u0007Tel:\u0007+49\u00078072\u00073767-0\u0007\u0007|\u0007\u0007sales@sl-rack.de | www.sl-rack.de RAIL 7 / RAIL 15 Setzen\u0007Sie\u0007die\u0007Stockschraube\u0007an\u0007und\u0007drehen\u0007diese\u0007ein\u0007(Bild\u00071). Die\u0007Stockschraube\u0007sollte\u0007mit\u0007Dichtmittel\u0007großzügig\u0007abgedichtet\u0007werden\u0007(Bild\u00072\u0007+\u00073). Montieren\u0007Sie\u0007wahlweise\u0007mit\u0007Universaladapter\u0007Art.-Nr .\u000791205-00\u0007oder\u0007den\u0007Stockschraubenaufsatz\u00072.0\u0007 Art.-Nr .\u000711302-12\u0007(Bild\u00074). Achtung: Berücksichten Sie vor Montage der Stockschraube die gegenseitige Verschattung. Montage Stockschraube – Vorarbeit für alle Montagearten Dieser\u0007Vorgang\u0007ist\u0007für\u0007alle\u0007Montagevarianten\u0007gleich\u0007und\u0007ident\u0007bei\u0007Holz,\u0007Stahlpfetten\u0007oder\u0007Chemisch\u0007in\u0007Beton. Dichtmittel",
       "keywords": [
         "stockschraube",
         "rail",
         "sie",
         "bild",
         "sl-rack",
+        "dichtmittel",
         "art",
         "-nr",
         "montage",
@@ -9973,8 +9974,7 @@
         "gmbh",
         "münchener",
         "straße",
-        "83527",
-        "haag"
+        "83527"
       ]
     },
     {
@@ -9985,12 +9985,14 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Tragschienen_RAIL/SL_Rack_RAIL-7_RAIL-15_Produktblatt_DE.pdf",
       "localPdf": "data/sl-rack-documents/134-Tragschienen-RAIL-7-RAIL-15-in-Verbindung-mit-Stockschraube.pdf",
       "page": 4,
-      "content": "4 7 5a 5b 6 SL Rack GmbH\u0007\u0007|\u0007\u0007Münchener\u0007Straße\u00071\u0007\u0007|\u0007\u000783527\u0007Haag\u0007i.\u0007OB\u0007\u0007|\u0007\u0007Tel:\u0007+49\u00078072\u00073767-0\u0007\u0007|\u0007\u0007sales@sl-rack.de | www.sl-rack.de RAIL 7 / RAIL 15 oder: Montage mit Stockschrauben- aufsatz 2.0\u0007Art.-Nr .\u000711302-12 Die\u0007RAILs\u0007mit\u0007dem\u0007Außenver- binder RAIL 3.0\u0007Art.-Nr .\u000781110-00\u0007 zusammenfügen. Montage mit Universaladapter Art.-Nr .\u000791205-00 Die\u0007PV-Module\u0007auflegen,\u0007die\u0007Mittel-\u0007bzw.\u0007Endklemmen\u0007einsetzen\u0007und\u0007an\u0007die\u0007PV-Module\u0007schieben.\u0007Sind\u0007alle\u0007Kompo- nenten\u0007wie\u0007gewünscht\u0007ausgerichtet\u0007und\u0007fixiert,\u0007werden\u0007diese\u0007wie\u0007vorgegeben\u0007fest\u0007montiert.\u0007  Montageablauf RAIL 7 / RAIL 15 Montage\u0007wahlweise\u0007mit\u0007Universaladapter\u0007oder\u0007Stockschraubenaufsatz.\u0007",
+      "content": "4 7 5a 5b 6 50 mm50 mm 10 Nm10 Nm 25 Nm25 Nm 10 Nm10 Nm 25 Nm25 Nm 90 Nm90 Nm SL Rack GmbH\u0007\u0007|\u0007\u0007Münchener\u0007Straße\u00071\u0007\u0007|\u0007\u000783527\u0007Haag\u0007i.\u0007OB\u0007\u0007|\u0007\u0007Tel:\u0007+49\u00078072\u00073767-0\u0007\u0007|\u0007\u0007sales@sl-rack.de | www.sl-rack.de RAIL 7 / RAIL 15 oder: Montage mit Stockschrauben- aufsatz 2.0\u0007Art.-Nr .\u000711302-12 Die\u0007RAILs\u0007mit\u0007dem\u0007Außenver- binder RAIL 3.0\u0007Art.-Nr .\u000781110-00\u0007 zusammenfügen. Montage mit Universaladapter Art.-Nr .\u000791205-00 Die\u0007PV-Module\u0007auflegen,\u0007die\u0007Mittel-\u0007bzw.\u0007Endklemmen\u0007einsetzen\u0007und\u0007an\u0007die\u0007PV-Module\u0007schieben.\u0007Sind\u0007alle\u0007Kompo- nenten\u0007wie\u0007gewünscht\u0007ausgerichtet\u0007und\u0007fixiert,\u0007werden\u0007diese\u0007wie\u0007vorgegeben\u0007fest\u0007montiert.\u0007  Montageablauf RAIL 7 / RAIL 15 Montage\u0007wahlweise\u0007mit\u0007Universaladapter\u0007oder\u0007Stockschraubenaufsatz.\u0007",
       "keywords": [
         "rail",
         "montage",
         "art",
         "-nr",
+        "nm10",
+        "nm25",
         "sl-rack",
         "universaladapter",
         "pv-module",
@@ -9999,12 +10001,10 @@
         "verbindung",
         "stockschraube",
         "produktblätter",
+        "mm50",
+        "nm90",
         "rack",
-        "gmbh",
-        "münchener",
-        "straße",
-        "83527",
-        "haag"
+        "gmbh"
       ]
     },
     {
@@ -10045,12 +10045,13 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Tragschienen_RAIL/SL_Rack_RAIL-7_RAIL-15_Produktblatt_DE.pdf",
       "localPdf": "data/sl-rack-documents/134-Tragschienen-RAIL-7-RAIL-15-in-Verbindung-mit-Stockschraube.pdf",
       "page": 6,
-      "content": "6 5a 5b 6 SL Rack GmbH\u0007\u0007|\u0007\u0007Münchener\u0007Straße\u00071\u0007\u0007|\u0007\u000783527\u0007Haag\u0007i.\u0007OB\u0007\u0007|\u0007\u0007Tel:\u0007+49\u00078072\u00073767-0\u0007\u0007|\u0007\u0007sales@sl-rack.de | www.sl-rack.de RAIL 7 / RAIL 15 Montageablauf RAIL 40 / RAIL 60 – Dachparalelle Montage Montage\u0007wahlweise\u0007mit\u0007Universaladapter\u0007oder\u0007Stockschraubenaufsatz. Montage mit Universaladapter Art.-Nr .\u000791205-00 oder: Montage mit Stockschrauben- aufsatz 2.0\u0007Art.-Nr .\u000711302-12 Die\u0007RAILs\u0007mit\u0007dem\u0007Innenver- binder RAIL 2.0 für RAIL 40 oder RAIL 60\u0007Art.-Nr .\u000781140-02\u0007oder\u0007 81160-02\u0007zusammenfügen. Die\u0007Montage\u0007ist\u0007auch\u0007mit\u0007Außen- verbinder\u0007möglich. Die\u0007PV-Module\u0007auflegen,\u0007die\u0007Mittel-\u0007bzw.\u0007Endklemmen\u0007einsetzen\u0007und\u0007an\u0007die\u0007PV-Module\u0007schieben.\u0007Sind\u0007alle\u0007Kompo- nenten\u0007wie\u0007gewünscht\u0007ausgerichtet\u0007und\u0007fixiert,\u0007werden\u0007diese\u0007wie\u0007vorgegeben\u0007fest\u0007montiert.\u0007 ",
+      "content": "6 5a 5b 6 25 Nm25 Nm 25 Nm25 Nm 90 Nm90 Nm SL Rack GmbH\u0007\u0007|\u0007\u0007Münchener\u0007Straße\u00071\u0007\u0007|\u0007\u000783527\u0007Haag\u0007i.\u0007OB\u0007\u0007|\u0007\u0007Tel:\u0007+49\u00078072\u00073767-0\u0007\u0007|\u0007\u0007sales@sl-rack.de | www.sl-rack.de RAIL 7 / RAIL 15 Montageablauf RAIL 40 / RAIL 60 – Dachparalelle Montage Montage\u0007wahlweise\u0007mit\u0007Universaladapter\u0007oder\u0007Stockschraubenaufsatz. Montage mit Universaladapter Art.-Nr .\u000791205-00 oder: Montage mit Stockschrauben- aufsatz 2.0\u0007Art.-Nr .\u000711302-12 Die\u0007RAILs\u0007mit\u0007dem\u0007Innenver- binder RAIL 2.0 für RAIL 40 oder RAIL 60\u0007Art.-Nr .\u000781140-02\u0007oder\u0007 81160-02\u0007zusammenfügen. Die\u0007Montage\u0007ist\u0007auch\u0007mit\u0007Außen- verbinder\u0007möglich. Die\u0007PV-Module\u0007auflegen,\u0007die\u0007Mittel-\u0007bzw.\u0007Endklemmen\u0007einsetzen\u0007und\u0007an\u0007die\u0007PV-Module\u0007schieben.\u0007Sind\u0007alle\u0007Kompo- nenten\u0007wie\u0007gewünscht\u0007ausgerichtet\u0007und\u0007fixiert,\u0007werden\u0007diese\u0007wie\u0007vorgegeben\u0007fest\u0007montiert.\u0007 ",
       "keywords": [
         "rail",
         "montage",
         "art",
         "-nr",
+        "nm25",
         "sl-rack",
         "universaladapter",
         "pv-module",
@@ -10059,12 +10060,11 @@
         "verbindung",
         "stockschraube",
         "produktblätter",
+        "nm90",
         "rack",
         "gmbh",
         "münchener",
-        "straße",
-        "83527",
-        "haag"
+        "straße"
       ]
     },
     {
