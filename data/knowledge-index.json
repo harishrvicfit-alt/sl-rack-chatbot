@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-06T12:13:32.373Z",
+  "generatedAt": "2026-11-10T12:45:37.484Z",
   "sourceUrl": "https://www.sl-rack.com/downloads",
   "documentCount": 101,
   "chunkCount": 1515,
@@ -697,8 +697,8 @@
       "localText": "data/sl-rack-text/135-Montageanleitung-SL-Tracker-2P.json",
       "pageCount": 66,
       "chunkCount": 90,
-      "sourceBytes": 5289130,
-      "sourceSha256": "62f2f239a9e940510cc9c75130eabba7c8a543be74d823829bfb0a0772e405d3"
+      "sourceBytes": 5289123,
+      "sourceSha256": "e56be84dc4d4af15293ef387ae8e7a99d60e1b54afbe1ddbaf34b9ced8975016"
     },
     {
       "id": "doc-55",
@@ -31004,7 +31004,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/SL_Tracker/SL_Rack-Freiflaeche-Tracker-2P_Montageanl-DE.pdf",
       "localPdf": "data/sl-rack-documents/135-Montageanleitung-SL-Tracker-2P.pdf",
       "page": 29,
-      "content": "29 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 11.1. Montage Pfostenverlängerung 1 Montieren Sie die Pfostenverlängerung mit der oberen Sechskantschraube am Rammprofil. Beachten Sie, dass die Anpressplatte oben (Art.-Nr 62201-00-07) auf der Schrauben kopf- seite verbaut wird Achtung: Nur Handfest anziehen! 2 Richten Sie die Pfostenverlängerung im Wasser aus: Zeichnen Sie danach das Bohrloch an und bohren das zweite Befestigungsloch. Bohrdurchmesser 17,5 mm Achtung: Vor dem Bohren des zweiten Bohrlochs muss zur Lagesicherung die oberen Befestigungs- schrauben mit Drehmoment 15029Nmbefestigt werden! 3 Befestigen Sie die dritte Schraube der Pfosten- verlängerung am Rammprofil mit Drehmoment 150 Nm zusammen mit der Anpressplatte unten (Art.-Nr . 62201-00-06) an der Schraubenkopf- seite. Sechskantschraube M16 x 40, Art.-Nr . 71216-40 Sechskantmutter M16, Art.-Nr . 77216-00 11. MONTAGE",
+      "content": "29 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 11.1. Montage Pfostenverlängerung 1 Montieren Sie die Pfostenverlängerung mit der oberen Sechskantschraube am Rammprofil. Beachten Sie, dass die Anpressplatte oben (Art.-Nr 62201-00-07) auf der Schrauben kopf- seite verbaut wird Achtung: Nur Handfest anziehen! 2 Richten Sie die Pfostenverlängerung im Wasser aus: Zeichnen Sie danach das Bohrloch an und bohren das zweite Befestigungsloch. Bohrdurchmesser 17,5 mm Achtung: Vor dem Bohren des zweiten Bohrlochs muss zur Lagesicherung die oberen Befestigungs- schrauben mit Drehmoment 150 Nm befestigt werden! 3 Befestigen Sie die dritte Schraube der Pfosten- verlängerung am Rammprofil mit Drehmoment 150 Nm zusammen mit der Anpressplatte unten (Art.-Nr . 62201-00-06) an der Schraubenkopf- seite. Sechskantschraube M16 x 40, Art.-Nr . 71216-40 Sechskantmutter M16, Art.-Nr . 77216-00 11. MONTAGE",
       "keywords": [
         "sie",
         "art",
@@ -31021,9 +31021,9 @@
         "achtung",
         "bohren",
         "drehmoment",
+        "150",
         "m16",
-        "montageanleitung",
-        "tracker"
+        "montageanleitung"
       ]
     },
     {
@@ -31034,7 +31034,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/SL_Tracker/SL_Rack-Freiflaeche-Tracker-2P_Montageanl-DE.pdf",
       "localPdf": "data/sl-rack-documents/135-Montageanleitung-SL-Tracker-2P.pdf",
       "page": 30,
-      "content": "30 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 4 Setzen Sie das Anschlussblech 62201-00-02 auf. 5 Befestigen Sie das Anschlussblech mit Drehmo- ment (150 Nm) Sechskantschraube M16x40 Art.-Nr. 71216-40 Sechskantmutter M16 Art.-Nr . 77216-00 6 Montieren Sie die Montageplatte an dem Anschlussblech mit Drehmoment (150 Nm) Sechskantschraube M16x40 Art.-Nr. 71216-40 Sechskantmutter M16 Art.-Nr . 77216-00 11. MONTAGE",
+      "content": "30 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 4 Setzen Sie das Anschlussblech 62201-00-02 auf. 5 Befestigen Sie das Anschlussblech mit Dreh- moment (150 Nm) Sechskantschraube M16x40 Art.-Nr. 71216-40 Sechskantmutter M16 Art.-Nr . 77216-00 6 Montieren Sie die Montageplatte an dem Anschlussblech mit Drehmoment (150 Nm) Sechskantschraube M16x40 Art.-Nr. 71216-40 Sechskantmutter M16 Art.-Nr . 77216-00 11. MONTAGE",
       "keywords": [
         "art",
         "-nr",
@@ -31064,7 +31064,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/SL_Tracker/SL_Rack-Freiflaeche-Tracker-2P_Montageanl-DE.pdf",
       "localPdf": "data/sl-rack-documents/135-Montageanleitung-SL-Tracker-2P.pdf",
       "page": 31,
-      "content": "31 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 7 Setzen Sie den Getriebeträger Art.-Nr . (62201- 00-04) und das Verstärkungsblech (1P oder 2P) an die Pfostenverlängerung an. 8 Verschrauben Sie die Komponenten mit Drehmoment ( 150 Nm) Getriebeträger: Sechskantschraube M16x40 Art.-Nr. 71216-40 Sechskantmutter M16 Art.-Nr . 77216-00 Verstärkungsblech: Sechskantschraube M16x120 Art.-Nr. 71216-120 Sechskantmutter M16 Art.-Nr . 77216-00 11. MONTAGE",
+      "content": "31 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 7 Setzen Sie den Getriebeträger Art.-Nr . 62201-00-04 und das Verstärkungsblech an die Pfostenverlängerung an. 8 Verschrauben Sie die Komponenten mit Drehmoment (150 Nm) Getriebeträger: Sechskantschraube M16x40 Art.-Nr. 71216-40 Sechskantmutter M16 Art.-Nr . 77216-00 Verstärkungsblech: Sechskantschraube M16x120 Art.-Nr. 71216-120 Sechskantmutter M16 Art.-Nr . 77216-00 11. MONTAGE",
       "keywords": [
         "art",
         "-nr",
@@ -31394,7 +31394,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Montageanleitungen/SL_Tracker/SL_Rack-Freiflaeche-Tracker-2P_Montageanl-DE.pdf",
       "localPdf": "data/sl-rack-documents/135-Montageanleitung-SL-Tracker-2P.pdf",
       "page": 42,
-      "content": "42 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 11. MONTAGE 2 Befestigen Sie die Module wie gezeigt am ersten Modultragprofil des Tisches. Sechskantschraube M8 x 16: Art.-Nr . 71208-16 Sechskantmutter M8: Art.-Nr . 7720800 Drehmoment 25 Nm Achtung: Je nach Modultyp kann auch eine Befestigung mit M6 Schrauben benötigt werden. Die benötigten Befestigungsschrauben sind vor Projekt- beginn zu ermitteln. Sechskantschraube M6x16 Art.-Nr 71206-16 Sechskantmutter M6: 77206-00 3.1 Befestigen Sie das Modultragprofil am Vierkant- rohr. 3.2 Befestigen Sie das Modul am Modultragprofil. Sechskantschraube M8 x 20 : Art.-Nr . 71208-20 Sechskantmutter M8: Art.-Nr . 77208-00 Drehmoment 25 Nm 11.5. Befestigung Module 1 Legen Sie die Module auf die Modultrag profile. 3 Schieben Sie das nächste Modultragprofil unter die Befestigungspunkte des Moduls. Achtung: Prüfen Sie vor der Befestigung die Rechtwinkligkeit der Modultragprofile!",
+      "content": "42 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de 11. MONTAGE 2 Befestigen Sie die Module wie gezeigt am ersten Modultragprofil des Tisches. Sechskantschraube M8 x 16: Art.-Nr . 71208-16 Sechskantmutter M8: Art.-Nr . 77208-00 Drehmoment 25 Nm Achtung: Je nach Modultyp kann auch eine Befestigung mit M6 Schrauben benötigt werden. Die benötigten Befestigungsschrauben sind vor Projektbeginn zu ermitteln. Sechskantschraube M6x16 Art.-Nr 71206-16 Sechskantmutter M6: 77206-00 3.1 Befestigen Sie das Modultragprofil am Vierkant- rohr. 3.2 Befestigen Sie das Modul am Modultragprofil. Sechskantschraube M8 x 20 : Art.-Nr . 71208-20 Sechskantmutter M8: Art.-Nr . 77208-00 Drehmoment 25 Nm 11.5. Befestigung Module 1 Legen Sie die Module auf die Modultrag profile. 3 Schieben Sie das nächste Modultragprofil unter die Befestigungspunkte des Moduls. Achtung: Prüfen Sie vor der Befestigung die Rechtwinkligkeit der Modultragprofile!",
       "keywords": [
         "sie",
         "art",
@@ -31407,13 +31407,13 @@
         "befestigung",
         "sl-rack",
         "des",
+        "77208-00",
         "drehmoment",
         "achtung",
         "vor",
         "montageanleitung",
         "tracker",
-        "montageanleitungen",
-        "rack"
+        "montageanleitungen"
       ]
     },
     {
