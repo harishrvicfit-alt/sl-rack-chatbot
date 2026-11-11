@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T12:45:37.484Z",
+  "generatedAt": "2026-11-11T11:57:59.735Z",
   "sourceUrl": "https://www.sl-rack.com/downloads",
   "documentCount": 101,
   "chunkCount": 1515,
@@ -277,8 +277,8 @@
       "localText": "data/sl-rack-text/139-Dachhaken-SL-A2-Tegalit-Biberschwanz-Schiefer.json",
       "pageCount": 6,
       "chunkCount": 6,
-      "sourceBytes": 1241152,
-      "sourceSha256": "407eb78f8ae9ebb7d106fcc058ce754dfbaa5554f1bf261d160205b5531b3b04"
+      "sourceBytes": 1448973,
+      "sourceSha256": "7940d018ad602e712b94d15b0a78495b2d4cb11097518f25d672bcdece5679ca"
     },
     {
       "id": "doc-88",
@@ -9535,7 +9535,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Produktblaetter/Dachhaken_SL_A2-Tegalit_Biberschwanz_Schiefer/SL_Rack_Dachhaken_SL_A2_Tegalit_Bieberschwanz_Schiefer_Produktblatt_DE.pdf",
       "localPdf": "data/sl-rack-documents/139-Dachhaken-SL-A2-Tegalit-Biberschwanz-Schiefer.pdf",
       "page": 1,
-      "content": "35 mm 45 mm 75 mm PRODUKTBLATT SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de SL A2-TEGALIT/BIBERSCHWANZ/SCHIEFER Variable vertikale Profilmontage: SL A2-Schiefer Art.-Nr. 13107-00 Höhe 75 mm Haltbarkeits- 10 Jahre Garantie* Ihre Vorteile mit unseren Produkten » Edelstahl-Dachhaken ohne Schweißnaht » Funktioniert für alle gängigen Tegalit- und Biberschwanzdächer » Der mitgelieferte Kreuzverbinder ermöglicht horizontale oder vertikale Montage » Die Bohrungen in der Anschraubfläche erlauben eine seitliche Anpassung » Bewährte und einfache Einhängetechnik für Tragschienen » Nur ein Werkzeug nötig: Torx 40 » Installation einlagig oder im Kreuzverbund » SL A2-Schiefer: Funktioniert mit Dachziegelersatzplatten; horizontale und vertikale Direktanbringung der Modul- tragprofile durch Langloch (M10); Befestigungsschrauben (M10x25) und Muttern optional erhältlich, Art.-Nr. 71210-25 und Art.-Nr. 77210-00 SL A2-Tegalit Art.-Nr. 13105-00 Fußhöhe 45 mm SL A2-Biberschwanz Art.-Nr. 13106-00 Fußhöhe 35 mm * Es gelten unsere Garantiebedingungen. Diese sind auf unserer Webseite einsehbar unter www.sl-rack.de",
+      "content": "35 mm 45 mm 75 mm SL Rack GmbH | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de SL A2-TEGALIT/BIBERSCHWANZ/SCHIEFER Variable vertikale Profilmontage: SL A2-Schiefer Art.-Nr. 13107-00 Höhe 75 mm Haltbarkeits- 10 Jahre Garantie* Ihre Vorteile mit unseren Produkten » Edelstahl-Dachhaken ohne Schweißnaht » Funktioniert für alle gängigen Tegalit- und Biberschwanzdächer » Der mitgelieferte Kreuzverbinder ermöglicht horizontale oder vertikale Montage » Die Bohrungen in der Anschraubfläche erlauben eine seitliche Anpassung » Bewährte und einfache Einhängetechnik für Tragschienen » Nur ein Werkzeug nötig: Torx 40 » Installation einlagig oder im Kreuzverbund » SL A2-Schiefer: Funktioniert mit Dachziegelersatzplatten; horizontale und vertikale Direktanbringung der Modul- tragprofile durch Langloch (M10); Befestigungsschrauben (M10x25) und Muttern optional erhältlich, Art.-Nr. 71210-25 und Art.-Nr. 77210-00 SL A2-Tegalit Art.-Nr. 13105-00 Fußhöhe 45 mm SL A2-Biberschwanz Art.-Nr. 13106-00 Fußhöhe 35 mm * Es gelten unsere Garantiebedingungen. Diese sind auf unserer Webseite einsehbar unter www.sl-rack.de PRODUKTBLATT",
       "keywords": [
         "art",
         "-nr",
@@ -9551,10 +9551,10 @@
         "fußhöhe",
         "dachhaken",
         "produktblätter",
-        "produktblatt",
         "rack",
         "gmbh",
-        "83527"
+        "83527",
+        "haag"
       ]
     },
     {
