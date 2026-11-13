@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-12T12:51:46.603Z",
+  "generatedAt": "2026-11-13T12:20:35.563Z",
   "sourceUrl": "https://www.sl-rack.com/downloads",
   "documentCount": 101,
   "chunkCount": 1517,
@@ -397,8 +397,8 @@
       "localText": "data/sl-rack-text/096-Falzklemmen-2.0.json",
       "pageCount": 15,
       "chunkCount": 16,
-      "sourceBytes": 2025722,
-      "sourceSha256": "1a3d51b1c4c184bcc5c6d9a6bdd5823b39e47e43da01ed3313b1488923315e3d"
+      "sourceBytes": 2026111,
+      "sourceSha256": "3a5608d3b51daa2fea97aa4c2aeb81d1202c7535712ee21fd0bad15a0686ee58"
     },
     {
       "id": "doc-97",
