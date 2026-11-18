@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T12:20:35.563Z",
+  "generatedAt": "2026-11-18T13:11:32.833Z",
   "sourceUrl": "https://www.sl-rack.com/downloads",
   "documentCount": 101,
   "chunkCount": 1517,
@@ -13,8 +13,8 @@
       "localText": "data/sl-rack-text/001-SL-Rack-Schragdachsysteme.json",
       "pageCount": 40,
       "chunkCount": 50,
-      "sourceBytes": 5108095,
-      "sourceSha256": "47d3d8834ad5ef83264df9179c87df379257195802bf6fcb525dd1fcc0af4cff"
+      "sourceBytes": 5173656,
+      "sourceSha256": "88841ff26904822765aec827858230aba58bc736df9bd252e53cbb8ba5f425f0"
     },
     {
       "id": "doc-2",
@@ -37,8 +37,8 @@
       "localText": "data/sl-rack-text/003-SL-Rack-Flachdachsystem-SL-Fast-Flat.json",
       "pageCount": 20,
       "chunkCount": 21,
-      "sourceBytes": 2657965,
-      "sourceSha256": "11f44d0e6240c28ea243ff790270384936e8fc59e19bd368ea63c1fddb047b88"
+      "sourceBytes": 2702949,
+      "sourceSha256": "3806c4348597bf119ef3c8b03a0c63f44efbf74b3d38d32b50dd300105d3e1ff"
     },
     {
       "id": "doc-4",
@@ -1252,7 +1252,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Prospekte/SL_Rack_Schraegdachsysteme_Prospekt_DE.pdf",
       "localPdf": "data/sl-rack-documents/001-SL-Rack-Schragdachsysteme.pdf",
       "page": 2,
-      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de VORWORT Innovative Weiterentwicklung für Ihre Projekte „Seit 1996 werden unsere Montagesysteme kontinuierlich entwickelt und verbessert, um den Installateuren ihren Arbeitsalltag zu erleichtern. Effizienz und Wirtschaftlichkeit spielen dabei eine entscheidende Rolle, ebenso wie eine zügige Auftragsbearbeitung und die verlässliche Belieferung mit den benötigten Komponenten. Bei der Konstruktion unserer Komponenten haben wir konsequent auf die Verschraubbarkeit von oben geachtet, um einen ungestörten Arbeitsablauf zu gewährleisten. Die SL Rack Systeme sind montagefreundlich, universell einsetzbar, intuitiv verständlich und bleiben trotz allem individuell auf die jeweilige Montagesituation anpassbar.“ Ludwig Schletter Pionier und Vordenker der PV-Montagesysteme *Es gelten unsere Garantiebedingungen. Diese sind einsehbar auf unserer Webseite unter www.sl-rack.de SL Rack in Zahlen: 30 ........... Jahre Erfahrung 30 ........... GW installierter PV-Leistung weltweit 200 ......... Mitarbeitende beraten Sie gerne! EU .......... Zum Großteil in Deutschland und Europa produziert Blitzschutz- tragfähig nach DIN EN 62561 Haltbarkeits- Erfahren Sie mehr auf: www.sl-rack.de Kennen Sie schon den SL Rack YouTube-Kanal? Videos anschauen »",
+      "content": "2 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de VORWORT Innovative Weiterentwicklung für Ihre Projekte „Seit 1996 werden unsere Montagesysteme kontinuierlich entwickelt und verbessert, um den Installateuren ihren Arbeitsalltag zu erleichtern. Effizienz und Wirtschaftlichkeit spielen dabei eine entscheidende Rolle, ebenso wie eine zügige Auftragsbearbeitung und die verlässliche Belieferung mit den benötigten Komponenten. Bei der Konstruktion unserer Komponenten haben wir konsequent auf die Verschraubbarkeit von oben geachtet, um einen ungestörten Arbeitsablauf zu gewährleisten. Die SL Rack Systeme sind montagefreundlich, universell einsetzbar, intuitiv verständlich und bleiben trotz allem individuell auf die jeweilige Montagesituation anpassbar.“ Ludwig Schletter Pionier und Vordenker der PV-Montagesysteme *Es gelten unsere Garantiebedingungen. Diese sind einsehbar auf unserer Webseite unter www.sl-rack.de SL Rack in Zahlen: 30 ........... Jahre Erfahrung 30 ........... GW installierter PV-Leistung weltweit 200 ......... Mitarbeitende beraten Sie gerne! EU .......... Zum Großteil in Deutschland und Europa produziert Blitzschutz- tragfähig nach DIN EN 62561 Haltbarkeits- 10 Jahre Garantie* Erfahren Sie mehr auf: www.sl-rack.de Kennen Sie schon den SL Rack YouTube-Kanal? Videos anschauen »",
       "keywords": [
         "rack",
         "sl-rack",
@@ -1262,6 +1262,7 @@
         "komponenten",
         "unserer",
         "sind",
+        "jahre",
         "schrägdachsysteme",
         "prospekte",
         "gmbh",
@@ -1270,8 +1271,7 @@
         "83527",
         "haag",
         "tel",
-        "8072",
-        "3767-0"
+        "8072"
       ]
     },
     {
@@ -2202,7 +2202,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Prospekte/SL_Rack_Schraegdachsysteme_Prospekt_DE.pdf",
       "localPdf": "data/sl-rack-documents/001-SL-Rack-Schragdachsysteme.pdf",
       "page": 27,
-      "content": "27 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de FALZKLEMMEN SL Falzklemmen 2.0 » Speziell für Falzdächer entwickelt » Identisches Oberteil mit Schraubkanal und Langloch für höchste Flexibilität » Klemmbacken passend für jeweiliges Falzdach » Kreuzverbund mit unserem bewährten Kreuzverbinder (Artikel-Nr. 91204-00) » Integrierter Schraubkanal für Direktmontage mit Modulklemmen Art.-Nr. 11402-01 EAN 4262355113149 Rundfalzklemme 2.0 ‒ 18 mm passend für KalZip 50 Stück pro VPE Art.-Nr. 11402-03 EAN 4262355113156 Stehfalzklemme 2.0 – DFalzCU passend für Kupferfalzdächer 50 Stück pro VPE Art.-Nr. 11402-05 EAN 4262355113163 Stehfalzklemme 2.0 – DFalzPRO passend für Doppelfalzdächer 50 Stück pro VPE Art.-Nr. 11402-06 EAN 4262355113170 Industriefalzklemme 2.0 ‒ 1 passend für Roma RD 50 Stück pro VPE Art.-Nr. 11402-07 EAN 4262355113323 Stehfalzklemme 2.0 – DFalzAlu passend für Prefa 50 Stück pro VPE Art.-Nr. 11402-08 EAN 4262355113330 Industriefalzklemme 2.0 – 2 passend für Zambelli RIB Roof500 50 Stück pro VPE Art.-Nr. 11402-09 EAN 4262355113347 Industriefalzklemme 2.0 – 3 passend für Zambelli RIB Roof465 50 Stück pro VPE Art.-Nr. 11402-10 EAN 4262355113354 Rundfalzklemme 2.0-22mm passend für Zambelli RIB Roof Evo 50 Stück pro VPE Art.-Nr. 11402-11 EAN 4262355113361 Industriefalzklemme 2.0 ‒ 4 passend für Domico GBS 50 Stück pro VPE Art.-Nr. 11402-12 EAN 4262355113422 Industriefalzklemme 2.0 – 5 passend für Domitec 50 Stück pro VPE Art.-Nr. 11402-13 EAN 4262355112449 Railbrücke passend für Roma RD 150 Stück pro VPE VARIANTEN Rundfalzklemme 2.0 ‒ 18 mm passend für KalZip Industriefalzklemme 2.0 – 2 passend für Zambelli RIB Roof500 Stehfalzklemme 2.0 – DFalzCU passend für Kupferfalzdächer Industriefalzklemme 2.0 – 3",
+      "content": "27 07.10.2026 I 85-1.14.4-11/25 Z-14.4-1019 7. Oktober 2026 7. Oktober 2031 SL Rack GmbH Münchener Straße 1 83527 Haag i. OB PV-Modul-Befestigungsklemmen - Typ Roma RD: Industriefalzklemme 2.0-1 Der oben genannte Zulassungsgegenstand wird hiermit allgemein bauaufsichtlich zugelassen. Dieser Bescheid umfasst sechs Seiten und drei Anlagen mi t insgesamt 9 Seiten. mit ABZ: Z-14.4-1019 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de FALZKLEMMEN SL Falzklemmen 2.0 » Speziell für Falzdächer entwickelt » Identisches Oberteil mit Schraubkanal und Langloch für höchste Flexibilität » Klemmbacken passend für jeweiliges Falzdach » Kreuzverbund mit unserem bewährten Kreuzverbinder (Artikel-Nr. 91204-00) » Integrierter Schraubkanal für Direktmontage mit Modulklemmen Art.-Nr. 11402-01 EAN 4262355113149 Rundfalzklemme 2.0 ‒ 18 mm passend für KalZip 50 Stück pro VPE Art.-Nr. 11402-03 EAN 4262355113156 Stehfalzklemme 2.0 – DFalzCU passend für Kupferfalzdächer 50 Stück pro VPE Art.-Nr. 11402-05 EAN 4262355113163 Stehfalzklemme 2.0 – DFalzPRO passend für Doppelfalzdächer 50 Stück pro VPE Art.-Nr. 11402-06 EAN 4262355113170 Industriefalzklemme 2.0 ‒ 1 passend für Roma RD 50 Stück pro VPE Art.-Nr. 11402-07 EAN 4262355113323 Stehfalzklemme 2.0 – DFalzAlu passend für Prefa 50 Stück pro VPE Art.-Nr. 11402-08 EAN 4262355113330 Industriefalzklemme 2.0 – 2 passend für Zambelli RIB Roof500 50 Stück pro VPE Art.-Nr. 11402-09 EAN 4262355113347 Industriefalzklemme 2.0 – 3 passend für Zambelli RIB Roof465 50 Stück pro VPE Art.-Nr. 11402-10 EAN 4262355113354 Rundfalzklemme 2.0-22mm passend für Zambelli RIB Roof Evo 50 Stück pro VPE Art.-Nr. 11402-11 EAN 4262355113361 Industriefalzklemme 2.0 ‒ 4 passend für Domico GBS 50 Stück pro VPE Art.-N",
       "keywords": [
         "passend",
         "art",
@@ -2212,16 +2212,16 @@
         "pro",
         "vpe",
         "industriefalzklemme",
+        "rack",
         "stehfalzklemme",
         "zambelli",
         "rib",
-        "rundfalzklemme",
-        "rack",
-        "sl-rack",
-        "falzklemmen",
-        "schraubkanal",
-        "kalzip",
-        "dfalzcu"
+        "2026",
+        "z-14",
+        "4-1019",
+        "oktober",
+        "gmbh",
+        "münchener"
       ]
     },
     {
@@ -2232,26 +2232,26 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Prospekte/SL_Rack_Schraegdachsysteme_Prospekt_DE.pdf",
       "localPdf": "data/sl-rack-documents/001-SL-Rack-Schragdachsysteme.pdf",
       "page": 27,
-      "content": "passend für Roma RD 150 Stück pro VPE VARIANTEN Rundfalzklemme 2.0 ‒ 18 mm passend für KalZip Industriefalzklemme 2.0 – 2 passend für Zambelli RIB Roof500 Stehfalzklemme 2.0 – DFalzCU passend für Kupferfalzdächer Industriefalzklemme 2.0 – 3 passend für Zambelli RIB Roof465 Stehfalzklemme 2.0 – DFalzPRO passend für Doppelfalzdächer Rundfalzklemme 2.0 – 22 mm passend für Zambelli RIB Roof Evo Industriefalzklemme 2.0 ‒ 1 passend für Roma RD Industriefalzklemme 2.0 ‒ 4 passend für Domico GBS Stehfalzklemme 2.0 – DFalzAlu passend für Prefa Industriefalzklemme 2.0 – 5 passend für Domitec",
+      "content": "5 50 Stück pro VPE Art.-Nr. 11402-10 EAN 4262355113354 Rundfalzklemme 2.0-22mm passend für Zambelli RIB Roof Evo 50 Stück pro VPE Art.-Nr. 11402-11 EAN 4262355113361 Industriefalzklemme 2.0 ‒ 4 passend für Domico GBS 50 Stück pro VPE Art.-Nr. 11402-12 EAN 4262355113422 Industriefalzklemme 2.0 – 5 passend für Domitec 50 Stück pro VPE Art.-Nr. 11402-13 EAN 4262355112449 Railbrücke passend für Roma RD 150 Stück pro VPE VARIANTEN Rundfalzklemme 2.0 ‒ 18 mm passend für KalZip Industriefalzklemme 2.0 – 2 passend für Zambelli RIB Roof500 Stehfalzklemme 2.0 – DFalzCU passend für Kupferfalzdächer Industriefalzklemme 2.0 – 3 passend für Zambelli RIB Roof465 Stehfalzklemme 2.0 – DFalzPRO passend für Doppelfalzdächer Rundfalzklemme 2.0 – 22 mm passend für Zambelli RIB Roof Evo Industriefalzklemme 2.0 ‒ 1 passend für Roma RD Industriefalzklemme 2.0 ‒ 4 passend für Domico GBS Stehfalzklemme 2.0 – DFalzAlu passend für Prefa Industriefalzklemme 2.0 – 5 passend für Domitec",
       "keywords": [
         "passend",
         "industriefalzklemme",
-        "zambelli",
-        "rib",
-        "stehfalzklemme",
-        "roma",
-        "rundfalzklemme",
-        "rack",
-        "schrägdachsysteme",
-        "prospekte",
-        "150",
         "stück",
         "pro",
         "vpe",
-        "varianten",
-        "kalzip",
-        "roof500",
-        "dfalzcu"
+        "art",
+        "-nr",
+        "ean",
+        "zambelli",
+        "rib",
+        "rundfalzklemme",
+        "stehfalzklemme",
+        "roof",
+        "evo",
+        "domico",
+        "gbs",
+        "domitec",
+        "roma"
       ]
     },
     {
@@ -2679,7 +2679,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Prospekte/SL_Rack_Schraegdachsysteme_Prospekt_DE.pdf",
       "localPdf": "data/sl-rack-documents/001-SL-Rack-Schragdachsysteme.pdf",
       "page": 40,
-      "content": "SCHRÄGDACHSYSTEME 2026 Kontaktieren Sie uns für Ihr persönliches Angebot: SL Rack GmbH Münchener Straße 1 83527 Haag i. OB E-Mail: sales@sl-rack.de Tel.: +49 8072 3767-0 www.sl-rack.de SL Rack Online- Bestellsystem SL Rack YouTube SL Rack Website Technische Änderungen und Druckfehler vorbehalten. Stand 09/2026 V58",
+      "content": "SCHRÄGDACHSYSTEME 2026 Kontaktieren Sie uns für Ihr persönliches Angebot: SL Rack GmbH Münchener Straße 1 83527 Haag i. OB E-Mail: sales@sl-rack.de Tel.: +49 8072 3767-0 www.sl-rack.de SL Rack Online- Bestellsystem SL Rack YouTube SL Rack Website Technische Änderungen und Druckfehler vorbehalten. Stand 10/2026 V58",
       "keywords": [
         "rack",
         "schrägdachsysteme",
@@ -3367,7 +3367,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Prospekte/SL_Rack_Flachdachsystem_SL_Fast_Flat_Prospekt_DE.pdf",
       "localPdf": "data/sl-rack-documents/003-SL-Rack-Flachdachsystem-SL-Fast-Flat.pdf",
       "page": 9,
-      "content": "9 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de KOMPONENTEN Sprungmaß in Abhängigkeit von Bodenschuh und Zwischenstück Eine Kombination von Bodenschuhen und Zwischenstücken ist möglich. Bodenschuh HDPE 100 x 200 » UV-beständig und frei von Weichmachern » Bis zu drei Schuhe zusätzlich auf einer Schiene Bodenschuh HDPE XL 100 x 200 » Ermöglicht die Ausbildung eines 150 mm breiten Wartungsgangs » Reduziert den Montageaufwand durch Bauteileinsparung Art.-Nr. 22300-20 Abmessungen Gewicht Material VPE Bodenschuh HDPE 100 x 200 L 200 mm, B 100 mm, H 38 mm 0,34 kg ZM430/HDPE 35 Art.-Nr. 22300-80 Abmessungen Gewicht Material VPE Bodenschuh HDPE XL100 x 200 L 280 mm, B 100 mm, H 40 mm 0,443 kg ZM430/HDPE 50 NEU Fast Flat mit Bodenschuh 72,1 152,1 292,1 462,1 220,0 390,0 220,0 390,0 282,2 452,2 2379,2 2539,2 2819,2 2819,2 Fast Flat mit Bodenschuh XL Fast Flat mit Zwischenstück 220 Fast Flat mit Zwischenstück 390 Fast Flat mit Zwischenstück 700 62,2 142,2 772,1 700,0 700,0 3779,2 762,2",
+      "content": "9 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de KOMPONENTEN Sprungmaß in Abhängigkeit von Bodenschuh und Zwischenstück Eine Kombination von Bodenschuhen und Zwischenstücken ist möglich. Bodenschuh HDPE 100 x 200 » UV-beständig und frei von Weichmachern » Bis zu drei Schuhe zusätzlich auf einer Schiene Bodenschuh HDPE XL 100 x 200 » Ermöglicht die Einhaltung der Brandschutzanforderungen » Reduziert den Montageaufwand durch Bauteileinsparung Art.-Nr. 22300-20 Abmessungen Gewicht Material VPE Bodenschuh HDPE 100 x 200 L 200 mm, B 100 mm, H 38 mm 0,34 kg ZM430/HDPE 35 Art.-Nr. 22300-80 Abmessungen Gewicht Material VPE Bodenschuh HDPE XL 100 x 200 L 280 mm, B 100 mm, H 40 mm 0,443 kg ZM430/HDPE 25 NEU Fast Flat mit Bodenschuh 72,1 152,1 292,1 462,1 220,0 390,0 220,0 390,0 282,2 452,2 2379,2 2539,2 2819,2 3159,2 Fast Flat mit Bodenschuh XL Fast Flat mit Zwischenstück 220 Fast Flat mit Zwischenstück 390 Fast Flat mit Zwischenstück 700 62,2 142,2 772,1 700,0 700,0 3779,2 762,2",
       "keywords": [
         "bodenschuh",
         "fast",
@@ -3397,7 +3397,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Prospekte/SL_Rack_Flachdachsystem_SL_Fast_Flat_Prospekt_DE.pdf",
       "localPdf": "data/sl-rack-documents/003-SL-Rack-Flachdachsystem-SL-Fast-Flat.pdf",
       "page": 10,
-      "content": "10 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Bodenschuh HDPE 200 x 200 » UV-beständig und frei von Weichmachern » Bis zu drei Schuhe zusätzlich auf einer Schiene » Vergrößerte Auflagefläche verringert die Auflagerpressung Art.-Nr. 22300-30 Abmessungen Gewicht Material VPE Bodenschuh HDPE 200 x 200 L 200 mm, B 200 mm, H 30 mm 0,275 kg ZM430/HDPE 20 Bodenschuh EPDM » EPDM-Matte für erhöhten Reibbeiwert » Bis zu drei Schuhe zusätzlich auf einer Schiene » Vergrößerte Auflagefläche verringert die Auflagerpressung Bodenschuh HDPE light » UV-beständig und frei von Weichmachern » Vergrößerte Auflagefläche verringert die Auflagerpressung Art.-Nr. 22300-10 Abmessungen Gewicht Material VPE Bodenschuh EPDM 200 x 200 L 200 mm, B 200 mm, H 30 mm 0,42 kg ZM430/HDPE 20 Art.-Nr. 22300-15 Abmessungen Gewicht Material VPE Bodenschuh HDPE light L 200 mm, B 200 mm, H 30 mm 0,125 kg HDPE 35 Bodenschuh HDPE mit Langloch » Anbindung an Schweißanker für ballastreduzierte oder für Querkräfte ergänzende Montage » Anbindung an Stockschraube und Verankerungen » Befestigung von Kabeltrassen Art.-Nr. 22300-50 Abmessungen Gewicht Material VPE Bodenschuh HDPE mit Langloch L 200 mm x B 200 mm, H 40 mm Auflagefläche: L 200 mm x B 100 mm 0,638 kg Verzinkter Stahl ZM430 / HDPE 20 KOMPONENTEN",
+      "content": "10 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de Bodenschuh HDPE 200 x 200 » UV-beständig und frei von Weichmachern » Bis zu drei Schuhe zusätzlich auf einer Schiene » Vergrößerte Auflagefläche verringert die Auflagerpressung Art.-Nr. 22300-30 Abmessungen Gewicht Material VPE Bodenschuh HDPE 200 x 200 L 200 mm, B 200 mm, H 30 mm 0,275 kg ZM430/HDPE 20 Bodenschuh EPDM » EPDM-Matte für erhöhten Reibbeiwert » Bis zu drei Schuhe zusätzlich auf einer Schiene » Vergrößerte Auflagefläche verringert die Auflagerpressung Bodenschuh HDPE light » UV-beständig und frei von Weichmachern » Vergrößerte Auflagefläche verringert die Auflagerpressung Art.-Nr. 22300-10 Abmessungen Gewicht Material VPE Bodenschuh EPDM 200 x 200 L 200 mm, B 200 mm, H 30 mm 0,42 kg ZM430/EPDM 20 Art.-Nr. 22300-15 Abmessungen Gewicht Material VPE Bodenschuh HDPE light L 200 mm, B 200 mm, H 30 mm 0,125 kg HDPE 35 Bodenschuh HDPE mit Langloch » Anbindung an Schweißanker für ballastreduzierte oder für Querkräfte ergänzende Montage » Anbindung an Stockschraube und Verankerungen » Befestigung von Kabeltrassen Art.-Nr. 22300-50 Abmessungen Gewicht Material VPE Bodenschuh HDPE mit Langloch L 200 mm x B 200 mm, H 40 mm Auflagefläche: L 200 mm x B 100 mm 0,638 kg Verzinkter Stahl ZM430 / HDPE 20 KOMPONENTEN",
       "keywords": [
         "200",
         "hdpe",
@@ -3413,10 +3413,10 @@
         "verringert",
         "auflagerpressung",
         "zm430",
+        "epdm",
         "rack",
         "sl-rack",
-        "uv-beständig",
-        "frei"
+        "uv-beständig"
       ]
     },
     {
@@ -3427,7 +3427,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Prospekte/SL_Rack_Flachdachsystem_SL_Fast_Flat_Prospekt_DE.pdf",
       "localPdf": "data/sl-rack-documents/003-SL-Rack-Flachdachsystem-SL-Fast-Flat.pdf",
       "page": 11,
-      "content": "11 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de KOMPONENTEN – OPTIONAL Blitzschutzklemme A2 oben » Einfacher Anschluss an externe Blitzschutz- und Potentialausgleichssysteme » Geeignet für Blitzschutzdrähte 6, 8 und 10 mm Durchmesser » Für Kupferdrähte geeignet Bodenschuh Kiesdach » Passend für die Montage auf Grün-, Substrat- und Kiesdächern. » Weichmacher-freier Kiesdachschuh ermöglicht die Montage auch mit Kontakt zur Dachhaut. » Optimierte Geometrie ermöglicht Ausgleich von Dachunebenheiten bei Substrat- und Kiesdächern. Art.-Nr. 93801-00 Abmessungen Gewicht Material VPE Blitzschutzklemme A2 oben L 58 mm, B 40 mm, H 20 mm 0,104 kg Edelstahl 100 Art.-Nr. 21114-00 Abmessungen Gewicht Material VPE FLA Universalklemme L 35 mm, B 25 mm, H 60/45 mm 0,035 kg Aluminium/Edelstahl 200 Art.-Nr. 22300-85 Abmessungen Gewicht Material VPE Bodenschuh Kiesdach L 277 mm, B 184 mm, H 64 mm 0,369 kg HDPE 250 FLA Universalklemme » Universell einsetzbare Klemme für SL Rack Systeme » Zur Befestigung von Ballastwinkeln und Windleitblechen sowie Wechselrichter » Verschraubung von oben mit Torx 40 Kabelhalter » Höhergelegte Kabelführung verhindert Wasseransammlung » UV-beständig » Montierbar an Basic Frame und Viertelpunktstrebe Art.-Nr. 22300-41 Abmessungen Gewicht Material VPE Kabelhalter L 50 mm, B 10 mm, H 20 mm 0,004 kg PA66 100",
+      "content": "11 SL Rack GmbH | Münchener Straße 1 | 83527 Haag i. OB | Tel: +49 8072 3767-0 | sales@sl-rack.de | www.sl-rack.de KOMPONENTEN – OPTIONAL Blitzschutzklemme A2 oben » Einfacher Anschluss an externe Blitzschutz- und Potentialausgleichssysteme » Geeignet für Blitzschutzdrähte 6, 8 und 10 mm Durchmesser » Für Kupferdrähte geeignet Bodenschuh Kiesdach » Passend für die Montage auf Grün-, Substrat- und Kiesdächern. » Weichmacher-freier Kiesdachschuh. » Optimierte Geometrie ermöglicht Ausgleich von Dachunebenheiten bei Substrat- und Kiesdächern. Art.-Nr. 93801-00 Abmessungen Gewicht Material VPE Blitzschutzklemme A2 oben L 58 mm, B 40 mm, H 20 mm 0,104 kg Edelstahl 100 Art.-Nr. 21114-00 Abmessungen Gewicht Material VPE FLA Universalklemme L 35 mm, B 25 mm, H 60/45 mm 0,035 kg Aluminium/Edelstahl 200 Art.-Nr. 22300-85 Abmessungen Gewicht Material VPE Bodenschuh Kiesdach L 277 mm, B 184 mm, H 64 mm 0,369 kg HDPE 250 FLA Universalklemme » Universell einsetzbare Klemme für SL Rack Systeme » Zur Befestigung von Ballastwinkeln und Windleitblechen sowie Wechselrichter » Verschraubung von oben mit Torx 40 Kabelhalter » Höhergelegte Kabelführung verhindert Wasseransammlung » UV-beständig » Montierbar an Basic Frame und Viertelpunktstrebe Art.-Nr. 22300-41 Abmessungen Gewicht Material VPE Kabelhalter L 50 mm, B 10 mm, H 20 mm 0,004 kg PA66 100",
       "keywords": [
         "art",
         "-nr",
@@ -3442,11 +3442,11 @@
         "geeignet",
         "bodenschuh",
         "kiesdach",
-        "montage",
         "substrat-",
         "kiesdächern",
-        "ermöglicht",
-        "edelstahl"
+        "edelstahl",
+        "100",
+        "fla"
       ]
     },
     {
@@ -3694,7 +3694,7 @@
       "sourceUrl": "https://www.sl-rack.com/fileadmin/user_upload/downloads/Prospekte/SL_Rack_Flachdachsystem_SL_Fast_Flat_Prospekt_DE.pdf",
       "localPdf": "data/sl-rack-documents/003-SL-Rack-Flachdachsystem-SL-Fast-Flat.pdf",
       "page": 20,
-      "content": "SL FAST FLAT 2026 Kontaktieren Sie uns für Ihr persönliches Angebot: SL Rack GmbH Münchener Straße 1 83527 Haag i. OB E-Mail: sales@sl-rack.de Tel.: +49 8072 3767-0 www.sl-rack.de Technische Änderungen und Druckfehler vorbehalten. Stand 08/2026 V11 SL Rack YouTube SL Rack Website SL Rack Online- Bestellsystem",
+      "content": "SL FAST FLAT 2026 Kontaktieren Sie uns für Ihr persönliches Angebot: SL Rack GmbH Münchener Straße 1 83527 Haag i. OB E-Mail: sales@sl-rack.de Tel.: +49 8072 3767-0 www.sl-rack.de Technische Änderungen und Druckfehler vorbehalten. Stand 11/2026 V11 SL Rack YouTube SL Rack Website SL Rack Online- Bestellsystem",
       "keywords": [
         "rack",
         "fast",
